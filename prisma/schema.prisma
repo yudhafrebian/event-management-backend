@@ -23,13 +23,15 @@ model events {
   organizer_id    Int
   event_picture   String         @db.VarChar(255)
   title           String         @db.VarChar(255)
-  desciption      String         @db.VarChar(255)
   location        String         @db.VarChar(255)
   start_date      DateTime       @db.Date
   end_date        DateTime       @db.Date
-  price           BigInt
-  available_seats BigInt
+  price           Int
+  available_seats Int
   is_free         Boolean
+  category        Category       @default(music)
+  description     String         @default("Join us for an unforgettable night of music and entertainment.") @db.VarChar(255)
+  about           String
   attendees       attendees[]
   users           users          @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
   reviews         reviews[]
@@ -99,11 +101,11 @@ model users {
   profile_picture  String?            @db.VarChar(255)
   email            String             @unique @db.VarChar(255)
   password         String             @db.VarChar(255)
-  is_verified      Boolean            @default(false)
   role             String             @default("user") @db.VarChar(255)
   referral_code    String?            @db.VarChar(255)
   refered_by       String?            @db.VarChar(255)
   points           BigInt?
+  is_verified      Boolean            @default(false)
   attendees        attendees[]
   events           events[]
   notifications    notifications[]
@@ -121,4 +123,13 @@ model vouchers {
   end_date    DateTime @db.Date
   quota       BigInt
   events      events   @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vouchers_fk1")
+}
+
+enum Category {
+  music
+  tecnology
+  culinary
+  arts
+  sports
+  education
 }
