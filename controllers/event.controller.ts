@@ -30,7 +30,7 @@ export const detailEvents = async(req:Request, res:Response):Promise<any> => {
         res.status(500).send(error)
     }
 }
-export const b = async(req:Response, res:Response):Promise<any> => {
+export const a = async(req:Response, res:Response):Promise<any> => {
     try {
         
     } catch (error) {
