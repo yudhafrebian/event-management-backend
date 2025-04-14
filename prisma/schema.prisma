@@ -19,25 +19,23 @@ model attendees {
 }
 
 model events {
-  id              Int            @id @default(autoincrement())
-  organizer_id    Int
-  event_picture   String         @db.VarChar(255)
-  title           String         @db.VarChar(255)
-  location        String         @db.VarChar(255)
-  start_date      DateTime       @db.Date
-  end_date        DateTime       @db.Date
-  price           Int
-  available_seats Int
-  is_free         Boolean
-  category        Category       @default(music)
-  description     String         @default("Join us for an unforgettable night of music and entertainment.") @db.VarChar(255)
-  about           String
-  attendees       attendees[]
-  users           users          @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
-  reviews         reviews[]
-  tickets         tickets[]
-  transactions    transactions[]
-  vouchers        vouchers[]
+  id                 Int                  @id @default(autoincrement())
+  organizer_id       Int
+  event_picture      String               @db.VarChar(255)
+  title              String               @db.VarChar(255)
+  location           String               @db.VarChar(255)
+  start_date         DateTime             @db.Date
+  end_date           DateTime             @db.Date
+  category           Category             @default(music)
+  description        String               @default("Join us for an unforgettable night of music and entertainment.") @db.VarChar(255)
+  about              String
+  attendees          attendees[]
+  users              users                @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
+  reviews            reviews[]
+  ticket_types       ticket_types[]
+  transaction_detail transaction_detail[]
+  transactions       transactions[]
+  vouchers           vouchers[]
 }
 
 model notifications {
@@ -69,29 +67,19 @@ model reviews {
   events   events @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "reviews_fk2")
 }
 
-model tickets {
-  id           Int            @id @default(autoincrement())
-  code         BigInt         @unique
-  event_id     Int
-  price        BigInt
-  quota        BigInt
-  events       events         @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_fk2")
-  transactions transactions[]
-}
-
 model transactions {
-  id            Int             @id @default(autoincrement())
+  id            Int                @id @default(autoincrement())
   user_id       Int
   event_id      Int
   ticket_id     Int
   total_price   BigInt
-  payment_proof String          @db.VarChar(255)
-  status        String          @db.VarChar(255)
-  expired_date  DateTime        @db.Date
+  payment_proof String             @db.VarChar(255)
+  status        String             @db.VarChar(255)
+  expired_date  DateTime           @db.Date
   notifications notifications[]
-  users         users           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
-  events        events          @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk2")
-  tickets       tickets         @relation(fields: [ticket_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk3")
+  users         users              @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
+  events        events             @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk2")
+  tickets       transaction_detail @relation(fields: [ticket_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk3")
 }
 
 model users {
@@ -101,11 +89,11 @@ model users {
   profile_picture  String?            @db.VarChar(255)
   email            String             @unique @db.VarChar(255)
   password         String             @db.VarChar(255)
-  role             String             @default("user") @db.VarChar(255)
   referral_code    String?            @db.VarChar(255)
   refered_by       String?            @db.VarChar(255)
   points           BigInt?
   is_verified      Boolean            @default(false)
+  role             Role               @default(user)
   attendees        attendees[]
   events           events[]
   notifications    notifications[]
@@ -125,6 +113,27 @@ model vouchers {
   events      events   @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vouchers_fk1")
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ticket_types {
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  event_id    Int
+  type_name   String   @db.VarChar
+  quota       Int
+  price       Int
+  description String   @default("Ticket")
+  events      events   @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model transaction_detail {
+  id           Int            @id(map: "tickets_pkey") @default(autoincrement())
+  code         String         @unique(map: "tickets_code_key") @db.VarChar
+  event_id     Int
+  is_attend    Boolean        @default(false)
+  events       events         @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_fk2")
+  transactions transactions[]
+}
+
 enum Category {
   music
   tecnology
@@ -132,4 +141,9 @@ enum Category {
   arts
   sports
   education
+}
+
+enum Role {
+  user
+  organizer
 }
