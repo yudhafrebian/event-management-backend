@@ -27,7 +27,7 @@ model events {
   start_date         DateTime             @db.Date
   end_date           DateTime             @db.Date
   category           Category             @default(music)
-  description        String               @default("Join us for an unforgettable night of music and entertainment.") @db.VarChar(255)
+  description        String               @db.VarChar(255)
   about              String
   attendees          attendees[]
   users              users                @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
@@ -51,7 +51,7 @@ model referral_coupons {
   id            Int      @id @default(autoincrement())
   user_id       Int
   code          String   @db.VarChar(255)
-  coupon_amount BigInt
+  coupon_amount Int
   expires_date  DateTime @db.Date
   is_used       Boolean
   users         users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "referral_coupons_fk1")
@@ -61,7 +61,7 @@ model reviews {
   id       Int    @id @default(autoincrement())
   user_id  Int
   event_id Int
-  rating   BigInt
+  rating   Int
   comment  String @db.VarChar(255)
   users    users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "reviews_fk1")
   events   events @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "reviews_fk2")
@@ -72,7 +72,7 @@ model transactions {
   user_id       Int
   event_id      Int
   ticket_id     Int
-  total_price   BigInt
+  total_price   Int
   payment_proof String             @db.VarChar(255)
   status        String             @db.VarChar(255)
   expired_date  DateTime           @db.Date
@@ -91,7 +91,7 @@ model users {
   password         String             @db.VarChar(255)
   referral_code    String?            @db.VarChar(255)
   refered_by       String?            @db.VarChar(255)
-  points           BigInt?
+  points           Int?
   is_verified      Boolean            @default(false)
   role             Role               @default(user)
   attendees        attendees[]
@@ -105,8 +105,8 @@ model users {
 model vouchers {
   id          Int      @id @default(autoincrement())
   event_id    Int
-  code        BigInt
-  disc_amount BigInt
+  code        Int
+  disc_amount Int
   start_date  DateTime @db.Date
   end_date    DateTime @db.Date
   quota       BigInt
