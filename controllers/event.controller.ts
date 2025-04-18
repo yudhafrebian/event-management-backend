@@ -32,7 +32,7 @@ export const detailEvents = async (
         start_date:true,
         end_date:true,
         category:true,
-        users:true,
+        organizer:true,
         ticket_types: true
       }
     });
