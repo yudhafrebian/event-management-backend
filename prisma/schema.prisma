@@ -30,7 +30,7 @@ model events {
   description        String               @db.VarChar(255)
   about              String
   attendees          attendees[]
-  users              users                @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
+  organizer              organizers           @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
   reviews            reviews[]
   ticket_types       ticket_types[]
   transaction_detail transaction_detail[]
@@ -95,8 +95,8 @@ model users {
   is_verified      Boolean            @default(false)
   role             Role               @default(user)
   attendees        attendees[]
-  events           events[]
   notifications    notifications[]
+  organizers       organizers[]
   referral_coupons referral_coupons[]
   reviews          reviews[]
   transactions     transactions[]
@@ -132,6 +132,18 @@ model transaction_detail {
   is_attend    Boolean        @default(false)
   events       events         @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_fk2")
   transactions transactions[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model organizers {
+  id             Int      @id @default(autoincrement())
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  organizer_name String   @db.VarChar
+  description    String
+  profile_img    String?  @db.VarChar
+  user_id        Int
+  events         events[]
+  users          users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 enum Category {

@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors"
 import eventRoute from "./routers/event.router"
+import organizerRoute from "./routers/organizer.router"
 
 const PORT:number = 5000;
 
@@ -14,5 +15,6 @@ app.get("/", (req:Request, res:Response) => {
 })
 
 app.use("/events", eventRoute)
+app.use("/organizer", organizerRoute)
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
