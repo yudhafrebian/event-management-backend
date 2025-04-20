@@ -37,8 +37,8 @@ export const detailEvents = async (
       }
     });
 
-    const quota = detail?.ticket_types.reduce((acc, cur) => acc + cur.quota, 0);
-    const price = detail?.ticket_types.map((item) => item.price).sort((a,b) => a - b);
+    const quota = detail?.ticket_types.reduce((acc:number, cur:any) => acc + cur.quota, 0);
+    const price = detail?.ticket_types.map((item:any) => item.price).sort((a:number,b:number) => a - b);
 
     if (!detail) {
       throw "Event not found";
