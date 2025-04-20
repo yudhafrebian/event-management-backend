@@ -4,11 +4,10 @@ import prisma from "../config/prisma";
 export const getEvents = async (req: Request, res: Response): Promise<any> => {
   try {
     const response = await prisma.events.findMany({
-        include: {
-            ticket_types: true
-        }
+      include: {
+        ticket_types: true,
+      },
     });
-
     res.status(200).send(response);
   } catch (error) {
     console.log(error);
@@ -24,27 +23,29 @@ export const detailEvents = async (
       where: { id: parseInt(req.params.id) },
       select: {
         id: true,
-        organizer_id:true,
-        event_picture:true,
-        title:true,
-        about:true,
-        location:true,
-        start_date:true,
-        end_date:true,
-        category:true,
-        organizer:true,
-        ticket_types: true
-      }
+        organizer_id: true,
+        event_picture: true,
+        title: true,
+        about: true,
+        location: true,
+        start_date: true,
+        end_date: true,
+        category: true,
+        organizer: true,
+        ticket_types: true,
+      },
     });
 
     const quota = detail?.ticket_types.reduce((acc, cur) => acc + cur.quota, 0);
-    const price = detail?.ticket_types.map((item) => item.price).sort((a,b) => a - b);
+    const price = detail?.ticket_types
+      .map((item) => item.price)
+      .sort((a, b) => a - b);
 
     if (!detail) {
       throw "Event not found";
     }
 
-    res.status(200).send({detail, quota, price});
+    res.status(200).send({ detail, quota, price });
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
