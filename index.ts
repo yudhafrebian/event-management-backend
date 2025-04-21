@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-// import eventRoute from "./routers/event.router"
+import eventRoute from "./routers/event.router"
 import organizerRoute from "./routers/organizer.router";
 import authRouter from "./routers/auth.router";
 
