@@ -54,7 +54,6 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
     if (!isValidPassword) {
       throw "Invalid password";
     }
-    console.log(users);
 
     return res.status(200).send({
       id: users.id,
@@ -63,6 +62,8 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
       email: users.email,
       token: createToken({
         id: users.id,
+        is_verified: users.is_verified,
+        role: users.role,
       }),
     });
   } catch (error) {

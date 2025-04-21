@@ -30,7 +30,7 @@ model events {
   description        String               @db.VarChar(255)
   about              String
   attendees          attendees[]
-  organizer              organizers           @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
+  organizer          organizers           @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
   reviews            reviews[]
   ticket_types       ticket_types[]
   transaction_detail transaction_detail[]
