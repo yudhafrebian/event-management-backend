@@ -35,8 +35,12 @@ export const getDetailOrganizer = async (
       include: {
         ticket_types: true,
       },
-    })
-    res.status(200).send({detail, detailEvents});
+    });
+
+    const totalEvents = await prisma.events.count({
+      where: { organizer_id: parseInt(req.params.id) },
+    });
+    res.status(200).send({ detail, detailEvents, totalEvents });
   } catch (error) {
     res.status(500).send(error);
   }

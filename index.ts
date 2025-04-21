@@ -15,8 +15,8 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).send("<div>Event API</div>");
 });
 
-// app.use("/events", eventRoute);
-app.use("/organizer", organizerRoute);
 app.use("/auth", authRouter);
+app.use("/events", eventRoute)
+app.use("/organizers", organizerRoute)
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
