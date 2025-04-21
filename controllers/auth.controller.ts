@@ -23,6 +23,7 @@ export const register = async (req: Request, res: Response): Promise<any> => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         password: hashNewPassword,
+        referral_code: req.body.referral_code,
       },
     });
     console.log(newUsers);
