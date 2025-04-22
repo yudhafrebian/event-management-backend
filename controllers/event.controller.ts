@@ -5,44 +5,51 @@ export const getEvents = async (req: Request, res: Response): Promise<any> => {
   try {
     const { search, location, from, to } = req.query;
 
-    const filters: any = {};
+    const conditions: any[] = [];
 
     if (search) {
-      filters.OR = [
-        { title: { contains: search as string, mode: "insensitive" } },
-        { about: { contains: search as string, mode: "insensitive" } },
-      ];
+      conditions.push({
+        OR: [
+          {
+            title: { contains: search as string, mode: "insensitive" },
+          },
+          {
+            description: { contains: search as string, mode: "insensitive" },
+          },
+        ],
+      });
     }
 
     if (location) {
-      filters.location = {
-        contains: location as string,
-        mode: "insensitive",
-      };
+      conditions.push({
+        location: { contains: location as string, mode: "insensitive" },
+      });
     }
 
     if (from || to) {
-      filters.start_date = {};
-      if (from) {
-        filters.start_date.gte = new Date(from as string);
-      }
-      if (to) {
-        filters.start_date.lte = new Date(to as string);
-      }
+      const dateFilter: any = {};
+      if (from) dateFilter.gte = new Date(from as string);
+      if (to) dateFilter.lte = new Date(to as string);
+
+      conditions.push({ start_date: dateFilter });
     }
 
+    const where = conditions.length > 0 ? { AND: conditions } : {};
+
     const response = await prisma.events.findMany({
-      where: filters,
+      where,
       include: {
         ticket_types: true,
       },
     });
+
     res.status(200).send(response);
   } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
+    console.error(error);
+    res.status(500).send({ message: "Internal server error" });
   }
 };
+
 export const detailEvents = async (
   req: Request,
   res: Response
