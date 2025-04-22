@@ -3,7 +3,36 @@ import prisma from "../config/prisma";
 
 export const getEvents = async (req: Request, res: Response): Promise<any> => {
   try {
+    const { search, location, from, to } = req.query;
+
+    const filters: any = {};
+
+    if (search) {
+      filters.OR = [
+        { title: { contains: search as string, mode: "insensitive" } },
+        { about: { contains: search as string, mode: "insensitive" } },
+      ];
+    }
+
+    if (location) {
+      filters.location = {
+        contains: location as string,
+        mode: "insensitive",
+      };
+    }
+
+    if (from || to) {
+      filters.start_date = {};
+      if (from) {
+        filters.start_date.gte = new Date(from as string);
+      }
+      if (to) {
+        filters.start_date.lte = new Date(to as string);
+      }
+    }
+
     const response = await prisma.events.findMany({
+      where: filters,
       include: {
         ticket_types: true,
       },
@@ -36,8 +65,13 @@ export const detailEvents = async (
       },
     });
 
-    const quota = detail?.ticket_types.reduce((acc:number, cur:any) => acc + cur.quota, 0);
-    const price = detail?.ticket_types.map((item:any) => item.price).sort((a:number,b:number) => a - b);
+    const quota = detail?.ticket_types.reduce(
+      (acc: number, cur: any) => acc + cur.quota,
+      0
+    );
+    const price = detail?.ticket_types
+      .map((item: any) => item.price)
+      .sort((a: number, b: number) => a - b);
 
     if (!detail) {
       throw "Event not found";
