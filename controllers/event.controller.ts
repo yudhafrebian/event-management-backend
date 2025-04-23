@@ -120,3 +120,17 @@ export const getAllCategory = async (req: Request, res: Response) => {
         res.status(500).send(error);
     }
 }
+
+export const getAllCities = async (req: Request, res: Response) => {
+  try {
+    const response = await prisma.cities.findMany({
+      where:{country:"Indonesia"},
+      orderBy:{
+        city: 'asc'
+      }
+    })
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
