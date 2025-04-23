@@ -146,6 +146,13 @@ model organizers {
   users          users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model cities {
+  id      Int    @id @default(autoincrement())
+  city    String @db.VarChar
+  country String @db.VarChar
+}
+
 enum Category {
   Music
   Tecnology
