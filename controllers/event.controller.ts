@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import prisma from "../config/prisma";
+import { Category } from "@prisma/client";
 
 export const getEvents = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { search, location, from, to } = req.query;
+    const { search, location, from, to, category } = req.query;
 
     const conditions: any[] = [];
 
@@ -18,6 +19,12 @@ export const getEvents = async (req: Request, res: Response): Promise<any> => {
           },
         ],
       });
+    }
+
+    if(category){
+      conditions.push({
+        category: {equals: category as string},
+      })
     }
 
     if (location) {
@@ -56,7 +63,7 @@ export const detailEvents = async (
 ): Promise<any> => {
   try {
     const detail = await prisma.events.findUnique({
-      where: { id: parseInt(req.params.id) },
+      where: { title: req.params.title },
       select: {
         id: true,
         organizer_id: true,
@@ -104,3 +111,12 @@ export const v = async (req: Response, res: Response): Promise<any> => {
     res.status(500).send(error);
   }
 };
+
+export const getAllCategory = async (req: Request, res: Response) => {
+    try {
+        const categories = Object.values(Category);
+        res.status(200).send(categories);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}

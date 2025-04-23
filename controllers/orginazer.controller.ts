@@ -24,21 +24,21 @@ export const getDetailOrganizer = async (
 ): Promise<any> => {
   try {
     const detail = await prisma.organizers.findUnique({
-      where: { id: parseInt(req.params.id) },
+      where: { organizer_name: req.params.name },
       include: {
         users: true,
       },
     });
 
     const detailEvents = await prisma.events.findMany({
-      where: { organizer_id: parseInt(req.params.id) },
+      where: { organizer_id: detail?.id},
       include: {
         ticket_types: true,
       },
     });
 
     const totalEvents = await prisma.events.count({
-      where: { organizer_id: parseInt(req.params.id) },
+      where: { organizer_id: detail?.id },
     });
     res.status(200).send({ detail, detailEvents, totalEvents });
   } catch (error) {

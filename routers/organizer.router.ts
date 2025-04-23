@@ -5,6 +5,6 @@ import { getAllOrganizer, getDetailOrganizer } from "../controllers/orginazer.co
 const route = Router()
 
 route.get("/all", getAllOrganizer)
-route.get("/:id", getDetailOrganizer)
+route.get("/:name", getDetailOrganizer)
 
 export default route
