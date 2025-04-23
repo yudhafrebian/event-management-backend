@@ -9,14 +9,14 @@ export const verifyToken = async (
   try {
     //read token from req header
     const token = req.header("Authorization")?.split(" ")[1];
-    console.log(token);
+    console.log("token:", token);
 
     if (!token) {
       throw "Token doesn't exist";
     }
     //verify token data
     const checkToken = verify(token, process.env.TOKEN_KEY || "secret key");
-    console.log(checkToken);
+    console.log("check token:", checkToken);
 
     res.locals.data = checkToken;
     next();

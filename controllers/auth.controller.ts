@@ -84,8 +84,22 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
 
     return res.status(200).send({
       email: users?.email,
+      first_name: users?.first_name,
+      last_name: users?.last_name,
       token: createToken({ id: users?.id }),
     });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+};
+
+export const updateProfile = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    //
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
