@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output = "./generated/client"
 }
 
 datasource db {
@@ -27,8 +28,7 @@ model events {
   start_date         DateTime             @db.Date
   end_date           DateTime             @db.Date
   category           Category             @default(Music)
-  description        String               @db.VarChar(255)
-  about              String
+  description        String
   attendees          attendees[]
   organizer          organizers           @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
   reviews            reviews[]

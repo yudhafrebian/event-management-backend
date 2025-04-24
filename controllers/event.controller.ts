@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import prisma from "../config/prisma";
 import { Category } from "@prisma/client";
+import { cloudUpload } from "../config/cloudinary";
 
 export const getEvents = async (req: Request, res: Response): Promise<any> => {
   try {
+    console.log(res.locals.data);
     const { search, location, from, to, category } = req.query;
 
     const conditions: any[] = [];
@@ -21,10 +23,10 @@ export const getEvents = async (req: Request, res: Response): Promise<any> => {
       });
     }
 
-    if(category){
+    if (category) {
       conditions.push({
-        category: {equals: category as string},
-      })
+        category: { equals: category as string },
+      });
     }
 
     if (location) {
@@ -69,7 +71,6 @@ export const detailEvents = async (
         organizer_id: true,
         event_picture: true,
         title: true,
-        about: true,
         location: true,
         start_date: true,
         end_date: true,
@@ -97,8 +98,51 @@ export const detailEvents = async (
     res.status(500).send(error);
   }
 };
-export const a = async (req: Response, res: Response): Promise<any> => {
+export const createEvent = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   try {
+    const {
+      title,
+      description,
+      start_date,
+      end_date,
+      location,
+      category,
+    } = req.body;
+
+    const organizer = await prisma.organizers.findFirst({
+      where: { user_id: res.locals.data.id },
+    });
+
+    if (!organizer) {
+      throw "Organizer not found";
+    }
+    if (!req.file) {
+      throw "File not found";
+    }
+    const ticket_types = JSON.parse(req.body.ticket_types);
+    const upload = await cloudUpload(req.file);
+
+    const newEvent = await prisma.events.create({
+      data: {
+        organizer_id: organizer.id,
+        title,
+        description,
+        start_date: new Date(start_date),
+        end_date: new Date(end_date),
+        location,
+        category,
+        event_picture: upload.secure_url,
+        ticket_types: {
+          createMany: {
+            data: ticket_types,
+          },
+        },
+      },
+    });
+    res.status(201).send(newEvent);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
@@ -113,24 +157,24 @@ export const v = async (req: Response, res: Response): Promise<any> => {
 };
 
 export const getAllCategory = async (req: Request, res: Response) => {
-    try {
-        const categories = Object.values(Category);
-        res.status(200).send(categories);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-}
+  try {
+    const categories = Object.values(Category);
+    res.status(200).send(categories);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
 export const getAllCities = async (req: Request, res: Response) => {
   try {
     const response = await prisma.cities.findMany({
-      where:{country:"Indonesia"},
-      orderBy:{
-        city: 'asc'
-      }
-    })
+      where: { country: "Indonesia" },
+      orderBy: {
+        city: "asc",
+      },
+    });
     res.status(200).send(response);
   } catch (error) {
     res.status(500).send(error);
   }
-}
+};
