@@ -24,9 +24,19 @@ export const register = async (req: Request, res: Response): Promise<any> => {
         last_name: req.body.last_name,
         password: hashNewPassword,
         referral_code: req.body.referral_code,
+        role: req.body.role,
       },
     });
     console.log(newUsers);
+
+    const referralCode = await prisma.referral_coupons;
+    // find if code exist in db
+
+    if (referralCode) {
+      // add points in user db
+      // change is used to true in referral_coupons db
+      // delete code in referral_coupons db
+    }
 
     return res.status(200).send({
       success: true,
@@ -86,7 +96,13 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
       email: users?.email,
       first_name: users?.first_name,
       last_name: users?.last_name,
-      token: createToken({ id: users?.id }),
+      is_verified: users?.is_verified,
+      role: users?.role,
+      token: createToken({
+        id: users?.id,
+        is_verified: users?.is_verified,
+        role: users?.role,
+      }),
     });
   } catch (error) {
     console.log(error);
@@ -99,7 +115,9 @@ export const updateProfile = async (
   res: Response
 ): Promise<any> => {
   try {
-    //
+    if (!req.body) {
+      throw "No data to update";
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
