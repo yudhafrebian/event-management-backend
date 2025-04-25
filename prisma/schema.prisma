@@ -52,6 +52,7 @@ model referral_coupons {
   user_id      Int
   code         String   @db.VarChar(255)
   expires_date DateTime @db.Date
+  disc_amunt   Int      @default(10000)
   users        users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "referral_coupons_fk1")
 }
 
@@ -72,7 +73,7 @@ model transactions {
   ticket_id     Int
   total_price   Int
   payment_proof String             @db.VarChar(255)
-  status        String             @db.VarChar(255)
+  status        Status             @default(Pending)
   expired_date  DateTime           @db.Date
   invoice_id    String             @db.VarChar
   notifications notifications[]
@@ -177,4 +178,13 @@ enum Category {
 enum Role {
   user
   organizer
+}
+
+enum Status {
+  Pending
+  Confirmating
+  Approved
+  Rejected
+  Canceled
+  Expired
 }
