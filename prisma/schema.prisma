@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output = "./generated/client"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -48,13 +48,11 @@ model notifications {
 }
 
 model referral_coupons {
-  id            Int      @id @default(autoincrement())
-  user_id       Int
-  code          String   @db.VarChar(255)
-  coupon_amount Int
-  expires_date  DateTime @db.Date
-  is_used       Boolean
-  users         users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "referral_coupons_fk1")
+  id           Int      @id @default(autoincrement())
+  user_id      Int
+  code         String   @db.VarChar(255)
+  expires_date DateTime @db.Date
+  users        users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "referral_coupons_fk1")
 }
 
 model reviews {
@@ -76,6 +74,7 @@ model transactions {
   payment_proof String             @db.VarChar(255)
   status        String             @db.VarChar(255)
   expired_date  DateTime           @db.Date
+  invoice_id    String             @db.VarChar
   notifications notifications[]
   users         users              @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
   events        events             @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk2")
@@ -83,23 +82,25 @@ model transactions {
 }
 
 model users {
-  id               Int                @id @default(autoincrement())
-  first_name       String             @db.VarChar(255)
-  last_name        String             @db.VarChar(255)
-  profile_picture  String?            @db.VarChar(255)
-  email            String             @unique @db.VarChar(255)
-  password         String             @db.VarChar(255)
-  referral_code    String?            @db.VarChar(255)
-  refered_by       String?            @db.VarChar(255)
-  points           Int?
-  is_verified      Boolean            @default(false)
-  role             Role               @default(user)
-  attendees        attendees[]
-  notifications    notifications[]
-  organizers       organizers[]
-  referral_coupons referral_coupons[]
-  reviews          reviews[]
-  transactions     transactions[]
+  id                           Int                @id @default(autoincrement())
+  first_name                   String             @db.VarChar(255)
+  last_name                    String             @db.VarChar(255)
+  profile_picture              String?            @db.VarChar(255)
+  email                        String             @unique @db.VarChar(255)
+  password                     String             @db.VarChar(255)
+  referral_code                String?            @db.VarChar(255)
+  refered_by                   String?            @db.VarChar(255)
+  points                       Int?
+  is_verified                  Boolean            @default(false)
+  role                         Role               @default(user)
+  attendees                    attendees[]
+  notifications                notifications[]
+  organizers                   organizers[]
+  points_points_user_idTousers points?            @relation("points_user_idTousers")
+  referral_coupons             referral_coupons[]
+  reviews                      reviews[]
+  transactions                 transactions[]
+  points_users_pointsTopoints  points?            @relation("users_pointsTopoints", fields: [points], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model vouchers {
@@ -151,6 +152,17 @@ model cities {
   id      Int    @id @default(autoincrement())
   city    String @db.VarChar
   country String @db.VarChar
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model points {
+  id                          Int       @id @default(autoincrement())
+  created_at                  DateTime  @default(now()) @db.Timestamptz(6)
+  user_id                     Int       @unique
+  points_amount               Int
+  expire_date                 DateTime? @db.Date
+  users_points_user_idTousers users     @relation("points_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_users_pointsTopoints  users[]   @relation("users_pointsTopoints")
 }
 
 enum Category {
