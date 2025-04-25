@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model attendees {
+  id         Int    @id @default(autoincrement())
+  user_id    Int
+  event_id   Int
+  ticket_qty BigInt
+  total_paid BigInt
+  users      users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "attendees_fk1")
+  events     events @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "attendees_fk2")
+}
+
+model events {
+  id                 Int                  @id @default(autoincrement())
+  organizer_id       Int
+  event_picture      String               @db.VarChar(255)
+  title              String               @unique @db.VarChar(255)
+  location           String               @db.VarChar(255)
+  start_date         DateTime             @db.Date
+  end_date           DateTime             @db.Date
+  category           Category             @default(Music)
+  description        String
+  attendees          attendees[]
+  organizer          organizers           @relation(fields: [organizer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_fk1")
+  reviews            reviews[]
+  ticket_types       ticket_types[]
+  transaction_detail transaction_detail[]
+  transactions       transactions[]
+  vouchers           vouchers[]
+}
+
+model notifications {
+  id             Int          @id @default(autoincrement())
+  user_id        Int
+  transaction_id Int
+  message        String       @db.VarChar(255)
+  users          users        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notifications_fk1")
+  transactions   transactions @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notifications_fk2")
+}
+
+model referral_coupons {
+  id           Int      @id @default(autoincrement())
+  user_id      Int
+  code         String   @db.VarChar(255)
+  expires_date DateTime @db.Date
+  disc_amunt   Int      @default(10000)
+  users        users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "referral_coupons_fk1")
+}
+
+model reviews {
+  id       Int    @id @default(autoincrement())
+  user_id  Int
+  event_id Int
+  rating   Int
+  comment  String @db.VarChar(255)
+  users    users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "reviews_fk1")
+  events   events @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "reviews_fk2")
+}
+
+model transactions {
+  id            Int                @id @default(autoincrement())
+  user_id       Int
+  event_id      Int
+  ticket_id     Int
+  total_price   Int
+  payment_proof String             @db.VarChar(255)
+  status        Status             @default(Pending)
+  expired_date  DateTime           @db.Date
+  invoice_id    String             @db.VarChar
+  notifications notifications[]
+  users         users              @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
+  events        events             @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk2")
+  tickets       transaction_detail @relation(fields: [ticket_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk3")
+}
+
+model users {
+  id                           Int                @id @default(autoincrement())
+  first_name                   String             @db.VarChar(255)
+  last_name                    String             @db.VarChar(255)
+  profile_picture              String?            @db.VarChar(255)
+  email                        String             @unique @db.VarChar(255)
+  password                     String             @db.VarChar(255)
+  referral_code                String?            @db.VarChar(255)
+  refered_by                   String?            @db.VarChar(255)
+  points                       Int?
+  is_verified                  Boolean            @default(false)
+  role                         Role               @default(user)
+  attendees                    attendees[]
+  notifications                notifications[]
+  organizers                   organizers[]
+  points_points_user_idTousers points?            @relation("points_user_idTousers")
+  referral_coupons             referral_coupons[]
+  reviews                      reviews[]
+  transactions                 transactions[]
+  points_users_pointsTopoints  points?            @relation("users_pointsTopoints", fields: [points], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model vouchers {
+  id          Int      @id @default(autoincrement())
+  event_id    Int
+  code        Int
+  disc_amount Int
+  start_date  DateTime @db.Date
+  end_date    DateTime @db.Date
+  quota       BigInt
+  events      events   @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vouchers_fk1")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ticket_types {
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  event_id    Int
+  type_name   String   @db.VarChar
+  quota       Int
+  price       Int
+  description String   @default("Ticket")
+  events      events   @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model transaction_detail {
+  id           Int            @id(map: "tickets_pkey") @default(autoincrement())
+  code         String         @unique(map: "tickets_code_key") @db.VarChar
+  event_id     Int
+  is_attend    Boolean        @default(false)
+  events       events         @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tickets_fk2")
+  transactions transactions[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model organizers {
+  id             Int      @id @default(autoincrement())
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  organizer_name String   @unique @db.VarChar
+  description    String
+  profile_img    String?  @db.VarChar
+  user_id        Int
+  events         events[]
+  users          users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model cities {
+  id      Int    @id @default(autoincrement())
+  city    String @db.VarChar
+  country String @db.VarChar
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model points {
+  id                          Int       @id @default(autoincrement())
+  created_at                  DateTime  @default(now()) @db.Timestamptz(6)
+  user_id                     Int       @unique
+  points_amount               Int
+  expire_date                 DateTime? @db.Date
+  users_points_user_idTousers users     @relation("points_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_users_pointsTopoints  users[]   @relation("users_pointsTopoints")
+}
+
+enum Category {
+  Music
+  Tecnology
+  Culinary
+  Arts
+  Sports
+  Education
+}
+
+enum Role {
+  user
+  organizer
+}
+
+enum Status {
+  Pending
+  Confirmating
+  Approved
+  Rejected
+  Canceled
+  Expired
+}

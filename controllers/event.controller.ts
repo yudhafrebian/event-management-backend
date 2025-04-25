@@ -178,3 +178,18 @@ export const getAllCities = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
+
+export const detailTicket = async (req: Request, res: Response):Promise<any> => {
+  try {
+      const detail = await prisma.ticket_types.findFirst({
+          where:{type_name: req.params.type_name},
+          include:{
+              events: true
+          }
+      })
+
+      res.status(200).send(detail);
+  } catch (error) {
+      res.status(500).send(error);
+  }
+};
