@@ -19,37 +19,42 @@ export const register = async (req: Request, res: Response): Promise<any> => {
     });
     console.log(referralCode);
 
-    if (referralCode) {
-      // check if code is used
-      const checkCode = await prisma.referral_coupons.findUnique({
-        where: { id: referralCode.id },
-      });
-
-      const salt = await genSalt();
-      const hashNewPassword = await hash(req.body.password, salt);
-      console.log(req.body);
-
-      const newUsers = await prisma.users.create({
-        data: {
-          email: req.body.email,
-          first_name: req.body.first_name,
-          last_name: req.body.last_name,
-          password: hashNewPassword,
-          role: req.body.role,
-        },
-      });
-      console.log(newUsers);
-      console.log(req.body.referral_code);
-
-      // add points in user db of code owner
-      const referralPoints = await prisma.users.update({
-        where: { id: referralCode.user_id },
-        data: { points: { increment: 10000 } },
-      });
-      console.log("points added", referralPoints);
-
-      // give voucher to user who used the code
+    if (!referralCode) {
+      throw "Invalid referral code";
     }
+    // check if code is used
+    const checkCode = await prisma.referral_coupons.findUnique({
+      where: { id: referralCode.id },
+    });
+
+    const salt = await genSalt();
+    const hashNewPassword = await hash(req.body.password, salt);
+    console.log(req.body);
+
+    const newUsers = await prisma.users.create({
+      data: {
+        email: req.body.email,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        password: hashNewPassword,
+        role: req.body.role,
+      },
+    });
+    console.log(newUsers);
+    console.log(req.body.referral_code);
+
+    // add points in user db of code owner
+    const referralPoints = await prisma.points.create({
+      data: {
+        user_id: referralCode.user_id,
+        points_amount: 10000,
+        expire_date: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), //90 days
+      },
+    });
+    console.log("points added", referralPoints.points_amount);
+
+    // give voucher to user who used the code
+    // const referralVoucher = await prisma.vouchers
 
     return res.status(200).send({
       success: true,
