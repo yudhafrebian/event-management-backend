@@ -13,29 +13,42 @@ export const register = async (req: Request, res: Response): Promise<any> => {
       throw "Email has been used";
     }
 
-    const salt = await genSalt();
-    const hashNewPassword = await hash(req.body.password, salt);
-    console.log(req.body);
-
-    const newUsers = await prisma.users.create({
-      data: {
-        email: req.body.email,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        password: hashNewPassword,
-        referral_code: req.body.referral_code,
-        role: req.body.role,
-      },
+    const referralCode = await prisma.referral_coupons.findFirst({
+      // ERROR findFirst is reading old data
+      where: { code: req.body.referral_code },
     });
-    console.log(newUsers);
-
-    const referralCode = await prisma.referral_coupons;
-    // find if code exist in db
+    console.log(referralCode);
 
     if (referralCode) {
-      // add points in user db
-      // change is used to true in referral_coupons db
-      // delete code in referral_coupons db
+      // check if code is used
+      const checkCode = await prisma.referral_coupons.findUnique({
+        where: { id: referralCode.id },
+      });
+
+      const salt = await genSalt();
+      const hashNewPassword = await hash(req.body.password, salt);
+      console.log(req.body);
+
+      const newUsers = await prisma.users.create({
+        data: {
+          email: req.body.email,
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          password: hashNewPassword,
+          role: req.body.role,
+        },
+      });
+      console.log(newUsers);
+      console.log(req.body.referral_code);
+
+      // add points in user db of code owner
+      const referralPoints = await prisma.users.update({
+        where: { id: referralCode.user_id },
+        data: { points: { increment: 10000 } },
+      });
+      console.log("points added", referralPoints);
+
+      // give voucher to user who used the code
     }
 
     return res.status(200).send({
