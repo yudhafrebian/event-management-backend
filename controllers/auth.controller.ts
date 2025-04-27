@@ -23,12 +23,8 @@ export const register = async (req: Request, res: Response): Promise<any> => {
       // check if code is used
       const checkCode = await prisma.referral_coupons.findUnique({
         where: { id: referralCode.id },
-        select: { is_used: true },
       });
 
-      if (checkCode?.is_used === true) {
-        throw "Referral code has been used";
-      }
       const salt = await genSalt();
       const hashNewPassword = await hash(req.body.password, salt);
       console.log(req.body);

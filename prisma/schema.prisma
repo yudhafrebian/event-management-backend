@@ -73,9 +73,9 @@ model transactions {
   ticket_id     Int
   total_price   Int
   payment_proof String             @db.VarChar(255)
-  status        Status             @default(Pending)
   expired_date  DateTime           @db.Date
   invoice_id    String             @db.VarChar
+  status        Status             @default(Pending)
   notifications notifications[]
   users         users              @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
   events        events             @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk2")
