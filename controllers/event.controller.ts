@@ -76,6 +76,7 @@ export const detailEvents = async (
         end_date: true,
         category: true,
         organizer: true,
+        description: true,
         ticket_types: true,
       },
     });
@@ -182,8 +183,8 @@ export const getAllCities = async (req: Request, res: Response) => {
 export const detailTicket = async (req: Request, res: Response):Promise<any> => {
   try {
       const detail = await prisma.ticket_types.findFirst({
-          where:{type_name: req.params.type_name},
-          include:{
+          where:{type_name: {equals: req.params.name, mode: "insensitive"}},
+          include: {
               events: true
           }
       })
