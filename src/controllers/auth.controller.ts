@@ -140,8 +140,23 @@ export const updateProfile = async (
 ): Promise<any> => {
   try {
     if (!req.body) {
-      throw "No data to update";
+      throw "Input new data to update";
     }
+
+    const updateUserName = await prisma.users.update({
+      where: { id: res.locals.data.id },
+      data: {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        profile_picture: `/profile-img/${req.file?.filename}`,
+      },
+    });
+    console.log(updateUserName, "update username");
+
+    return res.status(200).send({
+      success: true,
+      message: "Update Success",
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
