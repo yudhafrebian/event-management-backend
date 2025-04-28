@@ -13,6 +13,20 @@ export const register = async (req: Request, res: Response): Promise<any> => {
       throw "Email has been used";
     }
 
+    const referralCode = await prisma.referral_coupons.findFirst({
+      // ERROR findFirst is reading old data
+      where: { code: req.body.referral_code },
+    });
+    console.log(referralCode);
+
+    if (!referralCode) {
+      throw "Invalid referral code";
+    }
+    // check if code is used
+    const checkCode = await prisma.referral_coupons.findUnique({
+      where: { id: referralCode.id },
+    });
+
     const salt = await genSalt();
     const hashNewPassword = await hash(req.body.password, salt);
     console.log(req.body);
@@ -23,20 +37,24 @@ export const register = async (req: Request, res: Response): Promise<any> => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         password: hashNewPassword,
-        referral_code: req.body.referral_code,
         role: req.body.role,
       },
     });
     console.log(newUsers);
+    console.log(req.body.referral_code);
 
-    const referralCode = await prisma.referral_coupons;
-    // find if code exist in db
+    // add points in user db of code owner
+    const referralPoints = await prisma.points.create({
+      data: {
+        user_id: referralCode.user_id,
+        points_amount: 10000,
+        expire_date: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), //90 days
+      },
+    });
+    console.log("points added", referralPoints.points_amount);
 
-    if (referralCode) {
-      // add points in user db
-      // change is used to true in referral_coupons db
-      // delete code in referral_coupons db
-    }
+    // give voucher to user who used the code
+    // const referralVoucher = await prisma.vouchers
 
     return res.status(200).send({
       success: true,

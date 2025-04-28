@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../config/prisma";
-import { Category } from "@prisma/client";
+import { Category } from "../prisma/generated/client";
 import { cloudUpload } from "../config/cloudinary";
 
 export const getEvents = async (req: Request, res: Response): Promise<any> => {
@@ -104,14 +104,8 @@ export const createEvent = async (
   res: Response
 ): Promise<any> => {
   try {
-    const {
-      title,
-      description,
-      start_date,
-      end_date,
-      location,
-      category,
-    } = req.body;
+    const { title, description, start_date, end_date, location, category } =
+      req.body;
 
     const organizer = await prisma.organizers.findFirst({
       where: { user_id: res.locals.data.id },
@@ -180,7 +174,10 @@ export const getAllCities = async (req: Request, res: Response) => {
   }
 };
 
-export const detailTicket = async (req: Request, res: Response):Promise<any> => {
+export const detailTicket = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   try {
       const detail = await prisma.ticket_types.findFirst({
           where:{type_name: {equals: req.params.name, mode: "insensitive"}},
@@ -188,9 +185,9 @@ export const detailTicket = async (req: Request, res: Response):Promise<any> => 
               events: true
           }
       })
-
+      
       res.status(200).send(detail);
   } catch (error) {
-      res.status(500).send(error);
+    res.status(500).send(error);
   }
 };
