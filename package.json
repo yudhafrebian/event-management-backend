@@ -5,11 +5,11 @@
   "license": "ISC",
   "author": "Yudha",
   "type": "commonjs",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "nodemon index.ts",
-    "dev": "nodemon index.ts",
+    "start": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
     "postinstall": "prisma generate"
   },
   "devDependencies": {

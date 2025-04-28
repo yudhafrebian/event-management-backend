@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../config/prisma";
-import { Category } from "../prisma/generated/client";
+import { Category } from "../../prisma/generated/client";
 import { cloudUpload } from "../config/cloudinary";
 
 export const getEvents = async (req: Request, res: Response): Promise<any> => {
