@@ -5,10 +5,12 @@
   "license": "ISC",
   "author": "Yudha",
   "type": "commonjs",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.ts"
+    "build": "tsc",
+    "start": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

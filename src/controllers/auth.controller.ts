@@ -96,6 +96,7 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
       email: users.email,
       is_verified: users.is_verified,
       role: users.role,
+      points: users.points,
       token: createToken({
         id: users.id,
         is_verified: users.is_verified,

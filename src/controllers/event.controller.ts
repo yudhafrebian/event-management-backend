@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../config/prisma";
-import { Category } from "../prisma/generated/client";
+import { Category } from "../../prisma/generated/client";
 import { cloudUpload } from "../config/cloudinary";
 
 export const getEvents = async (req: Request, res: Response): Promise<any> => {
@@ -76,6 +76,7 @@ export const detailEvents = async (
         end_date: true,
         category: true,
         organizer: true,
+        description: true,
         ticket_types: true,
       },
     });
@@ -178,14 +179,14 @@ export const detailTicket = async (
   res: Response
 ): Promise<any> => {
   try {
-    const detail = await prisma.ticket_types.findFirst({
-      where: { type_name: req.params.type_name },
-      include: {
-        events: true,
-      },
-    });
-
-    res.status(200).send(detail);
+      const detail = await prisma.ticket_types.findFirst({
+          where:{type_name: {equals: req.params.name, mode: "insensitive"}},
+          include: {
+              events: true
+          }
+      })
+      
+      res.status(200).send(detail);
   } catch (error) {
     res.status(500).send(error);
   }
