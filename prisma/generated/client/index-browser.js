@@ -167,9 +167,9 @@ exports.Prisma.TransactionsScalarFieldEnum = {
   ticket_id: 'ticket_id',
   total_price: 'total_price',
   payment_proof: 'payment_proof',
-  status: 'status',
   expired_date: 'expired_date',
-  invoice_id: 'invoice_id'
+  invoice_id: 'invoice_id',
+  status: 'status'
 };
 
 exports.Prisma.UsersScalarFieldEnum = {
