@@ -7,8 +7,10 @@
   "type": "commonjs",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.ts"
+    "build": "tsc",
+    "start": "nodemon index.ts",
+    "dev": "nodemon index.ts",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
