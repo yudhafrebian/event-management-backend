@@ -2260,37 +2260,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type PointsCountOutputType
-   */
-
-  export type PointsCountOutputType = {
-    users_users_pointsTopoints: number
-  }
-
-  export type PointsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users_users_pointsTopoints?: boolean | PointsCountOutputTypeCountUsers_users_pointsTopointsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * PointsCountOutputType without action
-   */
-  export type PointsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PointsCountOutputType
-     */
-    select?: PointsCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * PointsCountOutputType without action
-   */
-  export type PointsCountOutputTypeCountUsers_users_pointsTopointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: usersWhereInput
-  }
-
-
-  /**
    * Models
    */
 
@@ -9255,12 +9224,10 @@ export namespace Prisma {
 
   export type UsersAvgAggregateOutputType = {
     id: number | null
-    points: number | null
   }
 
   export type UsersSumAggregateOutputType = {
     id: number | null
-    points: number | null
   }
 
   export type UsersMinAggregateOutputType = {
@@ -9272,7 +9239,6 @@ export namespace Prisma {
     password: string | null
     referral_code: string | null
     refered_by: string | null
-    points: number | null
     is_verified: boolean | null
     role: $Enums.Role | null
   }
@@ -9286,7 +9252,6 @@ export namespace Prisma {
     password: string | null
     referral_code: string | null
     refered_by: string | null
-    points: number | null
     is_verified: boolean | null
     role: $Enums.Role | null
   }
@@ -9300,7 +9265,6 @@ export namespace Prisma {
     password: number
     referral_code: number
     refered_by: number
-    points: number
     is_verified: number
     role: number
     _all: number
@@ -9309,12 +9273,10 @@ export namespace Prisma {
 
   export type UsersAvgAggregateInputType = {
     id?: true
-    points?: true
   }
 
   export type UsersSumAggregateInputType = {
     id?: true
-    points?: true
   }
 
   export type UsersMinAggregateInputType = {
@@ -9326,7 +9288,6 @@ export namespace Prisma {
     password?: true
     referral_code?: true
     refered_by?: true
-    points?: true
     is_verified?: true
     role?: true
   }
@@ -9340,7 +9301,6 @@ export namespace Prisma {
     password?: true
     referral_code?: true
     refered_by?: true
-    points?: true
     is_verified?: true
     role?: true
   }
@@ -9354,7 +9314,6 @@ export namespace Prisma {
     password?: true
     referral_code?: true
     refered_by?: true
-    points?: true
     is_verified?: true
     role?: true
     _all?: true
@@ -9455,7 +9414,6 @@ export namespace Prisma {
     password: string
     referral_code: string | null
     refered_by: string | null
-    points: number | null
     is_verified: boolean
     role: $Enums.Role
     _count: UsersCountAggregateOutputType | null
@@ -9488,7 +9446,6 @@ export namespace Prisma {
     password?: boolean
     referral_code?: boolean
     refered_by?: boolean
-    points?: boolean
     is_verified?: boolean
     role?: boolean
     attendees?: boolean | users$attendeesArgs<ExtArgs>
@@ -9498,7 +9455,6 @@ export namespace Prisma {
     referral_coupons?: boolean | users$referral_couponsArgs<ExtArgs>
     reviews?: boolean | users$reviewsArgs<ExtArgs>
     transactions?: boolean | users$transactionsArgs<ExtArgs>
-    points_users_pointsTopoints?: boolean | users$points_users_pointsTopointsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
@@ -9511,10 +9467,8 @@ export namespace Prisma {
     password?: boolean
     referral_code?: boolean
     refered_by?: boolean
-    points?: boolean
     is_verified?: boolean
     role?: boolean
-    points_users_pointsTopoints?: boolean | users$points_users_pointsTopointsArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
   export type usersSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9526,10 +9480,8 @@ export namespace Prisma {
     password?: boolean
     referral_code?: boolean
     refered_by?: boolean
-    points?: boolean
     is_verified?: boolean
     role?: boolean
-    points_users_pointsTopoints?: boolean | users$points_users_pointsTopointsArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
   export type usersSelectScalar = {
@@ -9541,12 +9493,11 @@ export namespace Prisma {
     password?: boolean
     referral_code?: boolean
     refered_by?: boolean
-    points?: boolean
     is_verified?: boolean
     role?: boolean
   }
 
-  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "profile_picture" | "email" | "password" | "referral_code" | "refered_by" | "points" | "is_verified" | "role", ExtArgs["result"]["users"]>
+  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "profile_picture" | "email" | "password" | "referral_code" | "refered_by" | "is_verified" | "role", ExtArgs["result"]["users"]>
   export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     attendees?: boolean | users$attendeesArgs<ExtArgs>
     notifications?: boolean | users$notificationsArgs<ExtArgs>
@@ -9555,15 +9506,10 @@ export namespace Prisma {
     referral_coupons?: boolean | users$referral_couponsArgs<ExtArgs>
     reviews?: boolean | users$reviewsArgs<ExtArgs>
     transactions?: boolean | users$transactionsArgs<ExtArgs>
-    points_users_pointsTopoints?: boolean | users$points_users_pointsTopointsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type usersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    points_users_pointsTopoints?: boolean | users$points_users_pointsTopointsArgs<ExtArgs>
-  }
-  export type usersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    points_users_pointsTopoints?: boolean | users$points_users_pointsTopointsArgs<ExtArgs>
-  }
+  export type usersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type usersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $usersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "users"
@@ -9575,7 +9521,6 @@ export namespace Prisma {
       referral_coupons: Prisma.$referral_couponsPayload<ExtArgs>[]
       reviews: Prisma.$reviewsPayload<ExtArgs>[]
       transactions: Prisma.$transactionsPayload<ExtArgs>[]
-      points_users_pointsTopoints: Prisma.$pointsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -9586,7 +9531,6 @@ export namespace Prisma {
       password: string
       referral_code: string | null
       refered_by: string | null
-      points: number | null
       is_verified: boolean
       role: $Enums.Role
     }, ExtArgs["result"]["users"]>
@@ -9990,7 +9934,6 @@ export namespace Prisma {
     referral_coupons<T extends users$referral_couponsArgs<ExtArgs> = {}>(args?: Subset<T, users$referral_couponsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$referral_couponsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends users$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, users$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reviewsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends users$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, users$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    points_users_pointsTopoints<T extends users$points_users_pointsTopointsArgs<ExtArgs> = {}>(args?: Subset<T, users$points_users_pointsTopointsArgs<ExtArgs>>): Prisma__pointsClient<$Result.GetResult<Prisma.$pointsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10028,7 +9971,6 @@ export namespace Prisma {
     readonly password: FieldRef<"users", 'String'>
     readonly referral_code: FieldRef<"users", 'String'>
     readonly refered_by: FieldRef<"users", 'String'>
-    readonly points: FieldRef<"users", 'Int'>
     readonly is_verified: FieldRef<"users", 'Boolean'>
     readonly role: FieldRef<"users", 'Role'>
   }
@@ -10280,10 +10222,6 @@ export namespace Prisma {
      */
     data: usersCreateManyInput | usersCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usersIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -10354,10 +10292,6 @@ export namespace Prisma {
      * Limit how many users to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usersIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -10592,25 +10526,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransactionsScalarFieldEnum | TransactionsScalarFieldEnum[]
-  }
-
-  /**
-   * users.points_users_pointsTopoints
-   */
-  export type users$points_users_pointsTopointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the points
-     */
-    select?: pointsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the points
-     */
-    omit?: pointsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: pointsInclude<ExtArgs> | null
-    where?: pointsWhereInput
   }
 
   /**
@@ -16358,8 +16273,6 @@ export namespace Prisma {
     points_amount?: boolean
     expire_date?: boolean
     users_points_user_idTousers?: boolean | usersDefaultArgs<ExtArgs>
-    users_users_pointsTopoints?: boolean | points$users_users_pointsTopointsArgs<ExtArgs>
-    _count?: boolean | PointsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["points"]>
 
   export type pointsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -16391,8 +16304,6 @@ export namespace Prisma {
   export type pointsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "user_id" | "points_amount" | "expire_date", ExtArgs["result"]["points"]>
   export type pointsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users_points_user_idTousers?: boolean | usersDefaultArgs<ExtArgs>
-    users_users_pointsTopoints?: boolean | points$users_users_pointsTopointsArgs<ExtArgs>
-    _count?: boolean | PointsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type pointsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users_points_user_idTousers?: boolean | usersDefaultArgs<ExtArgs>
@@ -16405,7 +16316,6 @@ export namespace Prisma {
     name: "points"
     objects: {
       users_points_user_idTousers: Prisma.$usersPayload<ExtArgs>
-      users_users_pointsTopoints: Prisma.$usersPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -16808,7 +16718,6 @@ export namespace Prisma {
   export interface Prisma__pointsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users_points_user_idTousers<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    users_users_pointsTopoints<T extends points$users_users_pointsTopointsArgs<ExtArgs> = {}>(args?: Subset<T, points$users_users_pointsTopointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17239,30 +17148,6 @@ export namespace Prisma {
   }
 
   /**
-   * points.users_users_pointsTopoints
-   */
-  export type points$users_users_pointsTopointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the users
-     */
-    select?: usersSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the users
-     */
-    omit?: usersOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usersInclude<ExtArgs> | null
-    where?: usersWhereInput
-    orderBy?: usersOrderByWithRelationInput | usersOrderByWithRelationInput[]
-    cursor?: usersWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
-  }
-
-  /**
    * points without action
    */
   export type pointsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17377,7 +17262,6 @@ export namespace Prisma {
     password: 'password',
     referral_code: 'referral_code',
     refered_by: 'refered_by',
-    points: 'points',
     is_verified: 'is_verified',
     role: 'role'
   };
@@ -18029,7 +17913,6 @@ export namespace Prisma {
     password?: StringFilter<"users"> | string
     referral_code?: StringNullableFilter<"users"> | string | null
     refered_by?: StringNullableFilter<"users"> | string | null
-    points?: IntNullableFilter<"users"> | number | null
     is_verified?: BoolFilter<"users"> | boolean
     role?: EnumRoleFilter<"users"> | $Enums.Role
     attendees?: AttendeesListRelationFilter
@@ -18039,7 +17922,6 @@ export namespace Prisma {
     referral_coupons?: Referral_couponsListRelationFilter
     reviews?: ReviewsListRelationFilter
     transactions?: TransactionsListRelationFilter
-    points_users_pointsTopoints?: XOR<PointsNullableScalarRelationFilter, pointsWhereInput> | null
   }
 
   export type usersOrderByWithRelationInput = {
@@ -18051,7 +17933,6 @@ export namespace Prisma {
     password?: SortOrder
     referral_code?: SortOrderInput | SortOrder
     refered_by?: SortOrderInput | SortOrder
-    points?: SortOrderInput | SortOrder
     is_verified?: SortOrder
     role?: SortOrder
     attendees?: attendeesOrderByRelationAggregateInput
@@ -18061,7 +17942,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsOrderByRelationAggregateInput
     reviews?: reviewsOrderByRelationAggregateInput
     transactions?: transactionsOrderByRelationAggregateInput
-    points_users_pointsTopoints?: pointsOrderByWithRelationInput
   }
 
   export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -18076,7 +17956,6 @@ export namespace Prisma {
     password?: StringFilter<"users"> | string
     referral_code?: StringNullableFilter<"users"> | string | null
     refered_by?: StringNullableFilter<"users"> | string | null
-    points?: IntNullableFilter<"users"> | number | null
     is_verified?: BoolFilter<"users"> | boolean
     role?: EnumRoleFilter<"users"> | $Enums.Role
     attendees?: AttendeesListRelationFilter
@@ -18086,7 +17965,6 @@ export namespace Prisma {
     referral_coupons?: Referral_couponsListRelationFilter
     reviews?: ReviewsListRelationFilter
     transactions?: TransactionsListRelationFilter
-    points_users_pointsTopoints?: XOR<PointsNullableScalarRelationFilter, pointsWhereInput> | null
   }, "id" | "email">
 
   export type usersOrderByWithAggregationInput = {
@@ -18098,7 +17976,6 @@ export namespace Prisma {
     password?: SortOrder
     referral_code?: SortOrderInput | SortOrder
     refered_by?: SortOrderInput | SortOrder
-    points?: SortOrderInput | SortOrder
     is_verified?: SortOrder
     role?: SortOrder
     _count?: usersCountOrderByAggregateInput
@@ -18120,7 +17997,6 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"users"> | string
     referral_code?: StringNullableWithAggregatesFilter<"users"> | string | null
     refered_by?: StringNullableWithAggregatesFilter<"users"> | string | null
-    points?: IntNullableWithAggregatesFilter<"users"> | number | null
     is_verified?: BoolWithAggregatesFilter<"users"> | boolean
     role?: EnumRoleWithAggregatesFilter<"users"> | $Enums.Role
   }
@@ -18433,7 +18309,6 @@ export namespace Prisma {
     points_amount?: IntFilter<"points"> | number
     expire_date?: DateTimeNullableFilter<"points"> | Date | string | null
     users_points_user_idTousers?: XOR<UsersScalarRelationFilter, usersWhereInput>
-    users_users_pointsTopoints?: UsersListRelationFilter
   }
 
   export type pointsOrderByWithRelationInput = {
@@ -18443,7 +18318,6 @@ export namespace Prisma {
     points_amount?: SortOrder
     expire_date?: SortOrderInput | SortOrder
     users_points_user_idTousers?: usersOrderByWithRelationInput
-    users_users_pointsTopoints?: usersOrderByRelationAggregateInput
   }
 
   export type pointsWhereUniqueInput = Prisma.AtLeast<{
@@ -18456,7 +18330,6 @@ export namespace Prisma {
     points_amount?: IntFilter<"points"> | number
     expire_date?: DateTimeNullableFilter<"points"> | Date | string | null
     users_points_user_idTousers?: XOR<UsersScalarRelationFilter, usersWhereInput>
-    users_users_pointsTopoints?: UsersListRelationFilter
   }, "id">
 
   export type pointsOrderByWithAggregationInput = {
@@ -18884,7 +18757,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
     reviews?: reviewsCreateNestedManyWithoutUsersInput
     transactions?: transactionsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateInput = {
@@ -18896,7 +18768,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
@@ -18925,7 +18796,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
     reviews?: reviewsUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateInput = {
@@ -18937,7 +18807,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
@@ -18958,7 +18827,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
   }
@@ -18984,7 +18852,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
@@ -19277,7 +19144,6 @@ export namespace Prisma {
     points_amount: number
     expire_date?: Date | string | null
     users_points_user_idTousers: usersCreateNestedOneWithoutPoints_points_user_idTousersInput
-    users_users_pointsTopoints?: usersCreateNestedManyWithoutPoints_users_pointsTopointsInput
   }
 
   export type pointsUncheckedCreateInput = {
@@ -19286,7 +19152,6 @@ export namespace Prisma {
     user_id: number
     points_amount: number
     expire_date?: Date | string | null
-    users_users_pointsTopoints?: usersUncheckedCreateNestedManyWithoutPoints_users_pointsTopointsInput
   }
 
   export type pointsUpdateInput = {
@@ -19294,7 +19159,6 @@ export namespace Prisma {
     points_amount?: IntFieldUpdateOperationsInput | number
     expire_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users_points_user_idTousers?: usersUpdateOneRequiredWithoutPoints_points_user_idTousersNestedInput
-    users_users_pointsTopoints?: usersUpdateManyWithoutPoints_users_pointsTopointsNestedInput
   }
 
   export type pointsUncheckedUpdateInput = {
@@ -19303,7 +19167,6 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     points_amount?: IntFieldUpdateOperationsInput | number
     expire_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users_users_pointsTopoints?: usersUncheckedUpdateManyWithoutPoints_users_pointsTopointsNestedInput
   }
 
   export type pointsCreateManyInput = {
@@ -19829,17 +19692,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -19870,11 +19722,6 @@ export namespace Prisma {
     none?: referral_couponsWhereInput
   }
 
-  export type PointsNullableScalarRelationFilter = {
-    is?: pointsWhereInput | null
-    isNot?: pointsWhereInput | null
-  }
-
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -19901,14 +19748,12 @@ export namespace Prisma {
     password?: SortOrder
     referral_code?: SortOrder
     refered_by?: SortOrder
-    points?: SortOrder
     is_verified?: SortOrder
     role?: SortOrder
   }
 
   export type usersAvgOrderByAggregateInput = {
     id?: SortOrder
-    points?: SortOrder
   }
 
   export type usersMaxOrderByAggregateInput = {
@@ -19920,7 +19765,6 @@ export namespace Prisma {
     password?: SortOrder
     referral_code?: SortOrder
     refered_by?: SortOrder
-    points?: SortOrder
     is_verified?: SortOrder
     role?: SortOrder
   }
@@ -19934,14 +19778,12 @@ export namespace Prisma {
     password?: SortOrder
     referral_code?: SortOrder
     refered_by?: SortOrder
-    points?: SortOrder
     is_verified?: SortOrder
     role?: SortOrder
   }
 
   export type usersSumOrderByAggregateInput = {
     id?: SortOrder
-    points?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19960,22 +19802,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -20199,16 +20025,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type UsersListRelationFilter = {
-    every?: usersWhereInput
-    some?: usersWhereInput
-    none?: usersWhereInput
-  }
-
-  export type usersOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type pointsCountOrderByAggregateInput = {
@@ -20790,12 +20606,6 @@ export namespace Prisma {
     connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
   }
 
-  export type pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput = {
-    create?: XOR<pointsCreateWithoutUsers_users_pointsTopointsInput, pointsUncheckedCreateWithoutUsers_users_pointsTopointsInput>
-    connectOrCreate?: pointsCreateOrConnectWithoutUsers_users_pointsTopointsInput
-    connect?: pointsWhereUniqueInput
-  }
-
   export type attendeesUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<attendeesCreateWithoutUsersInput, attendeesUncheckedCreateWithoutUsersInput> | attendeesCreateWithoutUsersInput[] | attendeesUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: attendeesCreateOrConnectWithoutUsersInput | attendeesCreateOrConnectWithoutUsersInput[]
@@ -20953,24 +20763,6 @@ export namespace Prisma {
     update?: transactionsUpdateWithWhereUniqueWithoutUsersInput | transactionsUpdateWithWhereUniqueWithoutUsersInput[]
     updateMany?: transactionsUpdateManyWithWhereWithoutUsersInput | transactionsUpdateManyWithWhereWithoutUsersInput[]
     deleteMany?: transactionsScalarWhereInput | transactionsScalarWhereInput[]
-  }
-
-  export type pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput = {
-    create?: XOR<pointsCreateWithoutUsers_users_pointsTopointsInput, pointsUncheckedCreateWithoutUsers_users_pointsTopointsInput>
-    connectOrCreate?: pointsCreateOrConnectWithoutUsers_users_pointsTopointsInput
-    upsert?: pointsUpsertWithoutUsers_users_pointsTopointsInput
-    disconnect?: pointsWhereInput | boolean
-    delete?: pointsWhereInput | boolean
-    connect?: pointsWhereUniqueInput
-    update?: XOR<XOR<pointsUpdateToOneWithWhereWithoutUsers_users_pointsTopointsInput, pointsUpdateWithoutUsers_users_pointsTopointsInput>, pointsUncheckedUpdateWithoutUsers_users_pointsTopointsInput>
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type attendeesUncheckedUpdateManyWithoutUsersNestedInput = {
@@ -21217,20 +21009,6 @@ export namespace Prisma {
     connect?: usersWhereUniqueInput
   }
 
-  export type usersCreateNestedManyWithoutPoints_users_pointsTopointsInput = {
-    create?: XOR<usersCreateWithoutPoints_users_pointsTopointsInput, usersUncheckedCreateWithoutPoints_users_pointsTopointsInput> | usersCreateWithoutPoints_users_pointsTopointsInput[] | usersUncheckedCreateWithoutPoints_users_pointsTopointsInput[]
-    connectOrCreate?: usersCreateOrConnectWithoutPoints_users_pointsTopointsInput | usersCreateOrConnectWithoutPoints_users_pointsTopointsInput[]
-    createMany?: usersCreateManyPoints_users_pointsTopointsInputEnvelope
-    connect?: usersWhereUniqueInput | usersWhereUniqueInput[]
-  }
-
-  export type usersUncheckedCreateNestedManyWithoutPoints_users_pointsTopointsInput = {
-    create?: XOR<usersCreateWithoutPoints_users_pointsTopointsInput, usersUncheckedCreateWithoutPoints_users_pointsTopointsInput> | usersCreateWithoutPoints_users_pointsTopointsInput[] | usersUncheckedCreateWithoutPoints_users_pointsTopointsInput[]
-    connectOrCreate?: usersCreateOrConnectWithoutPoints_users_pointsTopointsInput | usersCreateOrConnectWithoutPoints_users_pointsTopointsInput[]
-    createMany?: usersCreateManyPoints_users_pointsTopointsInputEnvelope
-    connect?: usersWhereUniqueInput | usersWhereUniqueInput[]
-  }
-
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -21241,34 +21019,6 @@ export namespace Prisma {
     upsert?: usersUpsertWithoutPoints_points_user_idTousersInput
     connect?: usersWhereUniqueInput
     update?: XOR<XOR<usersUpdateToOneWithWhereWithoutPoints_points_user_idTousersInput, usersUpdateWithoutPoints_points_user_idTousersInput>, usersUncheckedUpdateWithoutPoints_points_user_idTousersInput>
-  }
-
-  export type usersUpdateManyWithoutPoints_users_pointsTopointsNestedInput = {
-    create?: XOR<usersCreateWithoutPoints_users_pointsTopointsInput, usersUncheckedCreateWithoutPoints_users_pointsTopointsInput> | usersCreateWithoutPoints_users_pointsTopointsInput[] | usersUncheckedCreateWithoutPoints_users_pointsTopointsInput[]
-    connectOrCreate?: usersCreateOrConnectWithoutPoints_users_pointsTopointsInput | usersCreateOrConnectWithoutPoints_users_pointsTopointsInput[]
-    upsert?: usersUpsertWithWhereUniqueWithoutPoints_users_pointsTopointsInput | usersUpsertWithWhereUniqueWithoutPoints_users_pointsTopointsInput[]
-    createMany?: usersCreateManyPoints_users_pointsTopointsInputEnvelope
-    set?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    disconnect?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    delete?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    connect?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    update?: usersUpdateWithWhereUniqueWithoutPoints_users_pointsTopointsInput | usersUpdateWithWhereUniqueWithoutPoints_users_pointsTopointsInput[]
-    updateMany?: usersUpdateManyWithWhereWithoutPoints_users_pointsTopointsInput | usersUpdateManyWithWhereWithoutPoints_users_pointsTopointsInput[]
-    deleteMany?: usersScalarWhereInput | usersScalarWhereInput[]
-  }
-
-  export type usersUncheckedUpdateManyWithoutPoints_users_pointsTopointsNestedInput = {
-    create?: XOR<usersCreateWithoutPoints_users_pointsTopointsInput, usersUncheckedCreateWithoutPoints_users_pointsTopointsInput> | usersCreateWithoutPoints_users_pointsTopointsInput[] | usersUncheckedCreateWithoutPoints_users_pointsTopointsInput[]
-    connectOrCreate?: usersCreateOrConnectWithoutPoints_users_pointsTopointsInput | usersCreateOrConnectWithoutPoints_users_pointsTopointsInput[]
-    upsert?: usersUpsertWithWhereUniqueWithoutPoints_users_pointsTopointsInput | usersUpsertWithWhereUniqueWithoutPoints_users_pointsTopointsInput[]
-    createMany?: usersCreateManyPoints_users_pointsTopointsInputEnvelope
-    set?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    disconnect?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    delete?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    connect?: usersWhereUniqueInput | usersWhereUniqueInput[]
-    update?: usersUpdateWithWhereUniqueWithoutPoints_users_pointsTopointsInput | usersUpdateWithWhereUniqueWithoutPoints_users_pointsTopointsInput[]
-    updateMany?: usersUpdateManyWithWhereWithoutPoints_users_pointsTopointsInput | usersUpdateManyWithWhereWithoutPoints_users_pointsTopointsInput[]
-    deleteMany?: usersScalarWhereInput | usersScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -21440,17 +21190,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -21480,7 +21219,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -21488,23 +21227,7 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -21566,7 +21289,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
     reviews?: reviewsCreateNestedManyWithoutUsersInput
     transactions?: transactionsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateWithoutAttendeesInput = {
@@ -21578,7 +21300,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     notifications?: notificationsUncheckedCreateNestedManyWithoutUsersInput
@@ -21659,7 +21380,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
     reviews?: reviewsUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateWithoutAttendeesInput = {
@@ -21671,7 +21391,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     notifications?: notificationsUncheckedUpdateManyWithoutUsersNestedInput
@@ -22117,7 +21836,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
     reviews?: reviewsCreateNestedManyWithoutUsersInput
     transactions?: transactionsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateWithoutNotificationsInput = {
@@ -22129,7 +21847,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
@@ -22200,7 +21917,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
     reviews?: reviewsUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateWithoutNotificationsInput = {
@@ -22212,7 +21928,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
@@ -22273,7 +21988,6 @@ export namespace Prisma {
     points_points_user_idTousers?: pointsCreateNestedManyWithoutUsers_points_user_idTousersInput
     reviews?: reviewsCreateNestedManyWithoutUsersInput
     transactions?: transactionsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateWithoutReferral_couponsInput = {
@@ -22285,7 +21999,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
@@ -22328,7 +22041,6 @@ export namespace Prisma {
     points_points_user_idTousers?: pointsUpdateManyWithoutUsers_points_user_idTousersNestedInput
     reviews?: reviewsUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateWithoutReferral_couponsInput = {
@@ -22340,7 +22052,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
@@ -22367,7 +22078,6 @@ export namespace Prisma {
     points_points_user_idTousers?: pointsCreateNestedManyWithoutUsers_points_user_idTousersInput
     referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
     transactions?: transactionsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateWithoutReviewsInput = {
@@ -22379,7 +22089,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
@@ -22460,7 +22169,6 @@ export namespace Prisma {
     points_points_user_idTousers?: pointsUpdateManyWithoutUsers_points_user_idTousersNestedInput
     referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateWithoutReviewsInput = {
@@ -22472,7 +22180,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
@@ -22564,7 +22271,6 @@ export namespace Prisma {
     points_points_user_idTousers?: pointsCreateNestedManyWithoutUsers_points_user_idTousersInput
     referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
     reviews?: reviewsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateWithoutTransactionsInput = {
@@ -22576,7 +22282,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
@@ -22701,7 +22406,6 @@ export namespace Prisma {
     points_points_user_idTousers?: pointsUpdateManyWithoutUsers_points_user_idTousersNestedInput
     referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
     reviews?: reviewsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateWithoutTransactionsInput = {
@@ -22713,7 +22417,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
@@ -22867,7 +22570,6 @@ export namespace Prisma {
     created_at?: Date | string
     points_amount: number
     expire_date?: Date | string | null
-    users_users_pointsTopoints?: usersCreateNestedManyWithoutPoints_users_pointsTopointsInput
   }
 
   export type pointsUncheckedCreateWithoutUsers_points_user_idTousersInput = {
@@ -22875,7 +22577,6 @@ export namespace Prisma {
     created_at?: Date | string
     points_amount: number
     expire_date?: Date | string | null
-    users_users_pointsTopoints?: usersUncheckedCreateNestedManyWithoutPoints_users_pointsTopointsInput
   }
 
   export type pointsCreateOrConnectWithoutUsers_points_user_idTousersInput = {
@@ -22965,26 +22666,6 @@ export namespace Prisma {
   export type transactionsCreateManyUsersInputEnvelope = {
     data: transactionsCreateManyUsersInput | transactionsCreateManyUsersInput[]
     skipDuplicates?: boolean
-  }
-
-  export type pointsCreateWithoutUsers_users_pointsTopointsInput = {
-    created_at?: Date | string
-    points_amount: number
-    expire_date?: Date | string | null
-    users_points_user_idTousers: usersCreateNestedOneWithoutPoints_points_user_idTousersInput
-  }
-
-  export type pointsUncheckedCreateWithoutUsers_users_pointsTopointsInput = {
-    id?: number
-    created_at?: Date | string
-    user_id: number
-    points_amount: number
-    expire_date?: Date | string | null
-  }
-
-  export type pointsCreateOrConnectWithoutUsers_users_pointsTopointsInput = {
-    where: pointsWhereUniqueInput
-    create: XOR<pointsCreateWithoutUsers_users_pointsTopointsInput, pointsUncheckedCreateWithoutUsers_users_pointsTopointsInput>
   }
 
   export type attendeesUpsertWithWhereUniqueWithoutUsersInput = {
@@ -23131,32 +22812,6 @@ export namespace Prisma {
   export type transactionsUpdateManyWithWhereWithoutUsersInput = {
     where: transactionsScalarWhereInput
     data: XOR<transactionsUpdateManyMutationInput, transactionsUncheckedUpdateManyWithoutUsersInput>
-  }
-
-  export type pointsUpsertWithoutUsers_users_pointsTopointsInput = {
-    update: XOR<pointsUpdateWithoutUsers_users_pointsTopointsInput, pointsUncheckedUpdateWithoutUsers_users_pointsTopointsInput>
-    create: XOR<pointsCreateWithoutUsers_users_pointsTopointsInput, pointsUncheckedCreateWithoutUsers_users_pointsTopointsInput>
-    where?: pointsWhereInput
-  }
-
-  export type pointsUpdateToOneWithWhereWithoutUsers_users_pointsTopointsInput = {
-    where?: pointsWhereInput
-    data: XOR<pointsUpdateWithoutUsers_users_pointsTopointsInput, pointsUncheckedUpdateWithoutUsers_users_pointsTopointsInput>
-  }
-
-  export type pointsUpdateWithoutUsers_users_pointsTopointsInput = {
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    points_amount?: IntFieldUpdateOperationsInput | number
-    expire_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users_points_user_idTousers?: usersUpdateOneRequiredWithoutPoints_points_user_idTousersNestedInput
-  }
-
-  export type pointsUncheckedUpdateWithoutUsers_users_pointsTopointsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: IntFieldUpdateOperationsInput | number
-    points_amount?: IntFieldUpdateOperationsInput | number
-    expire_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type eventsCreateWithoutVouchersInput = {
@@ -23513,7 +23168,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
     reviews?: reviewsCreateNestedManyWithoutUsersInput
     transactions?: transactionsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateWithoutOrganizersInput = {
@@ -23525,7 +23179,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
@@ -23599,7 +23252,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
     reviews?: reviewsUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateWithoutOrganizersInput = {
@@ -23611,7 +23263,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
@@ -23638,7 +23289,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
     reviews?: reviewsCreateNestedManyWithoutUsersInput
     transactions?: transactionsCreateNestedManyWithoutUsersInput
-    points_users_pointsTopoints?: pointsCreateNestedOneWithoutUsers_users_pointsTopointsInput
   }
 
   export type usersUncheckedCreateWithoutPoints_points_user_idTousersInput = {
@@ -23650,7 +23300,6 @@ export namespace Prisma {
     password: string
     referral_code?: string | null
     refered_by?: string | null
-    points?: number | null
     is_verified?: boolean
     role?: $Enums.Role
     attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
@@ -23664,55 +23313,6 @@ export namespace Prisma {
   export type usersCreateOrConnectWithoutPoints_points_user_idTousersInput = {
     where: usersWhereUniqueInput
     create: XOR<usersCreateWithoutPoints_points_user_idTousersInput, usersUncheckedCreateWithoutPoints_points_user_idTousersInput>
-  }
-
-  export type usersCreateWithoutPoints_users_pointsTopointsInput = {
-    first_name: string
-    last_name: string
-    profile_picture?: string | null
-    email: string
-    password: string
-    referral_code?: string | null
-    refered_by?: string | null
-    is_verified?: boolean
-    role?: $Enums.Role
-    attendees?: attendeesCreateNestedManyWithoutUsersInput
-    notifications?: notificationsCreateNestedManyWithoutUsersInput
-    organizers?: organizersCreateNestedManyWithoutUsersInput
-    points_points_user_idTousers?: pointsCreateNestedManyWithoutUsers_points_user_idTousersInput
-    referral_coupons?: referral_couponsCreateNestedManyWithoutUsersInput
-    reviews?: reviewsCreateNestedManyWithoutUsersInput
-    transactions?: transactionsCreateNestedManyWithoutUsersInput
-  }
-
-  export type usersUncheckedCreateWithoutPoints_users_pointsTopointsInput = {
-    id?: number
-    first_name: string
-    last_name: string
-    profile_picture?: string | null
-    email: string
-    password: string
-    referral_code?: string | null
-    refered_by?: string | null
-    is_verified?: boolean
-    role?: $Enums.Role
-    attendees?: attendeesUncheckedCreateNestedManyWithoutUsersInput
-    notifications?: notificationsUncheckedCreateNestedManyWithoutUsersInput
-    organizers?: organizersUncheckedCreateNestedManyWithoutUsersInput
-    points_points_user_idTousers?: pointsUncheckedCreateNestedManyWithoutUsers_points_user_idTousersInput
-    referral_coupons?: referral_couponsUncheckedCreateNestedManyWithoutUsersInput
-    reviews?: reviewsUncheckedCreateNestedManyWithoutUsersInput
-    transactions?: transactionsUncheckedCreateNestedManyWithoutUsersInput
-  }
-
-  export type usersCreateOrConnectWithoutPoints_users_pointsTopointsInput = {
-    where: usersWhereUniqueInput
-    create: XOR<usersCreateWithoutPoints_users_pointsTopointsInput, usersUncheckedCreateWithoutPoints_users_pointsTopointsInput>
-  }
-
-  export type usersCreateManyPoints_users_pointsTopointsInputEnvelope = {
-    data: usersCreateManyPoints_users_pointsTopointsInput | usersCreateManyPoints_users_pointsTopointsInput[]
-    skipDuplicates?: boolean
   }
 
   export type usersUpsertWithoutPoints_points_user_idTousersInput = {
@@ -23742,7 +23342,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
     reviews?: reviewsUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUpdateManyWithoutUsersNestedInput
-    points_users_pointsTopoints?: pointsUpdateOneWithoutUsers_users_pointsTopointsNestedInput
   }
 
   export type usersUncheckedUpdateWithoutPoints_points_user_idTousersInput = {
@@ -23754,7 +23353,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     referral_code?: NullableStringFieldUpdateOperationsInput | string | null
     refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: NullableIntFieldUpdateOperationsInput | number | null
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
@@ -23763,39 +23361,6 @@ export namespace Prisma {
     referral_coupons?: referral_couponsUncheckedUpdateManyWithoutUsersNestedInput
     reviews?: reviewsUncheckedUpdateManyWithoutUsersNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutUsersNestedInput
-  }
-
-  export type usersUpsertWithWhereUniqueWithoutPoints_users_pointsTopointsInput = {
-    where: usersWhereUniqueInput
-    update: XOR<usersUpdateWithoutPoints_users_pointsTopointsInput, usersUncheckedUpdateWithoutPoints_users_pointsTopointsInput>
-    create: XOR<usersCreateWithoutPoints_users_pointsTopointsInput, usersUncheckedCreateWithoutPoints_users_pointsTopointsInput>
-  }
-
-  export type usersUpdateWithWhereUniqueWithoutPoints_users_pointsTopointsInput = {
-    where: usersWhereUniqueInput
-    data: XOR<usersUpdateWithoutPoints_users_pointsTopointsInput, usersUncheckedUpdateWithoutPoints_users_pointsTopointsInput>
-  }
-
-  export type usersUpdateManyWithWhereWithoutPoints_users_pointsTopointsInput = {
-    where: usersScalarWhereInput
-    data: XOR<usersUpdateManyMutationInput, usersUncheckedUpdateManyWithoutPoints_users_pointsTopointsInput>
-  }
-
-  export type usersScalarWhereInput = {
-    AND?: usersScalarWhereInput | usersScalarWhereInput[]
-    OR?: usersScalarWhereInput[]
-    NOT?: usersScalarWhereInput | usersScalarWhereInput[]
-    id?: IntFilter<"users"> | number
-    first_name?: StringFilter<"users"> | string
-    last_name?: StringFilter<"users"> | string
-    profile_picture?: StringNullableFilter<"users"> | string | null
-    email?: StringFilter<"users"> | string
-    password?: StringFilter<"users"> | string
-    referral_code?: StringNullableFilter<"users"> | string | null
-    refered_by?: StringNullableFilter<"users"> | string | null
-    points?: IntNullableFilter<"users"> | number | null
-    is_verified?: BoolFilter<"users"> | boolean
-    role?: EnumRoleFilter<"users"> | $Enums.Role
   }
 
   export type attendeesCreateManyEventsInput = {
@@ -24134,7 +23699,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_amount?: IntFieldUpdateOperationsInput | number
     expire_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users_users_pointsTopoints?: usersUpdateManyWithoutPoints_users_pointsTopointsNestedInput
   }
 
   export type pointsUncheckedUpdateWithoutUsers_points_user_idTousersInput = {
@@ -24142,7 +23706,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_amount?: IntFieldUpdateOperationsInput | number
     expire_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users_users_pointsTopoints?: usersUncheckedUpdateManyWithoutPoints_users_pointsTopointsNestedInput
   }
 
   export type pointsUncheckedUpdateManyWithoutUsers_points_user_idTousersInput = {
@@ -24324,71 +23887,6 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: EnumCategoryFieldUpdateOperationsInput | $Enums.Category
     description?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type usersCreateManyPoints_users_pointsTopointsInput = {
-    id?: number
-    first_name: string
-    last_name: string
-    profile_picture?: string | null
-    email: string
-    password: string
-    referral_code?: string | null
-    refered_by?: string | null
-    is_verified?: boolean
-    role?: $Enums.Role
-  }
-
-  export type usersUpdateWithoutPoints_users_pointsTopointsInput = {
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    referral_code?: NullableStringFieldUpdateOperationsInput | string | null
-    refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    is_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    attendees?: attendeesUpdateManyWithoutUsersNestedInput
-    notifications?: notificationsUpdateManyWithoutUsersNestedInput
-    organizers?: organizersUpdateManyWithoutUsersNestedInput
-    points_points_user_idTousers?: pointsUpdateManyWithoutUsers_points_user_idTousersNestedInput
-    referral_coupons?: referral_couponsUpdateManyWithoutUsersNestedInput
-    reviews?: reviewsUpdateManyWithoutUsersNestedInput
-    transactions?: transactionsUpdateManyWithoutUsersNestedInput
-  }
-
-  export type usersUncheckedUpdateWithoutPoints_users_pointsTopointsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    referral_code?: NullableStringFieldUpdateOperationsInput | string | null
-    refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    is_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    attendees?: attendeesUncheckedUpdateManyWithoutUsersNestedInput
-    notifications?: notificationsUncheckedUpdateManyWithoutUsersNestedInput
-    organizers?: organizersUncheckedUpdateManyWithoutUsersNestedInput
-    points_points_user_idTousers?: pointsUncheckedUpdateManyWithoutUsers_points_user_idTousersNestedInput
-    referral_coupons?: referral_couponsUncheckedUpdateManyWithoutUsersNestedInput
-    reviews?: reviewsUncheckedUpdateManyWithoutUsersNestedInput
-    transactions?: transactionsUncheckedUpdateManyWithoutUsersNestedInput
-  }
-
-  export type usersUncheckedUpdateManyWithoutPoints_users_pointsTopointsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    referral_code?: NullableStringFieldUpdateOperationsInput | string | null
-    refered_by?: NullableStringFieldUpdateOperationsInput | string | null
-    is_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
 

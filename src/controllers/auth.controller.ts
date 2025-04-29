@@ -89,19 +89,27 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
       throw "Invalid password";
     }
 
+    const userPoints = await prisma.points.findMany({
+      where: { user_id: users?.id },
+    });
+    const totalPoints = userPoints
+      .map((a) => a.points_amount)
+      .reduce((a, b) => a + b);
+
     return res.status(200).send({
-      id: users.id,
-      first_name: users.first_name,
-      last_name: users.last_name,
-      email: users.email,
-      is_verified: users.is_verified,
-      role: users.role,
-      points: users.points,
+      id: users?.id,
+      email: users?.email,
+      first_name: users?.first_name,
+      last_name: users?.last_name,
+      is_verified: users?.is_verified,
+      role: users?.role,
+      code: users?.referral_code,
       token: createToken({
-        id: users.id,
-        is_verified: users.is_verified,
-        role: users.role,
+        id: users?.id,
+        is_verified: users?.is_verified,
+        role: users?.role,
       }),
+      points: totalPoints,
     });
   } catch (error) {
     console.log(error);
@@ -116,17 +124,27 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
       where: { id: res.locals.data.id },
     });
 
+    const userPoints = await prisma.points.findMany({
+      where: { user_id: users?.id },
+    });
+    const totalPoints = userPoints
+      .map((a) => a.points_amount)
+      .reduce((a, b) => a + b);
+
     return res.status(200).send({
+      id: users?.id,
       email: users?.email,
       first_name: users?.first_name,
       last_name: users?.last_name,
       is_verified: users?.is_verified,
       role: users?.role,
+      code: users?.referral_code,
       token: createToken({
         id: users?.id,
         is_verified: users?.is_verified,
         role: users?.role,
       }),
+      points: totalPoints,
     });
   } catch (error) {
     console.log(error);
@@ -143,7 +161,7 @@ export const updateProfile = async (
       throw "Input new data to update";
     }
 
-    const updateUserName = await prisma.users.update({
+    const updateUser = await prisma.users.update({
       where: { id: res.locals.data.id },
       data: {
         first_name: req.body.first_name,
@@ -151,7 +169,15 @@ export const updateProfile = async (
         profile_picture: `/profile-img/${req.file?.filename}`,
       },
     });
-    console.log(updateUserName, "update username");
+    console.log(updateUser);
+
+    const updateUserAuth = prisma.users.update({
+      where: { id: res.locals.data.id },
+      data: {
+        email: req.body.email,
+        password: req.body.password,
+      },
+    });
 
     return res.status(200).send({
       success: true,
