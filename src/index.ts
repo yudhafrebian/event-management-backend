@@ -4,6 +4,7 @@ import eventRoute from "./routers/event.router";
 import organizerRoute from "./routers/organizer.router";
 import authRouter from "./routers/auth.router";
 import transactionRoute from "./routers/transactions.router";
+import "./utils/cronJobs";
 
 const PORT: number = 5000;
 

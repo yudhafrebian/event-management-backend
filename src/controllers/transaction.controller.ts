@@ -54,7 +54,7 @@ export const handleCheckout = async (
     tickets.forEach((ticket) => {
       ticketCounts[ticket.id] = (ticketCounts[ticket.id] || 0) + 1;
     });
-    
+
     await Promise.all(
       Object.entries(ticketCounts).map(([ticketId, count]) =>
         prisma.ticket_types.update({
@@ -67,7 +67,7 @@ export const handleCheckout = async (
         })
       )
     );
-    res.status(200).send(transaction,);
+    res.status(200).send(transaction);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -97,12 +97,21 @@ export const updateTransactionStatus = async (
 
     const ticketCounts: Record<number, number> = {};
     current.transaction_detail.forEach((detail) => {
-      ticketCounts[detail.ticket_id] = (ticketCounts[detail.ticket_id] || 0) + 1;
+      ticketCounts[detail.ticket_id] =
+        (ticketCounts[detail.ticket_id] || 0) + 1;
     });
 
+    const now = new Date();
+    if(now.getTime() > current.expired_hours.getTime()) {
+      await prisma.transactions.update({
+        where: { id: transactionId },
+        data: { status: "Expired" },
+      });
+    }
+
     const shouldRestoreQuota =
-      current.status === "Pending" &&
-      ["Canceled", "Rejected", "Expired"].includes(newStatus);
+      ["Canceled", "Rejected", "Expired"].includes(current.status) &&
+      current.status === newStatus;
 
     if (shouldRestoreQuota) {
       await prisma.$transaction([
@@ -135,3 +144,18 @@ export const updateTransactionStatus = async (
   }
 };
 
+export const getTransactionList = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const userId = res.locals.data.id
+    const response = await prisma.transactions.findMany({
+      where: {user_id: userId}
+    })
+
+    res.status(200).send(response)
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
