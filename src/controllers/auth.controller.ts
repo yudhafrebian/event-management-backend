@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import prisma from "../config/prisma";
 import { hash, genSalt, compare } from "bcrypt";
 import { createToken } from "../utils/createToken";
+import { cloudUpload } from "../config/cloudinary";
 
 export const register = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -99,8 +100,10 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
     return res.status(200).send({
       id: users?.id,
       email: users?.email,
+      password: users?.password,
       first_name: users?.first_name,
       last_name: users?.last_name,
+      profile_picture: users?.profile_picture,
       is_verified: users?.is_verified,
       role: users?.role,
       code: users?.referral_code,
@@ -134,8 +137,10 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
     return res.status(200).send({
       id: users?.id,
       email: users?.email,
+      password: users?.password,
       first_name: users?.first_name,
       last_name: users?.last_name,
+      profile_picture: users?.profile_picture,
       is_verified: users?.is_verified,
       role: users?.role,
       code: users?.referral_code,
@@ -152,7 +157,7 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-export const updateProfile = async (
+export const updateUserProfile = async (
   req: Request,
   res: Response
 ): Promise<any> => {
@@ -161,7 +166,7 @@ export const updateProfile = async (
       throw "Input new data to update";
     }
 
-    const updateUser = await prisma.users.update({
+    const updateProfile = await prisma.users.update({
       where: { id: res.locals.data.id },
       data: {
         first_name: req.body.first_name,
@@ -169,19 +174,50 @@ export const updateProfile = async (
         profile_picture: `/profile-img/${req.file?.filename}`,
       },
     });
-    console.log(updateUser);
+    console.log(updateProfile);
 
-    const updateUserAuth = prisma.users.update({
+    const updateUser = prisma.users.update({
       where: { id: res.locals.data.id },
       data: {
         email: req.body.email,
         password: req.body.password,
       },
     });
+    console.log(updateUser);
 
     return res.status(200).send({
       success: true,
       message: "Update Success",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+};
+
+export const uploadProfileImgCloud = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    console.log("file upload info :", req.file);
+    if (!req.file) {
+      throw "No file attached";
+    }
+    const cloudRes = await cloudUpload(req.file);
+    console.log(cloudRes);
+
+    await prisma.users.update({
+      data: {
+        profile_picture: cloudRes.secure_url,
+      },
+      where: {
+        id: res.locals.data.id,
+      },
+    });
+    return res.status(200).send({
+      success: true,
+      message: "Uploade Success",
     });
   } catch (error) {
     console.log(error);
