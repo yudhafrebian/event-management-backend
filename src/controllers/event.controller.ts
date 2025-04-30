@@ -179,14 +179,21 @@ export const detailTicket = async (
   res: Response
 ): Promise<any> => {
   try {
-      const detail = await prisma.ticket_types.findFirst({
-          where:{type_name: {equals: req.params.name, mode: "insensitive"}},
-          include: {
-              events: true
-          }
-      })
-      
-      res.status(200).send(detail);
+    const { title, type_name } = req.params;
+    const detail = await prisma.ticket_types.findFirst({
+      where: {
+        type_name: { equals: type_name },
+        events: { title: { equals: title } },
+      },
+      include: {
+        events: true,
+      },
+    });
+    if (!detail) {
+      return res.status(404).send({ message: "Ticket not found for this event" });
+    }
+
+    res.status(200).send(detail);
   } catch (error) {
     res.status(500).send(error);
   }

@@ -164,12 +164,11 @@ exports.Prisma.TransactionsScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   event_id: 'event_id',
-  ticket_id: 'ticket_id',
-  total_price: 'total_price',
   payment_proof: 'payment_proof',
   expired_date: 'expired_date',
   invoice_id: 'invoice_id',
-  status: 'status'
+  status: 'status',
+  expired_hours: 'expired_hours'
 };
 
 exports.Prisma.UsersScalarFieldEnum = {
@@ -181,7 +180,6 @@ exports.Prisma.UsersScalarFieldEnum = {
   password: 'password',
   referral_code: 'referral_code',
   refered_by: 'refered_by',
-  points: 'points',
   is_verified: 'is_verified',
   role: 'role'
 };
@@ -210,7 +208,10 @@ exports.Prisma.Transaction_detailScalarFieldEnum = {
   id: 'id',
   code: 'code',
   event_id: 'event_id',
-  is_attend: 'is_attend'
+  is_attend: 'is_attend',
+  transaction_id: 'transaction_id',
+  ticket_id: 'ticket_id',
+  price: 'price'
 };
 
 exports.Prisma.OrganizersScalarFieldEnum = {

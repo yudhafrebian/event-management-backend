@@ -3,6 +3,7 @@ import cors from "cors";
 import eventRoute from "./routers/event.router";
 import organizerRoute from "./routers/organizer.router";
 import authRouter from "./routers/auth.router";
+import transactionRoute from "./routers/transactions.router";
 
 const PORT: number = 5000;
 
@@ -18,4 +19,5 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/auth", authRouter);
 app.use("/events", eventRoute);
 app.use("/organizers", organizerRoute);
+app.use("/transactions", transactionRoute);
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
