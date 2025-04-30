@@ -181,7 +181,6 @@ exports.Prisma.UsersScalarFieldEnum = {
   password: 'password',
   referral_code: 'referral_code',
   refered_by: 'refered_by',
-  points: 'points',
   is_verified: 'is_verified',
   role: 'role'
 };

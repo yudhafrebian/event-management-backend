@@ -91,17 +91,15 @@ model users {
   password                     String             @db.VarChar(255)
   referral_code                String?            @db.VarChar(255)
   refered_by                   String?            @db.VarChar(255)
-  points                       Int?
   is_verified                  Boolean            @default(false)
   role                         Role               @default(user)
   attendees                    attendees[]
   notifications                notifications[]
   organizers                   organizers[]
-  points_points_user_idTousers points?            @relation("points_user_idTousers")
+  points_points_user_idTousers points[]           @relation("points_user_idTousers")
   referral_coupons             referral_coupons[]
   reviews                      reviews[]
   transactions                 transactions[]
-  points_users_pointsTopoints  points?            @relation("users_pointsTopoints", fields: [points], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model vouchers {
@@ -159,11 +157,10 @@ model cities {
 model points {
   id                          Int       @id @default(autoincrement())
   created_at                  DateTime  @default(now()) @db.Timestamptz(6)
-  user_id                     Int       @unique
+  user_id                     Int
   points_amount               Int
   expire_date                 DateTime? @db.Date
   users_points_user_idTousers users     @relation("points_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users_users_pointsTopoints  users[]   @relation("users_pointsTopoints")
 }
 
 enum Category {
