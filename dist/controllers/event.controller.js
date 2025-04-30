@@ -172,12 +172,19 @@ const getAllCities = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getAllCities = getAllCities;
 const detailTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { title, type_name } = req.params;
         const detail = yield prisma_1.default.ticket_types.findFirst({
-            where: { type_name: { equals: req.params.name, mode: "insensitive" } },
+            where: {
+                type_name: { equals: type_name },
+                events: { title: { equals: title } },
+            },
             include: {
-                events: true
-            }
+                events: true,
+            },
         });
+        if (!detail) {
+            return res.status(404).send({ message: "Ticket not found for this event" });
+        }
         res.status(200).send(detail);
     }
     catch (error) {

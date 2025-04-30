@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const verifyToken_1 = require("../middleware/verifyToken");
+const transaction_controller_1 = require("../controllers/transaction.controller");
+const route = (0, express_1.Router)();
+route.get("/list", verifyToken_1.verifyToken, transaction_controller_1.getTransactionList);
+route.post("/create", verifyToken_1.verifyToken, transaction_controller_1.handleCheckout);
+route.patch("/status", transaction_controller_1.updateTransactionStatus);
+exports.default = route;
