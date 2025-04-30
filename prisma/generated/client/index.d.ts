@@ -2087,10 +2087,12 @@ export namespace Prisma {
 
   export type TransactionsCountOutputType = {
     notifications: number
+    transaction_detail: number
   }
 
   export type TransactionsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notifications?: boolean | TransactionsCountOutputTypeCountNotificationsArgs
+    transaction_detail?: boolean | TransactionsCountOutputTypeCountTransaction_detailArgs
   }
 
   // Custom InputTypes
@@ -2109,6 +2111,13 @@ export namespace Prisma {
    */
   export type TransactionsCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: notificationsWhereInput
+  }
+
+  /**
+   * TransactionsCountOutputType without action
+   */
+  export type TransactionsCountOutputTypeCountTransaction_detailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: transaction_detailWhereInput
   }
 
 
@@ -2198,33 +2207,33 @@ export namespace Prisma {
 
 
   /**
-   * Count Type Transaction_detailCountOutputType
+   * Count Type Ticket_typesCountOutputType
    */
 
-  export type Transaction_detailCountOutputType = {
-    transactions: number
+  export type Ticket_typesCountOutputType = {
+    transaction_detail: number
   }
 
-  export type Transaction_detailCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transactions?: boolean | Transaction_detailCountOutputTypeCountTransactionsArgs
+  export type Ticket_typesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transaction_detail?: boolean | Ticket_typesCountOutputTypeCountTransaction_detailArgs
   }
 
   // Custom InputTypes
   /**
-   * Transaction_detailCountOutputType without action
+   * Ticket_typesCountOutputType without action
    */
-  export type Transaction_detailCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Ticket_typesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Transaction_detailCountOutputType
+     * Select specific fields to fetch from the Ticket_typesCountOutputType
      */
-    select?: Transaction_detailCountOutputTypeSelect<ExtArgs> | null
+    select?: Ticket_typesCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * Transaction_detailCountOutputType without action
+   * Ticket_typesCountOutputType without action
    */
-  export type Transaction_detailCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: transactionsWhereInput
+  export type Ticket_typesCountOutputTypeCountTransaction_detailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: transaction_detailWhereInput
   }
 
 
@@ -8020,52 +8029,45 @@ export namespace Prisma {
     id: number | null
     user_id: number | null
     event_id: number | null
-    ticket_id: number | null
-    total_price: number | null
   }
 
   export type TransactionsSumAggregateOutputType = {
     id: number | null
     user_id: number | null
     event_id: number | null
-    ticket_id: number | null
-    total_price: number | null
   }
 
   export type TransactionsMinAggregateOutputType = {
     id: number | null
     user_id: number | null
     event_id: number | null
-    ticket_id: number | null
-    total_price: number | null
     payment_proof: string | null
     expired_date: Date | null
     invoice_id: string | null
     status: $Enums.Status | null
+    expired_hours: Date | null
   }
 
   export type TransactionsMaxAggregateOutputType = {
     id: number | null
     user_id: number | null
     event_id: number | null
-    ticket_id: number | null
-    total_price: number | null
     payment_proof: string | null
     expired_date: Date | null
     invoice_id: string | null
     status: $Enums.Status | null
+    expired_hours: Date | null
   }
 
   export type TransactionsCountAggregateOutputType = {
     id: number
     user_id: number
     event_id: number
-    ticket_id: number
-    total_price: number
     payment_proof: number
     expired_date: number
     invoice_id: number
     status: number
+    expired_hours: number
     _all: number
   }
 
@@ -8074,52 +8076,45 @@ export namespace Prisma {
     id?: true
     user_id?: true
     event_id?: true
-    ticket_id?: true
-    total_price?: true
   }
 
   export type TransactionsSumAggregateInputType = {
     id?: true
     user_id?: true
     event_id?: true
-    ticket_id?: true
-    total_price?: true
   }
 
   export type TransactionsMinAggregateInputType = {
     id?: true
     user_id?: true
     event_id?: true
-    ticket_id?: true
-    total_price?: true
     payment_proof?: true
     expired_date?: true
     invoice_id?: true
     status?: true
+    expired_hours?: true
   }
 
   export type TransactionsMaxAggregateInputType = {
     id?: true
     user_id?: true
     event_id?: true
-    ticket_id?: true
-    total_price?: true
     payment_proof?: true
     expired_date?: true
     invoice_id?: true
     status?: true
+    expired_hours?: true
   }
 
   export type TransactionsCountAggregateInputType = {
     id?: true
     user_id?: true
     event_id?: true
-    ticket_id?: true
-    total_price?: true
     payment_proof?: true
     expired_date?: true
     invoice_id?: true
     status?: true
+    expired_hours?: true
     _all?: true
   }
 
@@ -8213,12 +8208,11 @@ export namespace Prisma {
     id: number
     user_id: number
     event_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof: string | null
     expired_date: Date
     invoice_id: string
     status: $Enums.Status
+    expired_hours: Date
     _count: TransactionsCountAggregateOutputType | null
     _avg: TransactionsAvgAggregateOutputType | null
     _sum: TransactionsSumAggregateOutputType | null
@@ -8244,16 +8238,15 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     event_id?: boolean
-    ticket_id?: boolean
-    total_price?: boolean
     payment_proof?: boolean
     expired_date?: boolean
     invoice_id?: boolean
     status?: boolean
+    expired_hours?: boolean
     notifications?: boolean | transactions$notificationsArgs<ExtArgs>
+    transaction_detail?: boolean | transactions$transaction_detailArgs<ExtArgs>
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    tickets?: boolean | transaction_detailDefaultArgs<ExtArgs>
     _count?: boolean | TransactionsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions"]>
 
@@ -8261,81 +8254,73 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     event_id?: boolean
-    ticket_id?: boolean
-    total_price?: boolean
     payment_proof?: boolean
     expired_date?: boolean
     invoice_id?: boolean
     status?: boolean
+    expired_hours?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    tickets?: boolean | transaction_detailDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions"]>
 
   export type transactionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
     event_id?: boolean
-    ticket_id?: boolean
-    total_price?: boolean
     payment_proof?: boolean
     expired_date?: boolean
     invoice_id?: boolean
     status?: boolean
+    expired_hours?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    tickets?: boolean | transaction_detailDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions"]>
 
   export type transactionsSelectScalar = {
     id?: boolean
     user_id?: boolean
     event_id?: boolean
-    ticket_id?: boolean
-    total_price?: boolean
     payment_proof?: boolean
     expired_date?: boolean
     invoice_id?: boolean
     status?: boolean
+    expired_hours?: boolean
   }
 
-  export type transactionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "event_id" | "ticket_id" | "total_price" | "payment_proof" | "expired_date" | "invoice_id" | "status", ExtArgs["result"]["transactions"]>
+  export type transactionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "event_id" | "payment_proof" | "expired_date" | "invoice_id" | "status" | "expired_hours", ExtArgs["result"]["transactions"]>
   export type transactionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notifications?: boolean | transactions$notificationsArgs<ExtArgs>
+    transaction_detail?: boolean | transactions$transaction_detailArgs<ExtArgs>
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    tickets?: boolean | transaction_detailDefaultArgs<ExtArgs>
     _count?: boolean | TransactionsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type transactionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    tickets?: boolean | transaction_detailDefaultArgs<ExtArgs>
   }
   export type transactionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    tickets?: boolean | transaction_detailDefaultArgs<ExtArgs>
   }
 
   export type $transactionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "transactions"
     objects: {
       notifications: Prisma.$notificationsPayload<ExtArgs>[]
+      transaction_detail: Prisma.$transaction_detailPayload<ExtArgs>[]
       users: Prisma.$usersPayload<ExtArgs>
       events: Prisma.$eventsPayload<ExtArgs>
-      tickets: Prisma.$transaction_detailPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       user_id: number
       event_id: number
-      ticket_id: number
-      total_price: number
-      payment_proof: string
+      payment_proof: string | null
       expired_date: Date
       invoice_id: string
       status: $Enums.Status
+      expired_hours: Date
     }, ExtArgs["result"]["transactions"]>
     composites: {}
   }
@@ -8731,9 +8716,9 @@ export namespace Prisma {
   export interface Prisma__transactionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     notifications<T extends transactions$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, transactions$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$notificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transaction_detail<T extends transactions$transaction_detailArgs<ExtArgs> = {}>(args?: Subset<T, transactions$transaction_detailArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaction_detailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     users<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     events<T extends eventsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, eventsDefaultArgs<ExtArgs>>): Prisma__eventsClient<$Result.GetResult<Prisma.$eventsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tickets<T extends transaction_detailDefaultArgs<ExtArgs> = {}>(args?: Subset<T, transaction_detailDefaultArgs<ExtArgs>>): Prisma__transaction_detailClient<$Result.GetResult<Prisma.$transaction_detailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8766,12 +8751,11 @@ export namespace Prisma {
     readonly id: FieldRef<"transactions", 'Int'>
     readonly user_id: FieldRef<"transactions", 'Int'>
     readonly event_id: FieldRef<"transactions", 'Int'>
-    readonly ticket_id: FieldRef<"transactions", 'Int'>
-    readonly total_price: FieldRef<"transactions", 'Int'>
     readonly payment_proof: FieldRef<"transactions", 'String'>
     readonly expired_date: FieldRef<"transactions", 'DateTime'>
     readonly invoice_id: FieldRef<"transactions", 'String'>
     readonly status: FieldRef<"transactions", 'Status'>
+    readonly expired_hours: FieldRef<"transactions", 'DateTime'>
   }
     
 
@@ -9189,6 +9173,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationsScalarFieldEnum | NotificationsScalarFieldEnum[]
+  }
+
+  /**
+   * transactions.transaction_detail
+   */
+  export type transactions$transaction_detailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transaction_detail
+     */
+    select?: transaction_detailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transaction_detail
+     */
+    omit?: transaction_detailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transaction_detailInclude<ExtArgs> | null
+    where?: transaction_detailWhereInput
+    orderBy?: transaction_detailOrderByWithRelationInput | transaction_detailOrderByWithRelationInput[]
+    cursor?: transaction_detailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Transaction_detailScalarFieldEnum | Transaction_detailScalarFieldEnum[]
   }
 
   /**
@@ -11908,6 +11916,8 @@ export namespace Prisma {
     price?: boolean
     description?: boolean
     events?: boolean | eventsDefaultArgs<ExtArgs>
+    transaction_detail?: boolean | ticket_types$transaction_detailArgs<ExtArgs>
+    _count?: boolean | Ticket_typesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ticket_types"]>
 
   export type ticket_typesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11945,6 +11955,8 @@ export namespace Prisma {
   export type ticket_typesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "event_id" | "type_name" | "quota" | "price" | "description", ExtArgs["result"]["ticket_types"]>
   export type ticket_typesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     events?: boolean | eventsDefaultArgs<ExtArgs>
+    transaction_detail?: boolean | ticket_types$transaction_detailArgs<ExtArgs>
+    _count?: boolean | Ticket_typesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ticket_typesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     events?: boolean | eventsDefaultArgs<ExtArgs>
@@ -11957,6 +11969,7 @@ export namespace Prisma {
     name: "ticket_types"
     objects: {
       events: Prisma.$eventsPayload<ExtArgs>
+      transaction_detail: Prisma.$transaction_detailPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -12361,6 +12374,7 @@ export namespace Prisma {
   export interface Prisma__ticket_typesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     events<T extends eventsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, eventsDefaultArgs<ExtArgs>>): Prisma__eventsClient<$Result.GetResult<Prisma.$eventsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transaction_detail<T extends ticket_types$transaction_detailArgs<ExtArgs> = {}>(args?: Subset<T, ticket_types$transaction_detailArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaction_detailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12793,6 +12807,30 @@ export namespace Prisma {
   }
 
   /**
+   * ticket_types.transaction_detail
+   */
+  export type ticket_types$transaction_detailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transaction_detail
+     */
+    select?: transaction_detailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transaction_detail
+     */
+    omit?: transaction_detailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transaction_detailInclude<ExtArgs> | null
+    where?: transaction_detailWhereInput
+    orderBy?: transaction_detailOrderByWithRelationInput | transaction_detailOrderByWithRelationInput[]
+    cursor?: transaction_detailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Transaction_detailScalarFieldEnum | Transaction_detailScalarFieldEnum[]
+  }
+
+  /**
    * ticket_types without action
    */
   export type ticket_typesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12826,11 +12864,17 @@ export namespace Prisma {
   export type Transaction_detailAvgAggregateOutputType = {
     id: number | null
     event_id: number | null
+    transaction_id: number | null
+    ticket_id: number | null
+    price: number | null
   }
 
   export type Transaction_detailSumAggregateOutputType = {
     id: number | null
     event_id: number | null
+    transaction_id: number | null
+    ticket_id: number | null
+    price: number | null
   }
 
   export type Transaction_detailMinAggregateOutputType = {
@@ -12838,6 +12882,9 @@ export namespace Prisma {
     code: string | null
     event_id: number | null
     is_attend: boolean | null
+    transaction_id: number | null
+    ticket_id: number | null
+    price: number | null
   }
 
   export type Transaction_detailMaxAggregateOutputType = {
@@ -12845,6 +12892,9 @@ export namespace Prisma {
     code: string | null
     event_id: number | null
     is_attend: boolean | null
+    transaction_id: number | null
+    ticket_id: number | null
+    price: number | null
   }
 
   export type Transaction_detailCountAggregateOutputType = {
@@ -12852,6 +12902,9 @@ export namespace Prisma {
     code: number
     event_id: number
     is_attend: number
+    transaction_id: number
+    ticket_id: number
+    price: number
     _all: number
   }
 
@@ -12859,11 +12912,17 @@ export namespace Prisma {
   export type Transaction_detailAvgAggregateInputType = {
     id?: true
     event_id?: true
+    transaction_id?: true
+    ticket_id?: true
+    price?: true
   }
 
   export type Transaction_detailSumAggregateInputType = {
     id?: true
     event_id?: true
+    transaction_id?: true
+    ticket_id?: true
+    price?: true
   }
 
   export type Transaction_detailMinAggregateInputType = {
@@ -12871,6 +12930,9 @@ export namespace Prisma {
     code?: true
     event_id?: true
     is_attend?: true
+    transaction_id?: true
+    ticket_id?: true
+    price?: true
   }
 
   export type Transaction_detailMaxAggregateInputType = {
@@ -12878,6 +12940,9 @@ export namespace Prisma {
     code?: true
     event_id?: true
     is_attend?: true
+    transaction_id?: true
+    ticket_id?: true
+    price?: true
   }
 
   export type Transaction_detailCountAggregateInputType = {
@@ -12885,6 +12950,9 @@ export namespace Prisma {
     code?: true
     event_id?: true
     is_attend?: true
+    transaction_id?: true
+    ticket_id?: true
+    price?: true
     _all?: true
   }
 
@@ -12979,6 +13047,9 @@ export namespace Prisma {
     code: string
     event_id: number
     is_attend: boolean
+    transaction_id: number
+    ticket_id: number
+    price: number
     _count: Transaction_detailCountAggregateOutputType | null
     _avg: Transaction_detailAvgAggregateOutputType | null
     _sum: Transaction_detailSumAggregateOutputType | null
@@ -13005,9 +13076,12 @@ export namespace Prisma {
     code?: boolean
     event_id?: boolean
     is_attend?: boolean
+    transaction_id?: boolean
+    ticket_id?: boolean
+    price?: boolean
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    transactions?: boolean | transaction_detail$transactionsArgs<ExtArgs>
-    _count?: boolean | Transaction_detailCountOutputTypeDefaultArgs<ExtArgs>
+    ticket_types?: boolean | ticket_typesDefaultArgs<ExtArgs>
+    transactions?: boolean | transactionsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction_detail"]>
 
   export type transaction_detailSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13015,7 +13089,12 @@ export namespace Prisma {
     code?: boolean
     event_id?: boolean
     is_attend?: boolean
+    transaction_id?: boolean
+    ticket_id?: boolean
+    price?: boolean
     events?: boolean | eventsDefaultArgs<ExtArgs>
+    ticket_types?: boolean | ticket_typesDefaultArgs<ExtArgs>
+    transactions?: boolean | transactionsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction_detail"]>
 
   export type transaction_detailSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13023,7 +13102,12 @@ export namespace Prisma {
     code?: boolean
     event_id?: boolean
     is_attend?: boolean
+    transaction_id?: boolean
+    ticket_id?: boolean
+    price?: boolean
     events?: boolean | eventsDefaultArgs<ExtArgs>
+    ticket_types?: boolean | ticket_typesDefaultArgs<ExtArgs>
+    transactions?: boolean | transactionsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction_detail"]>
 
   export type transaction_detailSelectScalar = {
@@ -13031,32 +13115,43 @@ export namespace Prisma {
     code?: boolean
     event_id?: boolean
     is_attend?: boolean
+    transaction_id?: boolean
+    ticket_id?: boolean
+    price?: boolean
   }
 
-  export type transaction_detailOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "event_id" | "is_attend", ExtArgs["result"]["transaction_detail"]>
+  export type transaction_detailOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "event_id" | "is_attend" | "transaction_id" | "ticket_id" | "price", ExtArgs["result"]["transaction_detail"]>
   export type transaction_detailInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     events?: boolean | eventsDefaultArgs<ExtArgs>
-    transactions?: boolean | transaction_detail$transactionsArgs<ExtArgs>
-    _count?: boolean | Transaction_detailCountOutputTypeDefaultArgs<ExtArgs>
+    ticket_types?: boolean | ticket_typesDefaultArgs<ExtArgs>
+    transactions?: boolean | transactionsDefaultArgs<ExtArgs>
   }
   export type transaction_detailIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     events?: boolean | eventsDefaultArgs<ExtArgs>
+    ticket_types?: boolean | ticket_typesDefaultArgs<ExtArgs>
+    transactions?: boolean | transactionsDefaultArgs<ExtArgs>
   }
   export type transaction_detailIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     events?: boolean | eventsDefaultArgs<ExtArgs>
+    ticket_types?: boolean | ticket_typesDefaultArgs<ExtArgs>
+    transactions?: boolean | transactionsDefaultArgs<ExtArgs>
   }
 
   export type $transaction_detailPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "transaction_detail"
     objects: {
       events: Prisma.$eventsPayload<ExtArgs>
-      transactions: Prisma.$transactionsPayload<ExtArgs>[]
+      ticket_types: Prisma.$ticket_typesPayload<ExtArgs>
+      transactions: Prisma.$transactionsPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       code: string
       event_id: number
       is_attend: boolean
+      transaction_id: number
+      ticket_id: number
+      price: number
     }, ExtArgs["result"]["transaction_detail"]>
     composites: {}
   }
@@ -13452,7 +13547,8 @@ export namespace Prisma {
   export interface Prisma__transaction_detailClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     events<T extends eventsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, eventsDefaultArgs<ExtArgs>>): Prisma__eventsClient<$Result.GetResult<Prisma.$eventsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    transactions<T extends transaction_detail$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, transaction_detail$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ticket_types<T extends ticket_typesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ticket_typesDefaultArgs<ExtArgs>>): Prisma__ticket_typesClient<$Result.GetResult<Prisma.$ticket_typesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transactions<T extends transactionsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, transactionsDefaultArgs<ExtArgs>>): Prisma__transactionsClient<$Result.GetResult<Prisma.$transactionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13486,6 +13582,9 @@ export namespace Prisma {
     readonly code: FieldRef<"transaction_detail", 'String'>
     readonly event_id: FieldRef<"transaction_detail", 'Int'>
     readonly is_attend: FieldRef<"transaction_detail", 'Boolean'>
+    readonly transaction_id: FieldRef<"transaction_detail", 'Int'>
+    readonly ticket_id: FieldRef<"transaction_detail", 'Int'>
+    readonly price: FieldRef<"transaction_detail", 'Int'>
   }
     
 
@@ -13879,30 +13978,6 @@ export namespace Prisma {
      * Limit how many transaction_details to delete.
      */
     limit?: number
-  }
-
-  /**
-   * transaction_detail.transactions
-   */
-  export type transaction_detail$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the transactions
-     */
-    select?: transactionsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the transactions
-     */
-    omit?: transactionsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: transactionsInclude<ExtArgs> | null
-    where?: transactionsWhereInput
-    orderBy?: transactionsOrderByWithRelationInput | transactionsOrderByWithRelationInput[]
-    cursor?: transactionsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TransactionsScalarFieldEnum | TransactionsScalarFieldEnum[]
   }
 
   /**
@@ -17242,12 +17317,11 @@ export namespace Prisma {
     id: 'id',
     user_id: 'user_id',
     event_id: 'event_id',
-    ticket_id: 'ticket_id',
-    total_price: 'total_price',
     payment_proof: 'payment_proof',
     expired_date: 'expired_date',
     invoice_id: 'invoice_id',
-    status: 'status'
+    status: 'status',
+    expired_hours: 'expired_hours'
   };
 
   export type TransactionsScalarFieldEnum = (typeof TransactionsScalarFieldEnum)[keyof typeof TransactionsScalarFieldEnum]
@@ -17299,7 +17373,10 @@ export namespace Prisma {
     id: 'id',
     code: 'code',
     event_id: 'event_id',
-    is_attend: 'is_attend'
+    is_attend: 'is_attend',
+    transaction_id: 'transaction_id',
+    ticket_id: 'ticket_id',
+    price: 'price'
   };
 
   export type Transaction_detailScalarFieldEnum = (typeof Transaction_detailScalarFieldEnum)[keyof typeof Transaction_detailScalarFieldEnum]
@@ -17822,32 +17899,30 @@ export namespace Prisma {
     id?: IntFilter<"transactions"> | number
     user_id?: IntFilter<"transactions"> | number
     event_id?: IntFilter<"transactions"> | number
-    ticket_id?: IntFilter<"transactions"> | number
-    total_price?: IntFilter<"transactions"> | number
-    payment_proof?: StringFilter<"transactions"> | string
+    payment_proof?: StringNullableFilter<"transactions"> | string | null
     expired_date?: DateTimeFilter<"transactions"> | Date | string
     invoice_id?: StringFilter<"transactions"> | string
     status?: EnumStatusFilter<"transactions"> | $Enums.Status
+    expired_hours?: DateTimeFilter<"transactions"> | Date | string
     notifications?: NotificationsListRelationFilter
+    transaction_detail?: Transaction_detailListRelationFilter
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
-    tickets?: XOR<Transaction_detailScalarRelationFilter, transaction_detailWhereInput>
   }
 
   export type transactionsOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
     event_id?: SortOrder
-    ticket_id?: SortOrder
-    total_price?: SortOrder
-    payment_proof?: SortOrder
+    payment_proof?: SortOrderInput | SortOrder
     expired_date?: SortOrder
     invoice_id?: SortOrder
     status?: SortOrder
+    expired_hours?: SortOrder
     notifications?: notificationsOrderByRelationAggregateInput
+    transaction_detail?: transaction_detailOrderByRelationAggregateInput
     users?: usersOrderByWithRelationInput
     events?: eventsOrderByWithRelationInput
-    tickets?: transaction_detailOrderByWithRelationInput
   }
 
   export type transactionsWhereUniqueInput = Prisma.AtLeast<{
@@ -17857,28 +17932,26 @@ export namespace Prisma {
     NOT?: transactionsWhereInput | transactionsWhereInput[]
     user_id?: IntFilter<"transactions"> | number
     event_id?: IntFilter<"transactions"> | number
-    ticket_id?: IntFilter<"transactions"> | number
-    total_price?: IntFilter<"transactions"> | number
-    payment_proof?: StringFilter<"transactions"> | string
+    payment_proof?: StringNullableFilter<"transactions"> | string | null
     expired_date?: DateTimeFilter<"transactions"> | Date | string
     invoice_id?: StringFilter<"transactions"> | string
     status?: EnumStatusFilter<"transactions"> | $Enums.Status
+    expired_hours?: DateTimeFilter<"transactions"> | Date | string
     notifications?: NotificationsListRelationFilter
+    transaction_detail?: Transaction_detailListRelationFilter
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
-    tickets?: XOR<Transaction_detailScalarRelationFilter, transaction_detailWhereInput>
   }, "id">
 
   export type transactionsOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
     event_id?: SortOrder
-    ticket_id?: SortOrder
-    total_price?: SortOrder
-    payment_proof?: SortOrder
+    payment_proof?: SortOrderInput | SortOrder
     expired_date?: SortOrder
     invoice_id?: SortOrder
     status?: SortOrder
+    expired_hours?: SortOrder
     _count?: transactionsCountOrderByAggregateInput
     _avg?: transactionsAvgOrderByAggregateInput
     _max?: transactionsMaxOrderByAggregateInput
@@ -17893,12 +17966,11 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"transactions"> | number
     user_id?: IntWithAggregatesFilter<"transactions"> | number
     event_id?: IntWithAggregatesFilter<"transactions"> | number
-    ticket_id?: IntWithAggregatesFilter<"transactions"> | number
-    total_price?: IntWithAggregatesFilter<"transactions"> | number
-    payment_proof?: StringWithAggregatesFilter<"transactions"> | string
+    payment_proof?: StringNullableWithAggregatesFilter<"transactions"> | string | null
     expired_date?: DateTimeWithAggregatesFilter<"transactions"> | Date | string
     invoice_id?: StringWithAggregatesFilter<"transactions"> | string
     status?: EnumStatusWithAggregatesFilter<"transactions"> | $Enums.Status
+    expired_hours?: DateTimeWithAggregatesFilter<"transactions"> | Date | string
   }
 
   export type usersWhereInput = {
@@ -18080,6 +18152,7 @@ export namespace Prisma {
     price?: IntFilter<"ticket_types"> | number
     description?: StringFilter<"ticket_types"> | string
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
+    transaction_detail?: Transaction_detailListRelationFilter
   }
 
   export type ticket_typesOrderByWithRelationInput = {
@@ -18091,6 +18164,7 @@ export namespace Prisma {
     price?: SortOrder
     description?: SortOrder
     events?: eventsOrderByWithRelationInput
+    transaction_detail?: transaction_detailOrderByRelationAggregateInput
   }
 
   export type ticket_typesWhereUniqueInput = Prisma.AtLeast<{
@@ -18105,6 +18179,7 @@ export namespace Prisma {
     price?: IntFilter<"ticket_types"> | number
     description?: StringFilter<"ticket_types"> | string
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
+    transaction_detail?: Transaction_detailListRelationFilter
   }, "id">
 
   export type ticket_typesOrderByWithAggregationInput = {
@@ -18143,8 +18218,12 @@ export namespace Prisma {
     code?: StringFilter<"transaction_detail"> | string
     event_id?: IntFilter<"transaction_detail"> | number
     is_attend?: BoolFilter<"transaction_detail"> | boolean
+    transaction_id?: IntFilter<"transaction_detail"> | number
+    ticket_id?: IntFilter<"transaction_detail"> | number
+    price?: IntFilter<"transaction_detail"> | number
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
-    transactions?: TransactionsListRelationFilter
+    ticket_types?: XOR<Ticket_typesScalarRelationFilter, ticket_typesWhereInput>
+    transactions?: XOR<TransactionsScalarRelationFilter, transactionsWhereInput>
   }
 
   export type transaction_detailOrderByWithRelationInput = {
@@ -18152,8 +18231,12 @@ export namespace Prisma {
     code?: SortOrder
     event_id?: SortOrder
     is_attend?: SortOrder
+    transaction_id?: SortOrder
+    ticket_id?: SortOrder
+    price?: SortOrder
     events?: eventsOrderByWithRelationInput
-    transactions?: transactionsOrderByRelationAggregateInput
+    ticket_types?: ticket_typesOrderByWithRelationInput
+    transactions?: transactionsOrderByWithRelationInput
   }
 
   export type transaction_detailWhereUniqueInput = Prisma.AtLeast<{
@@ -18164,8 +18247,12 @@ export namespace Prisma {
     NOT?: transaction_detailWhereInput | transaction_detailWhereInput[]
     event_id?: IntFilter<"transaction_detail"> | number
     is_attend?: BoolFilter<"transaction_detail"> | boolean
+    transaction_id?: IntFilter<"transaction_detail"> | number
+    ticket_id?: IntFilter<"transaction_detail"> | number
+    price?: IntFilter<"transaction_detail"> | number
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
-    transactions?: TransactionsListRelationFilter
+    ticket_types?: XOR<Ticket_typesScalarRelationFilter, ticket_typesWhereInput>
+    transactions?: XOR<TransactionsScalarRelationFilter, transactionsWhereInput>
   }, "id" | "code">
 
   export type transaction_detailOrderByWithAggregationInput = {
@@ -18173,6 +18260,9 @@ export namespace Prisma {
     code?: SortOrder
     event_id?: SortOrder
     is_attend?: SortOrder
+    transaction_id?: SortOrder
+    ticket_id?: SortOrder
+    price?: SortOrder
     _count?: transaction_detailCountOrderByAggregateInput
     _avg?: transaction_detailAvgOrderByAggregateInput
     _max?: transaction_detailMaxOrderByAggregateInput
@@ -18188,6 +18278,9 @@ export namespace Prisma {
     code?: StringWithAggregatesFilter<"transaction_detail"> | string
     event_id?: IntWithAggregatesFilter<"transaction_detail"> | number
     is_attend?: BoolWithAggregatesFilter<"transaction_detail"> | boolean
+    transaction_id?: IntWithAggregatesFilter<"transaction_detail"> | number
+    ticket_id?: IntWithAggregatesFilter<"transaction_detail"> | number
+    price?: IntWithAggregatesFilter<"transaction_detail"> | number
   }
 
   export type organizersWhereInput = {
@@ -18659,85 +18752,83 @@ export namespace Prisma {
   }
 
   export type transactionsCreateInput = {
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
+    transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
-    tickets: transaction_detailCreateNestedOneWithoutTransactionsInput
   }
 
   export type transactionsUncheckedCreateInput = {
     id?: number
     user_id: number
     event_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
+    transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
   export type transactionsUpdateInput = {
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
+    transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
-    tickets?: transaction_detailUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type transactionsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    ticket_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
+    transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
   export type transactionsCreateManyInput = {
     id?: number
     user_id: number
     event_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
   }
 
   export type transactionsUpdateManyMutationInput = {
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type transactionsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    ticket_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type usersCreateInput = {
@@ -18929,6 +19020,7 @@ export namespace Prisma {
     price: number
     description?: string
     events: eventsCreateNestedOneWithoutTicket_typesInput
+    transaction_detail?: transaction_detailCreateNestedManyWithoutTicket_typesInput
   }
 
   export type ticket_typesUncheckedCreateInput = {
@@ -18939,6 +19031,7 @@ export namespace Prisma {
     quota: number
     price: number
     description?: string
+    transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTicket_typesInput
   }
 
   export type ticket_typesUpdateInput = {
@@ -18948,6 +19041,7 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     events?: eventsUpdateOneRequiredWithoutTicket_typesNestedInput
+    transaction_detail?: transaction_detailUpdateManyWithoutTicket_typesNestedInput
   }
 
   export type ticket_typesUncheckedUpdateInput = {
@@ -18958,6 +19052,7 @@ export namespace Prisma {
     quota?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
+    transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTicket_typesNestedInput
   }
 
   export type ticket_typesCreateManyInput = {
@@ -18991,8 +19086,10 @@ export namespace Prisma {
   export type transaction_detailCreateInput = {
     code: string
     is_attend?: boolean
+    price: number
     events: eventsCreateNestedOneWithoutTransaction_detailInput
-    transactions?: transactionsCreateNestedManyWithoutTicketsInput
+    ticket_types: ticket_typesCreateNestedOneWithoutTransaction_detailInput
+    transactions: transactionsCreateNestedOneWithoutTransaction_detailInput
   }
 
   export type transaction_detailUncheckedCreateInput = {
@@ -19000,14 +19097,18 @@ export namespace Prisma {
     code: string
     event_id: number
     is_attend?: boolean
-    transactions?: transactionsUncheckedCreateNestedManyWithoutTicketsInput
+    transaction_id: number
+    ticket_id: number
+    price: number
   }
 
   export type transaction_detailUpdateInput = {
     code?: StringFieldUpdateOperationsInput | string
     is_attend?: BoolFieldUpdateOperationsInput | boolean
+    price?: IntFieldUpdateOperationsInput | number
     events?: eventsUpdateOneRequiredWithoutTransaction_detailNestedInput
-    transactions?: transactionsUpdateManyWithoutTicketsNestedInput
+    ticket_types?: ticket_typesUpdateOneRequiredWithoutTransaction_detailNestedInput
+    transactions?: transactionsUpdateOneRequiredWithoutTransaction_detailNestedInput
   }
 
   export type transaction_detailUncheckedUpdateInput = {
@@ -19015,7 +19116,9 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     event_id?: IntFieldUpdateOperationsInput | number
     is_attend?: BoolFieldUpdateOperationsInput | boolean
-    transactions?: transactionsUncheckedUpdateManyWithoutTicketsNestedInput
+    transaction_id?: IntFieldUpdateOperationsInput | number
+    ticket_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type transaction_detailCreateManyInput = {
@@ -19023,11 +19126,15 @@ export namespace Prisma {
     code: string
     event_id: number
     is_attend?: boolean
+    transaction_id: number
+    ticket_id: number
+    price: number
   }
 
   export type transaction_detailUpdateManyMutationInput = {
     code?: StringFieldUpdateOperationsInput | string
     is_attend?: BoolFieldUpdateOperationsInput | boolean
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type transaction_detailUncheckedUpdateManyInput = {
@@ -19035,6 +19142,9 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     event_id?: IntFieldUpdateOperationsInput | number
     is_attend?: BoolFieldUpdateOperationsInput | boolean
+    transaction_id?: IntFieldUpdateOperationsInput | number
+    ticket_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type organizersCreateInput = {
@@ -19593,90 +19703,6 @@ export namespace Prisma {
     rating?: SortOrder
   }
 
-  export type EnumStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
-  }
-
-  export type NotificationsListRelationFilter = {
-    every?: notificationsWhereInput
-    some?: notificationsWhereInput
-    none?: notificationsWhereInput
-  }
-
-  export type Transaction_detailScalarRelationFilter = {
-    is?: transaction_detailWhereInput
-    isNot?: transaction_detailWhereInput
-  }
-
-  export type notificationsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type transactionsCountOrderByAggregateInput = {
-    id?: SortOrder
-    user_id?: SortOrder
-    event_id?: SortOrder
-    ticket_id?: SortOrder
-    total_price?: SortOrder
-    payment_proof?: SortOrder
-    expired_date?: SortOrder
-    invoice_id?: SortOrder
-    status?: SortOrder
-  }
-
-  export type transactionsAvgOrderByAggregateInput = {
-    id?: SortOrder
-    user_id?: SortOrder
-    event_id?: SortOrder
-    ticket_id?: SortOrder
-    total_price?: SortOrder
-  }
-
-  export type transactionsMaxOrderByAggregateInput = {
-    id?: SortOrder
-    user_id?: SortOrder
-    event_id?: SortOrder
-    ticket_id?: SortOrder
-    total_price?: SortOrder
-    payment_proof?: SortOrder
-    expired_date?: SortOrder
-    invoice_id?: SortOrder
-    status?: SortOrder
-  }
-
-  export type transactionsMinOrderByAggregateInput = {
-    id?: SortOrder
-    user_id?: SortOrder
-    event_id?: SortOrder
-    ticket_id?: SortOrder
-    total_price?: SortOrder
-    payment_proof?: SortOrder
-    expired_date?: SortOrder
-    invoice_id?: SortOrder
-    status?: SortOrder
-  }
-
-  export type transactionsSumOrderByAggregateInput = {
-    id?: SortOrder
-    user_id?: SortOrder
-    event_id?: SortOrder
-    ticket_id?: SortOrder
-    total_price?: SortOrder
-  }
-
-  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumStatusFilter<$PrismaModel>
-    _max?: NestedEnumStatusFilter<$PrismaModel>
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -19690,6 +19716,101 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type NotificationsListRelationFilter = {
+    every?: notificationsWhereInput
+    some?: notificationsWhereInput
+    none?: notificationsWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type notificationsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type transactionsCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    event_id?: SortOrder
+    payment_proof?: SortOrder
+    expired_date?: SortOrder
+    invoice_id?: SortOrder
+    status?: SortOrder
+    expired_hours?: SortOrder
+  }
+
+  export type transactionsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    event_id?: SortOrder
+  }
+
+  export type transactionsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    event_id?: SortOrder
+    payment_proof?: SortOrder
+    expired_date?: SortOrder
+    invoice_id?: SortOrder
+    status?: SortOrder
+    expired_hours?: SortOrder
+  }
+
+  export type transactionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    event_id?: SortOrder
+    payment_proof?: SortOrder
+    expired_date?: SortOrder
+    invoice_id?: SortOrder
+    status?: SortOrder
+    expired_hours?: SortOrder
+  }
+
+  export type transactionsSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    event_id?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -19722,12 +19843,11 @@ export namespace Prisma {
     none?: referral_couponsWhereInput
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type organizersOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
-  export type organizersOrderByRelationAggregateInput = {
+  export type pointsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -19912,16 +20032,27 @@ export namespace Prisma {
     price?: SortOrder
   }
 
+  export type Ticket_typesScalarRelationFilter = {
+    is?: ticket_typesWhereInput
+    isNot?: ticket_typesWhereInput
+  }
+
   export type transaction_detailCountOrderByAggregateInput = {
     id?: SortOrder
     code?: SortOrder
     event_id?: SortOrder
     is_attend?: SortOrder
+    transaction_id?: SortOrder
+    ticket_id?: SortOrder
+    price?: SortOrder
   }
 
   export type transaction_detailAvgOrderByAggregateInput = {
     id?: SortOrder
     event_id?: SortOrder
+    transaction_id?: SortOrder
+    ticket_id?: SortOrder
+    price?: SortOrder
   }
 
   export type transaction_detailMaxOrderByAggregateInput = {
@@ -19929,6 +20060,9 @@ export namespace Prisma {
     code?: SortOrder
     event_id?: SortOrder
     is_attend?: SortOrder
+    transaction_id?: SortOrder
+    ticket_id?: SortOrder
+    price?: SortOrder
   }
 
   export type transaction_detailMinOrderByAggregateInput = {
@@ -19936,11 +20070,17 @@ export namespace Prisma {
     code?: SortOrder
     event_id?: SortOrder
     is_attend?: SortOrder
+    transaction_id?: SortOrder
+    ticket_id?: SortOrder
+    price?: SortOrder
   }
 
   export type transaction_detailSumOrderByAggregateInput = {
     id?: SortOrder
     event_id?: SortOrder
+    transaction_id?: SortOrder
+    ticket_id?: SortOrder
+    price?: SortOrder
   }
 
   export type EventsListRelationFilter = {
@@ -20476,6 +20616,13 @@ export namespace Prisma {
     connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
   }
 
+  export type transaction_detailCreateNestedManyWithoutTransactionsInput = {
+    create?: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput> | transaction_detailCreateWithoutTransactionsInput[] | transaction_detailUncheckedCreateWithoutTransactionsInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTransactionsInput | transaction_detailCreateOrConnectWithoutTransactionsInput[]
+    createMany?: transaction_detailCreateManyTransactionsInputEnvelope
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+  }
+
   export type usersCreateNestedOneWithoutTransactionsInput = {
     create?: XOR<usersCreateWithoutTransactionsInput, usersUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: usersCreateOrConnectWithoutTransactionsInput
@@ -20488,17 +20635,22 @@ export namespace Prisma {
     connect?: eventsWhereUniqueInput
   }
 
-  export type transaction_detailCreateNestedOneWithoutTransactionsInput = {
-    create?: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: transaction_detailCreateOrConnectWithoutTransactionsInput
-    connect?: transaction_detailWhereUniqueInput
-  }
-
   export type notificationsUncheckedCreateNestedManyWithoutTransactionsInput = {
     create?: XOR<notificationsCreateWithoutTransactionsInput, notificationsUncheckedCreateWithoutTransactionsInput> | notificationsCreateWithoutTransactionsInput[] | notificationsUncheckedCreateWithoutTransactionsInput[]
     connectOrCreate?: notificationsCreateOrConnectWithoutTransactionsInput | notificationsCreateOrConnectWithoutTransactionsInput[]
     createMany?: notificationsCreateManyTransactionsInputEnvelope
     connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+  }
+
+  export type transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput = {
+    create?: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput> | transaction_detailCreateWithoutTransactionsInput[] | transaction_detailUncheckedCreateWithoutTransactionsInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTransactionsInput | transaction_detailCreateOrConnectWithoutTransactionsInput[]
+    createMany?: transaction_detailCreateManyTransactionsInputEnvelope
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type EnumStatusFieldUpdateOperationsInput = {
@@ -20519,6 +20671,20 @@ export namespace Prisma {
     deleteMany?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
   }
 
+  export type transaction_detailUpdateManyWithoutTransactionsNestedInput = {
+    create?: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput> | transaction_detailCreateWithoutTransactionsInput[] | transaction_detailUncheckedCreateWithoutTransactionsInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTransactionsInput | transaction_detailCreateOrConnectWithoutTransactionsInput[]
+    upsert?: transaction_detailUpsertWithWhereUniqueWithoutTransactionsInput | transaction_detailUpsertWithWhereUniqueWithoutTransactionsInput[]
+    createMany?: transaction_detailCreateManyTransactionsInputEnvelope
+    set?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    disconnect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    delete?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    update?: transaction_detailUpdateWithWhereUniqueWithoutTransactionsInput | transaction_detailUpdateWithWhereUniqueWithoutTransactionsInput[]
+    updateMany?: transaction_detailUpdateManyWithWhereWithoutTransactionsInput | transaction_detailUpdateManyWithWhereWithoutTransactionsInput[]
+    deleteMany?: transaction_detailScalarWhereInput | transaction_detailScalarWhereInput[]
+  }
+
   export type usersUpdateOneRequiredWithoutTransactionsNestedInput = {
     create?: XOR<usersCreateWithoutTransactionsInput, usersUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: usersCreateOrConnectWithoutTransactionsInput
@@ -20535,14 +20701,6 @@ export namespace Prisma {
     update?: XOR<XOR<eventsUpdateToOneWithWhereWithoutTransactionsInput, eventsUpdateWithoutTransactionsInput>, eventsUncheckedUpdateWithoutTransactionsInput>
   }
 
-  export type transaction_detailUpdateOneRequiredWithoutTransactionsNestedInput = {
-    create?: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: transaction_detailCreateOrConnectWithoutTransactionsInput
-    upsert?: transaction_detailUpsertWithoutTransactionsInput
-    connect?: transaction_detailWhereUniqueInput
-    update?: XOR<XOR<transaction_detailUpdateToOneWithWhereWithoutTransactionsInput, transaction_detailUpdateWithoutTransactionsInput>, transaction_detailUncheckedUpdateWithoutTransactionsInput>
-  }
-
   export type notificationsUncheckedUpdateManyWithoutTransactionsNestedInput = {
     create?: XOR<notificationsCreateWithoutTransactionsInput, notificationsUncheckedCreateWithoutTransactionsInput> | notificationsCreateWithoutTransactionsInput[] | notificationsUncheckedCreateWithoutTransactionsInput[]
     connectOrCreate?: notificationsCreateOrConnectWithoutTransactionsInput | notificationsCreateOrConnectWithoutTransactionsInput[]
@@ -20555,6 +20713,20 @@ export namespace Prisma {
     update?: notificationsUpdateWithWhereUniqueWithoutTransactionsInput | notificationsUpdateWithWhereUniqueWithoutTransactionsInput[]
     updateMany?: notificationsUpdateManyWithWhereWithoutTransactionsInput | notificationsUpdateManyWithWhereWithoutTransactionsInput[]
     deleteMany?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
+  }
+
+  export type transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput = {
+    create?: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput> | transaction_detailCreateWithoutTransactionsInput[] | transaction_detailUncheckedCreateWithoutTransactionsInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTransactionsInput | transaction_detailCreateOrConnectWithoutTransactionsInput[]
+    upsert?: transaction_detailUpsertWithWhereUniqueWithoutTransactionsInput | transaction_detailUpsertWithWhereUniqueWithoutTransactionsInput[]
+    createMany?: transaction_detailCreateManyTransactionsInputEnvelope
+    set?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    disconnect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    delete?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    update?: transaction_detailUpdateWithWhereUniqueWithoutTransactionsInput | transaction_detailUpdateWithWhereUniqueWithoutTransactionsInput[]
+    updateMany?: transaction_detailUpdateManyWithWhereWithoutTransactionsInput | transaction_detailUpdateManyWithWhereWithoutTransactionsInput[]
+    deleteMany?: transaction_detailScalarWhereInput | transaction_detailScalarWhereInput[]
   }
 
   export type attendeesCreateNestedManyWithoutUsersInput = {
@@ -20653,10 +20825,6 @@ export namespace Prisma {
     connectOrCreate?: transactionsCreateOrConnectWithoutUsersInput | transactionsCreateOrConnectWithoutUsersInput[]
     createMany?: transactionsCreateManyUsersInputEnvelope
     connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -20883,6 +21051,20 @@ export namespace Prisma {
     connect?: eventsWhereUniqueInput
   }
 
+  export type transaction_detailCreateNestedManyWithoutTicket_typesInput = {
+    create?: XOR<transaction_detailCreateWithoutTicket_typesInput, transaction_detailUncheckedCreateWithoutTicket_typesInput> | transaction_detailCreateWithoutTicket_typesInput[] | transaction_detailUncheckedCreateWithoutTicket_typesInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTicket_typesInput | transaction_detailCreateOrConnectWithoutTicket_typesInput[]
+    createMany?: transaction_detailCreateManyTicket_typesInputEnvelope
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+  }
+
+  export type transaction_detailUncheckedCreateNestedManyWithoutTicket_typesInput = {
+    create?: XOR<transaction_detailCreateWithoutTicket_typesInput, transaction_detailUncheckedCreateWithoutTicket_typesInput> | transaction_detailCreateWithoutTicket_typesInput[] | transaction_detailUncheckedCreateWithoutTicket_typesInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTicket_typesInput | transaction_detailCreateOrConnectWithoutTicket_typesInput[]
+    createMany?: transaction_detailCreateManyTicket_typesInputEnvelope
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+  }
+
   export type eventsUpdateOneRequiredWithoutTicket_typesNestedInput = {
     create?: XOR<eventsCreateWithoutTicket_typesInput, eventsUncheckedCreateWithoutTicket_typesInput>
     connectOrCreate?: eventsCreateOrConnectWithoutTicket_typesInput
@@ -20891,24 +21073,50 @@ export namespace Prisma {
     update?: XOR<XOR<eventsUpdateToOneWithWhereWithoutTicket_typesInput, eventsUpdateWithoutTicket_typesInput>, eventsUncheckedUpdateWithoutTicket_typesInput>
   }
 
+  export type transaction_detailUpdateManyWithoutTicket_typesNestedInput = {
+    create?: XOR<transaction_detailCreateWithoutTicket_typesInput, transaction_detailUncheckedCreateWithoutTicket_typesInput> | transaction_detailCreateWithoutTicket_typesInput[] | transaction_detailUncheckedCreateWithoutTicket_typesInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTicket_typesInput | transaction_detailCreateOrConnectWithoutTicket_typesInput[]
+    upsert?: transaction_detailUpsertWithWhereUniqueWithoutTicket_typesInput | transaction_detailUpsertWithWhereUniqueWithoutTicket_typesInput[]
+    createMany?: transaction_detailCreateManyTicket_typesInputEnvelope
+    set?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    disconnect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    delete?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    update?: transaction_detailUpdateWithWhereUniqueWithoutTicket_typesInput | transaction_detailUpdateWithWhereUniqueWithoutTicket_typesInput[]
+    updateMany?: transaction_detailUpdateManyWithWhereWithoutTicket_typesInput | transaction_detailUpdateManyWithWhereWithoutTicket_typesInput[]
+    deleteMany?: transaction_detailScalarWhereInput | transaction_detailScalarWhereInput[]
+  }
+
+  export type transaction_detailUncheckedUpdateManyWithoutTicket_typesNestedInput = {
+    create?: XOR<transaction_detailCreateWithoutTicket_typesInput, transaction_detailUncheckedCreateWithoutTicket_typesInput> | transaction_detailCreateWithoutTicket_typesInput[] | transaction_detailUncheckedCreateWithoutTicket_typesInput[]
+    connectOrCreate?: transaction_detailCreateOrConnectWithoutTicket_typesInput | transaction_detailCreateOrConnectWithoutTicket_typesInput[]
+    upsert?: transaction_detailUpsertWithWhereUniqueWithoutTicket_typesInput | transaction_detailUpsertWithWhereUniqueWithoutTicket_typesInput[]
+    createMany?: transaction_detailCreateManyTicket_typesInputEnvelope
+    set?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    disconnect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    delete?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    connect?: transaction_detailWhereUniqueInput | transaction_detailWhereUniqueInput[]
+    update?: transaction_detailUpdateWithWhereUniqueWithoutTicket_typesInput | transaction_detailUpdateWithWhereUniqueWithoutTicket_typesInput[]
+    updateMany?: transaction_detailUpdateManyWithWhereWithoutTicket_typesInput | transaction_detailUpdateManyWithWhereWithoutTicket_typesInput[]
+    deleteMany?: transaction_detailScalarWhereInput | transaction_detailScalarWhereInput[]
+  }
+
   export type eventsCreateNestedOneWithoutTransaction_detailInput = {
     create?: XOR<eventsCreateWithoutTransaction_detailInput, eventsUncheckedCreateWithoutTransaction_detailInput>
     connectOrCreate?: eventsCreateOrConnectWithoutTransaction_detailInput
     connect?: eventsWhereUniqueInput
   }
 
-  export type transactionsCreateNestedManyWithoutTicketsInput = {
-    create?: XOR<transactionsCreateWithoutTicketsInput, transactionsUncheckedCreateWithoutTicketsInput> | transactionsCreateWithoutTicketsInput[] | transactionsUncheckedCreateWithoutTicketsInput[]
-    connectOrCreate?: transactionsCreateOrConnectWithoutTicketsInput | transactionsCreateOrConnectWithoutTicketsInput[]
-    createMany?: transactionsCreateManyTicketsInputEnvelope
-    connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
+  export type ticket_typesCreateNestedOneWithoutTransaction_detailInput = {
+    create?: XOR<ticket_typesCreateWithoutTransaction_detailInput, ticket_typesUncheckedCreateWithoutTransaction_detailInput>
+    connectOrCreate?: ticket_typesCreateOrConnectWithoutTransaction_detailInput
+    connect?: ticket_typesWhereUniqueInput
   }
 
-  export type transactionsUncheckedCreateNestedManyWithoutTicketsInput = {
-    create?: XOR<transactionsCreateWithoutTicketsInput, transactionsUncheckedCreateWithoutTicketsInput> | transactionsCreateWithoutTicketsInput[] | transactionsUncheckedCreateWithoutTicketsInput[]
-    connectOrCreate?: transactionsCreateOrConnectWithoutTicketsInput | transactionsCreateOrConnectWithoutTicketsInput[]
-    createMany?: transactionsCreateManyTicketsInputEnvelope
-    connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
+  export type transactionsCreateNestedOneWithoutTransaction_detailInput = {
+    create?: XOR<transactionsCreateWithoutTransaction_detailInput, transactionsUncheckedCreateWithoutTransaction_detailInput>
+    connectOrCreate?: transactionsCreateOrConnectWithoutTransaction_detailInput
+    connect?: transactionsWhereUniqueInput
   }
 
   export type eventsUpdateOneRequiredWithoutTransaction_detailNestedInput = {
@@ -20919,32 +21127,20 @@ export namespace Prisma {
     update?: XOR<XOR<eventsUpdateToOneWithWhereWithoutTransaction_detailInput, eventsUpdateWithoutTransaction_detailInput>, eventsUncheckedUpdateWithoutTransaction_detailInput>
   }
 
-  export type transactionsUpdateManyWithoutTicketsNestedInput = {
-    create?: XOR<transactionsCreateWithoutTicketsInput, transactionsUncheckedCreateWithoutTicketsInput> | transactionsCreateWithoutTicketsInput[] | transactionsUncheckedCreateWithoutTicketsInput[]
-    connectOrCreate?: transactionsCreateOrConnectWithoutTicketsInput | transactionsCreateOrConnectWithoutTicketsInput[]
-    upsert?: transactionsUpsertWithWhereUniqueWithoutTicketsInput | transactionsUpsertWithWhereUniqueWithoutTicketsInput[]
-    createMany?: transactionsCreateManyTicketsInputEnvelope
-    set?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    disconnect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    delete?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    update?: transactionsUpdateWithWhereUniqueWithoutTicketsInput | transactionsUpdateWithWhereUniqueWithoutTicketsInput[]
-    updateMany?: transactionsUpdateManyWithWhereWithoutTicketsInput | transactionsUpdateManyWithWhereWithoutTicketsInput[]
-    deleteMany?: transactionsScalarWhereInput | transactionsScalarWhereInput[]
+  export type ticket_typesUpdateOneRequiredWithoutTransaction_detailNestedInput = {
+    create?: XOR<ticket_typesCreateWithoutTransaction_detailInput, ticket_typesUncheckedCreateWithoutTransaction_detailInput>
+    connectOrCreate?: ticket_typesCreateOrConnectWithoutTransaction_detailInput
+    upsert?: ticket_typesUpsertWithoutTransaction_detailInput
+    connect?: ticket_typesWhereUniqueInput
+    update?: XOR<XOR<ticket_typesUpdateToOneWithWhereWithoutTransaction_detailInput, ticket_typesUpdateWithoutTransaction_detailInput>, ticket_typesUncheckedUpdateWithoutTransaction_detailInput>
   }
 
-  export type transactionsUncheckedUpdateManyWithoutTicketsNestedInput = {
-    create?: XOR<transactionsCreateWithoutTicketsInput, transactionsUncheckedCreateWithoutTicketsInput> | transactionsCreateWithoutTicketsInput[] | transactionsUncheckedCreateWithoutTicketsInput[]
-    connectOrCreate?: transactionsCreateOrConnectWithoutTicketsInput | transactionsCreateOrConnectWithoutTicketsInput[]
-    upsert?: transactionsUpsertWithWhereUniqueWithoutTicketsInput | transactionsUpsertWithWhereUniqueWithoutTicketsInput[]
-    createMany?: transactionsCreateManyTicketsInputEnvelope
-    set?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    disconnect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    delete?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-    update?: transactionsUpdateWithWhereUniqueWithoutTicketsInput | transactionsUpdateWithWhereUniqueWithoutTicketsInput[]
-    updateMany?: transactionsUpdateManyWithWhereWithoutTicketsInput | transactionsUpdateManyWithWhereWithoutTicketsInput[]
-    deleteMany?: transactionsScalarWhereInput | transactionsScalarWhereInput[]
+  export type transactionsUpdateOneRequiredWithoutTransaction_detailNestedInput = {
+    create?: XOR<transactionsCreateWithoutTransaction_detailInput, transactionsUncheckedCreateWithoutTransaction_detailInput>
+    connectOrCreate?: transactionsCreateOrConnectWithoutTransaction_detailInput
+    upsert?: transactionsUpsertWithoutTransaction_detailInput
+    connect?: transactionsWhereUniqueInput
+    update?: XOR<XOR<transactionsUpdateToOneWithWhereWithoutTransaction_detailInput, transactionsUpdateWithoutTransaction_detailInput>, transactionsUncheckedUpdateWithoutTransaction_detailInput>
   }
 
   export type eventsCreateNestedManyWithoutOrganizerInput = {
@@ -21159,23 +21355,6 @@ export namespace Prisma {
     _max?: NestedEnumCategoryFilter<$PrismaModel>
   }
 
-  export type NestedEnumStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
-  }
-
-  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumStatusFilter<$PrismaModel>
-    _max?: NestedEnumStatusFilter<$PrismaModel>
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -21188,6 +21367,51 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -21519,6 +21743,7 @@ export namespace Prisma {
     quota: number
     price: number
     description?: string
+    transaction_detail?: transaction_detailCreateNestedManyWithoutTicket_typesInput
   }
 
   export type ticket_typesUncheckedCreateWithoutEventsInput = {
@@ -21528,6 +21753,7 @@ export namespace Prisma {
     quota: number
     price: number
     description?: string
+    transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTicket_typesInput
   }
 
   export type ticket_typesCreateOrConnectWithoutEventsInput = {
@@ -21543,14 +21769,18 @@ export namespace Prisma {
   export type transaction_detailCreateWithoutEventsInput = {
     code: string
     is_attend?: boolean
-    transactions?: transactionsCreateNestedManyWithoutTicketsInput
+    price: number
+    ticket_types: ticket_typesCreateNestedOneWithoutTransaction_detailInput
+    transactions: transactionsCreateNestedOneWithoutTransaction_detailInput
   }
 
   export type transaction_detailUncheckedCreateWithoutEventsInput = {
     id?: number
     code: string
     is_attend?: boolean
-    transactions?: transactionsUncheckedCreateNestedManyWithoutTicketsInput
+    transaction_id: number
+    ticket_id: number
+    price: number
   }
 
   export type transaction_detailCreateOrConnectWithoutEventsInput = {
@@ -21564,26 +21794,26 @@ export namespace Prisma {
   }
 
   export type transactionsCreateWithoutEventsInput = {
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
+    transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
-    tickets: transaction_detailCreateNestedOneWithoutTransactionsInput
   }
 
   export type transactionsUncheckedCreateWithoutEventsInput = {
     id?: number
     user_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
+    transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
   export type transactionsCreateOrConnectWithoutEventsInput = {
@@ -21758,6 +21988,9 @@ export namespace Prisma {
     code?: StringFilter<"transaction_detail"> | string
     event_id?: IntFilter<"transaction_detail"> | number
     is_attend?: BoolFilter<"transaction_detail"> | boolean
+    transaction_id?: IntFilter<"transaction_detail"> | number
+    ticket_id?: IntFilter<"transaction_detail"> | number
+    price?: IntFilter<"transaction_detail"> | number
   }
 
   export type transactionsUpsertWithWhereUniqueWithoutEventsInput = {
@@ -21783,12 +22016,11 @@ export namespace Prisma {
     id?: IntFilter<"transactions"> | number
     user_id?: IntFilter<"transactions"> | number
     event_id?: IntFilter<"transactions"> | number
-    ticket_id?: IntFilter<"transactions"> | number
-    total_price?: IntFilter<"transactions"> | number
-    payment_proof?: StringFilter<"transactions"> | string
+    payment_proof?: StringNullableFilter<"transactions"> | string | null
     expired_date?: DateTimeFilter<"transactions"> | Date | string
     invoice_id?: StringFilter<"transactions"> | string
     status?: EnumStatusFilter<"transactions"> | $Enums.Status
+    expired_hours?: DateTimeFilter<"transactions"> | Date | string
   }
 
   export type vouchersUpsertWithWhereUniqueWithoutEventsInput = {
@@ -21863,26 +22095,26 @@ export namespace Prisma {
   }
 
   export type transactionsCreateWithoutNotificationsInput = {
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
+    transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
-    tickets: transaction_detailCreateNestedOneWithoutTransactionsInput
   }
 
   export type transactionsUncheckedCreateWithoutNotificationsInput = {
     id?: number
     user_id: number
     event_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
+    transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
   export type transactionsCreateOrConnectWithoutNotificationsInput = {
@@ -21950,26 +22182,26 @@ export namespace Prisma {
   }
 
   export type transactionsUpdateWithoutNotificationsInput = {
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
+    transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
-    tickets?: transaction_detailUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type transactionsUncheckedUpdateWithoutNotificationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    ticket_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
+    transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
   export type usersCreateWithoutReferral_couponsInput = {
@@ -22255,6 +22487,33 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type transaction_detailCreateWithoutTransactionsInput = {
+    code: string
+    is_attend?: boolean
+    price: number
+    events: eventsCreateNestedOneWithoutTransaction_detailInput
+    ticket_types: ticket_typesCreateNestedOneWithoutTransaction_detailInput
+  }
+
+  export type transaction_detailUncheckedCreateWithoutTransactionsInput = {
+    id?: number
+    code: string
+    event_id: number
+    is_attend?: boolean
+    ticket_id: number
+    price: number
+  }
+
+  export type transaction_detailCreateOrConnectWithoutTransactionsInput = {
+    where: transaction_detailWhereUniqueInput
+    create: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type transaction_detailCreateManyTransactionsInputEnvelope = {
+    data: transaction_detailCreateManyTransactionsInput | transaction_detailCreateManyTransactionsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type usersCreateWithoutTransactionsInput = {
     first_name: string
     last_name: string
@@ -22335,24 +22594,6 @@ export namespace Prisma {
     create: XOR<eventsCreateWithoutTransactionsInput, eventsUncheckedCreateWithoutTransactionsInput>
   }
 
-  export type transaction_detailCreateWithoutTransactionsInput = {
-    code: string
-    is_attend?: boolean
-    events: eventsCreateNestedOneWithoutTransaction_detailInput
-  }
-
-  export type transaction_detailUncheckedCreateWithoutTransactionsInput = {
-    id?: number
-    code: string
-    event_id: number
-    is_attend?: boolean
-  }
-
-  export type transaction_detailCreateOrConnectWithoutTransactionsInput = {
-    where: transaction_detailWhereUniqueInput
-    create: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput>
-  }
-
   export type notificationsUpsertWithWhereUniqueWithoutTransactionsInput = {
     where: notificationsWhereUniqueInput
     update: XOR<notificationsUpdateWithoutTransactionsInput, notificationsUncheckedUpdateWithoutTransactionsInput>
@@ -22377,6 +22618,22 @@ export namespace Prisma {
     user_id?: IntFilter<"notifications"> | number
     transaction_id?: IntFilter<"notifications"> | number
     message?: StringFilter<"notifications"> | string
+  }
+
+  export type transaction_detailUpsertWithWhereUniqueWithoutTransactionsInput = {
+    where: transaction_detailWhereUniqueInput
+    update: XOR<transaction_detailUpdateWithoutTransactionsInput, transaction_detailUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type transaction_detailUpdateWithWhereUniqueWithoutTransactionsInput = {
+    where: transaction_detailWhereUniqueInput
+    data: XOR<transaction_detailUpdateWithoutTransactionsInput, transaction_detailUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type transaction_detailUpdateManyWithWhereWithoutTransactionsInput = {
+    where: transaction_detailScalarWhereInput
+    data: XOR<transaction_detailUpdateManyMutationInput, transaction_detailUncheckedUpdateManyWithoutTransactionsInput>
   }
 
   export type usersUpsertWithoutTransactionsInput = {
@@ -22469,30 +22726,6 @@ export namespace Prisma {
     ticket_types?: ticket_typesUncheckedUpdateManyWithoutEventsNestedInput
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutEventsNestedInput
     vouchers?: vouchersUncheckedUpdateManyWithoutEventsNestedInput
-  }
-
-  export type transaction_detailUpsertWithoutTransactionsInput = {
-    update: XOR<transaction_detailUpdateWithoutTransactionsInput, transaction_detailUncheckedUpdateWithoutTransactionsInput>
-    create: XOR<transaction_detailCreateWithoutTransactionsInput, transaction_detailUncheckedCreateWithoutTransactionsInput>
-    where?: transaction_detailWhereInput
-  }
-
-  export type transaction_detailUpdateToOneWithWhereWithoutTransactionsInput = {
-    where?: transaction_detailWhereInput
-    data: XOR<transaction_detailUpdateWithoutTransactionsInput, transaction_detailUncheckedUpdateWithoutTransactionsInput>
-  }
-
-  export type transaction_detailUpdateWithoutTransactionsInput = {
-    code?: StringFieldUpdateOperationsInput | string
-    is_attend?: BoolFieldUpdateOperationsInput | boolean
-    events?: eventsUpdateOneRequiredWithoutTransaction_detailNestedInput
-  }
-
-  export type transaction_detailUncheckedUpdateWithoutTransactionsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    code?: StringFieldUpdateOperationsInput | string
-    event_id?: IntFieldUpdateOperationsInput | number
-    is_attend?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type attendeesCreateWithoutUsersInput = {
@@ -22636,26 +22869,26 @@ export namespace Prisma {
   }
 
   export type transactionsCreateWithoutUsersInput = {
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
+    transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
-    tickets: transaction_detailCreateNestedOneWithoutTransactionsInput
   }
 
   export type transactionsUncheckedCreateWithoutUsersInput = {
     id?: number
     event_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
+    transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
   export type transactionsCreateOrConnectWithoutUsersInput = {
@@ -22934,6 +23167,33 @@ export namespace Prisma {
     create: XOR<eventsCreateWithoutTicket_typesInput, eventsUncheckedCreateWithoutTicket_typesInput>
   }
 
+  export type transaction_detailCreateWithoutTicket_typesInput = {
+    code: string
+    is_attend?: boolean
+    price: number
+    events: eventsCreateNestedOneWithoutTransaction_detailInput
+    transactions: transactionsCreateNestedOneWithoutTransaction_detailInput
+  }
+
+  export type transaction_detailUncheckedCreateWithoutTicket_typesInput = {
+    id?: number
+    code: string
+    event_id: number
+    is_attend?: boolean
+    transaction_id: number
+    price: number
+  }
+
+  export type transaction_detailCreateOrConnectWithoutTicket_typesInput = {
+    where: transaction_detailWhereUniqueInput
+    create: XOR<transaction_detailCreateWithoutTicket_typesInput, transaction_detailUncheckedCreateWithoutTicket_typesInput>
+  }
+
+  export type transaction_detailCreateManyTicket_typesInputEnvelope = {
+    data: transaction_detailCreateManyTicket_typesInput | transaction_detailCreateManyTicket_typesInput[]
+    skipDuplicates?: boolean
+  }
+
   export type eventsUpsertWithoutTicket_typesInput = {
     update: XOR<eventsUpdateWithoutTicket_typesInput, eventsUncheckedUpdateWithoutTicket_typesInput>
     create: XOR<eventsCreateWithoutTicket_typesInput, eventsUncheckedCreateWithoutTicket_typesInput>
@@ -22978,6 +23238,22 @@ export namespace Prisma {
     vouchers?: vouchersUncheckedUpdateManyWithoutEventsNestedInput
   }
 
+  export type transaction_detailUpsertWithWhereUniqueWithoutTicket_typesInput = {
+    where: transaction_detailWhereUniqueInput
+    update: XOR<transaction_detailUpdateWithoutTicket_typesInput, transaction_detailUncheckedUpdateWithoutTicket_typesInput>
+    create: XOR<transaction_detailCreateWithoutTicket_typesInput, transaction_detailUncheckedCreateWithoutTicket_typesInput>
+  }
+
+  export type transaction_detailUpdateWithWhereUniqueWithoutTicket_typesInput = {
+    where: transaction_detailWhereUniqueInput
+    data: XOR<transaction_detailUpdateWithoutTicket_typesInput, transaction_detailUncheckedUpdateWithoutTicket_typesInput>
+  }
+
+  export type transaction_detailUpdateManyWithWhereWithoutTicket_typesInput = {
+    where: transaction_detailScalarWhereInput
+    data: XOR<transaction_detailUpdateManyMutationInput, transaction_detailUncheckedUpdateManyWithoutTicket_typesInput>
+  }
+
   export type eventsCreateWithoutTransaction_detailInput = {
     event_picture: string
     title: string
@@ -23016,37 +23292,56 @@ export namespace Prisma {
     create: XOR<eventsCreateWithoutTransaction_detailInput, eventsUncheckedCreateWithoutTransaction_detailInput>
   }
 
-  export type transactionsCreateWithoutTicketsInput = {
-    total_price: number
-    payment_proof: string
+  export type ticket_typesCreateWithoutTransaction_detailInput = {
+    created_at?: Date | string
+    type_name: string
+    quota: number
+    price: number
+    description?: string
+    events: eventsCreateNestedOneWithoutTicket_typesInput
+  }
+
+  export type ticket_typesUncheckedCreateWithoutTransaction_detailInput = {
+    id?: number
+    created_at?: Date | string
+    event_id: number
+    type_name: string
+    quota: number
+    price: number
+    description?: string
+  }
+
+  export type ticket_typesCreateOrConnectWithoutTransaction_detailInput = {
+    where: ticket_typesWhereUniqueInput
+    create: XOR<ticket_typesCreateWithoutTransaction_detailInput, ticket_typesUncheckedCreateWithoutTransaction_detailInput>
+  }
+
+  export type transactionsCreateWithoutTransaction_detailInput = {
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
   }
 
-  export type transactionsUncheckedCreateWithoutTicketsInput = {
+  export type transactionsUncheckedCreateWithoutTransaction_detailInput = {
     id?: number
     user_id: number
     event_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
-  export type transactionsCreateOrConnectWithoutTicketsInput = {
+  export type transactionsCreateOrConnectWithoutTransaction_detailInput = {
     where: transactionsWhereUniqueInput
-    create: XOR<transactionsCreateWithoutTicketsInput, transactionsUncheckedCreateWithoutTicketsInput>
-  }
-
-  export type transactionsCreateManyTicketsInputEnvelope = {
-    data: transactionsCreateManyTicketsInput | transactionsCreateManyTicketsInput[]
-    skipDuplicates?: boolean
+    create: XOR<transactionsCreateWithoutTransaction_detailInput, transactionsUncheckedCreateWithoutTransaction_detailInput>
   }
 
   export type eventsUpsertWithoutTransaction_detailInput = {
@@ -23093,20 +23388,68 @@ export namespace Prisma {
     vouchers?: vouchersUncheckedUpdateManyWithoutEventsNestedInput
   }
 
-  export type transactionsUpsertWithWhereUniqueWithoutTicketsInput = {
-    where: transactionsWhereUniqueInput
-    update: XOR<transactionsUpdateWithoutTicketsInput, transactionsUncheckedUpdateWithoutTicketsInput>
-    create: XOR<transactionsCreateWithoutTicketsInput, transactionsUncheckedCreateWithoutTicketsInput>
+  export type ticket_typesUpsertWithoutTransaction_detailInput = {
+    update: XOR<ticket_typesUpdateWithoutTransaction_detailInput, ticket_typesUncheckedUpdateWithoutTransaction_detailInput>
+    create: XOR<ticket_typesCreateWithoutTransaction_detailInput, ticket_typesUncheckedCreateWithoutTransaction_detailInput>
+    where?: ticket_typesWhereInput
   }
 
-  export type transactionsUpdateWithWhereUniqueWithoutTicketsInput = {
-    where: transactionsWhereUniqueInput
-    data: XOR<transactionsUpdateWithoutTicketsInput, transactionsUncheckedUpdateWithoutTicketsInput>
+  export type ticket_typesUpdateToOneWithWhereWithoutTransaction_detailInput = {
+    where?: ticket_typesWhereInput
+    data: XOR<ticket_typesUpdateWithoutTransaction_detailInput, ticket_typesUncheckedUpdateWithoutTransaction_detailInput>
   }
 
-  export type transactionsUpdateManyWithWhereWithoutTicketsInput = {
-    where: transactionsScalarWhereInput
-    data: XOR<transactionsUpdateManyMutationInput, transactionsUncheckedUpdateManyWithoutTicketsInput>
+  export type ticket_typesUpdateWithoutTransaction_detailInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    type_name?: StringFieldUpdateOperationsInput | string
+    quota?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    events?: eventsUpdateOneRequiredWithoutTicket_typesNestedInput
+  }
+
+  export type ticket_typesUncheckedUpdateWithoutTransaction_detailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    event_id?: IntFieldUpdateOperationsInput | number
+    type_name?: StringFieldUpdateOperationsInput | string
+    quota?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type transactionsUpsertWithoutTransaction_detailInput = {
+    update: XOR<transactionsUpdateWithoutTransaction_detailInput, transactionsUncheckedUpdateWithoutTransaction_detailInput>
+    create: XOR<transactionsCreateWithoutTransaction_detailInput, transactionsUncheckedCreateWithoutTransaction_detailInput>
+    where?: transactionsWhereInput
+  }
+
+  export type transactionsUpdateToOneWithWhereWithoutTransaction_detailInput = {
+    where?: transactionsWhereInput
+    data: XOR<transactionsUpdateWithoutTransaction_detailInput, transactionsUncheckedUpdateWithoutTransaction_detailInput>
+  }
+
+  export type transactionsUpdateWithoutTransaction_detailInput = {
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
+    users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
+    events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
+  }
+
+  export type transactionsUncheckedUpdateWithoutTransaction_detailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    event_id?: IntFieldUpdateOperationsInput | number
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
   export type eventsCreateWithoutOrganizerInput = {
@@ -23390,17 +23733,19 @@ export namespace Prisma {
     id?: number
     code: string
     is_attend?: boolean
+    transaction_id: number
+    ticket_id: number
+    price: number
   }
 
   export type transactionsCreateManyEventsInput = {
     id?: number
     user_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
   }
 
   export type vouchersCreateManyEventsInput = {
@@ -23458,6 +23803,7 @@ export namespace Prisma {
     quota?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
+    transaction_detail?: transaction_detailUpdateManyWithoutTicket_typesNestedInput
   }
 
   export type ticket_typesUncheckedUpdateWithoutEventsInput = {
@@ -23467,6 +23813,7 @@ export namespace Prisma {
     quota?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
+    transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTicket_typesNestedInput
   }
 
   export type ticket_typesUncheckedUpdateManyWithoutEventsInput = {
@@ -23481,54 +23828,60 @@ export namespace Prisma {
   export type transaction_detailUpdateWithoutEventsInput = {
     code?: StringFieldUpdateOperationsInput | string
     is_attend?: BoolFieldUpdateOperationsInput | boolean
-    transactions?: transactionsUpdateManyWithoutTicketsNestedInput
+    price?: IntFieldUpdateOperationsInput | number
+    ticket_types?: ticket_typesUpdateOneRequiredWithoutTransaction_detailNestedInput
+    transactions?: transactionsUpdateOneRequiredWithoutTransaction_detailNestedInput
   }
 
   export type transaction_detailUncheckedUpdateWithoutEventsInput = {
     id?: IntFieldUpdateOperationsInput | number
     code?: StringFieldUpdateOperationsInput | string
     is_attend?: BoolFieldUpdateOperationsInput | boolean
-    transactions?: transactionsUncheckedUpdateManyWithoutTicketsNestedInput
+    transaction_id?: IntFieldUpdateOperationsInput | number
+    ticket_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type transaction_detailUncheckedUpdateManyWithoutEventsInput = {
     id?: IntFieldUpdateOperationsInput | number
     code?: StringFieldUpdateOperationsInput | string
     is_attend?: BoolFieldUpdateOperationsInput | boolean
+    transaction_id?: IntFieldUpdateOperationsInput | number
+    ticket_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type transactionsUpdateWithoutEventsInput = {
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
+    transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
-    tickets?: transaction_detailUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type transactionsUncheckedUpdateWithoutEventsInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    ticket_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
+    transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
   export type transactionsUncheckedUpdateManyWithoutEventsInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    ticket_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type vouchersUpdateWithoutEventsInput = {
@@ -23563,6 +23916,15 @@ export namespace Prisma {
     message: string
   }
 
+  export type transaction_detailCreateManyTransactionsInput = {
+    id?: number
+    code: string
+    event_id: number
+    is_attend?: boolean
+    ticket_id: number
+    price: number
+  }
+
   export type notificationsUpdateWithoutTransactionsInput = {
     message?: StringFieldUpdateOperationsInput | string
     users?: usersUpdateOneRequiredWithoutNotificationsNestedInput
@@ -23578,6 +23940,32 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type transaction_detailUpdateWithoutTransactionsInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    is_attend?: BoolFieldUpdateOperationsInput | boolean
+    price?: IntFieldUpdateOperationsInput | number
+    events?: eventsUpdateOneRequiredWithoutTransaction_detailNestedInput
+    ticket_types?: ticket_typesUpdateOneRequiredWithoutTransaction_detailNestedInput
+  }
+
+  export type transaction_detailUncheckedUpdateWithoutTransactionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    event_id?: IntFieldUpdateOperationsInput | number
+    is_attend?: BoolFieldUpdateOperationsInput | boolean
+    ticket_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type transaction_detailUncheckedUpdateManyWithoutTransactionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    event_id?: IntFieldUpdateOperationsInput | number
+    is_attend?: BoolFieldUpdateOperationsInput | boolean
+    ticket_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type attendeesCreateManyUsersInput = {
@@ -23625,12 +24013,11 @@ export namespace Prisma {
   export type transactionsCreateManyUsersInput = {
     id?: number
     event_id: number
-    ticket_id: number
-    total_price: number
-    payment_proof: string
+    payment_proof?: string | null
     expired_date: Date | string
     invoice_id: string
     status?: $Enums.Status
+    expired_hours: Date | string
   }
 
   export type attendeesUpdateWithoutUsersInput = {
@@ -23756,82 +24143,71 @@ export namespace Prisma {
   }
 
   export type transactionsUpdateWithoutUsersInput = {
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
+    transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
-    tickets?: transaction_detailUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type transactionsUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    ticket_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
+    transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
   export type transactionsUncheckedUpdateManyWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    ticket_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice_id?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type transactionsCreateManyTicketsInput = {
+  export type transaction_detailCreateManyTicket_typesInput = {
     id?: number
-    user_id: number
+    code: string
     event_id: number
-    total_price: number
-    payment_proof: string
-    expired_date: Date | string
-    invoice_id: string
-    status?: $Enums.Status
+    is_attend?: boolean
+    transaction_id: number
+    price: number
   }
 
-  export type transactionsUpdateWithoutTicketsInput = {
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
-    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    invoice_id?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
-    users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
-    events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
+  export type transaction_detailUpdateWithoutTicket_typesInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    is_attend?: BoolFieldUpdateOperationsInput | boolean
+    price?: IntFieldUpdateOperationsInput | number
+    events?: eventsUpdateOneRequiredWithoutTransaction_detailNestedInput
+    transactions?: transactionsUpdateOneRequiredWithoutTransaction_detailNestedInput
   }
 
-  export type transactionsUncheckedUpdateWithoutTicketsInput = {
+  export type transaction_detailUncheckedUpdateWithoutTicket_typesInput = {
     id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     event_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
-    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    invoice_id?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
+    is_attend?: BoolFieldUpdateOperationsInput | boolean
+    transaction_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
   }
 
-  export type transactionsUncheckedUpdateManyWithoutTicketsInput = {
+  export type transaction_detailUncheckedUpdateManyWithoutTicket_typesInput = {
     id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     event_id?: IntFieldUpdateOperationsInput | number
-    total_price?: IntFieldUpdateOperationsInput | number
-    payment_proof?: StringFieldUpdateOperationsInput | string
-    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    invoice_id?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    is_attend?: BoolFieldUpdateOperationsInput | boolean
+    transaction_id?: IntFieldUpdateOperationsInput | number
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type eventsCreateManyOrganizerInput = {
