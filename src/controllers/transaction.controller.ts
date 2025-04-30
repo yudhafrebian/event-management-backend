@@ -19,14 +19,6 @@ export const handleCheckout = async (
         price: number;
       }[];
     } = req.body;
-    const ticketCounts: Record<number, number> = {};
-    tickets.forEach((ticket) => {
-      if (!ticketCounts[ticket.id]) {
-        ticketCounts[ticket.id] = 1;
-      } else {
-        ticketCounts[ticket.id]++;
-      }
-    });
 
     console.log(event_id, tickets);
 
@@ -58,6 +50,11 @@ export const handleCheckout = async (
       })),
     });
 
+    const ticketCounts: Record<number, number> = {};
+    tickets.forEach((ticket) => {
+      ticketCounts[ticket.id] = (ticketCounts[ticket.id] || 0) + 1;
+    });
+    
     await Promise.all(
       Object.entries(ticketCounts).map(([ticketId, count]) =>
         prisma.ticket_types.update({
@@ -70,8 +67,7 @@ export const handleCheckout = async (
         })
       )
     );
-
-    res.status(200).send(transaction);
+    res.status(200).send(transaction,);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -83,7 +79,10 @@ export const updateTransactionStatus = async (
 ): Promise<any> => {
   try {
     const { transactionId, newStatus } = req.body;
-    const ticketCount: Record<number, number> = {};
+
+    if (!transactionId || !newStatus) {
+      throw "Missing required fields";
+    }
 
     const current = await prisma.transactions.findUnique({
       where: { id: transactionId },
@@ -92,20 +91,22 @@ export const updateTransactionStatus = async (
       },
     });
 
-    if (!current) throw "Transaction not found";
+    if (!current) {
+      throw "Transaction not found";
+    }
+
+    const ticketCounts: Record<number, number> = {};
     current.transaction_detail.forEach((detail) => {
-      if (!ticketCount[detail.ticket_id]) {
-        ticketCount[detail.ticket_id] = 1;
-      } else {
-        ticketCount[detail.ticket_id]++;
-      }
+      ticketCounts[detail.ticket_id] = (ticketCounts[detail.ticket_id] || 0) + 1;
     });
-    if (
+
+    const shouldRestoreQuota =
       current.status === "Pending" &&
-      (newStatus === "Canceled" || newStatus === "Rejected" || newStatus === "Expired")
-    ) {
+      ["Canceled", "Rejected", "Expired"].includes(newStatus);
+
+    if (shouldRestoreQuota) {
       await prisma.$transaction([
-        ...Object.entries(ticketCount).map(([ticketId, count]) =>
+        ...Object.entries(ticketCounts).map(([ticketId, count]) =>
           prisma.ticket_types.update({
             where: { id: parseInt(ticketId) },
             data: {
@@ -126,7 +127,6 @@ export const updateTransactionStatus = async (
         data: { status: newStatus },
       });
     }
-    console.log(ticketCount);
 
     res.status(200).send({ message: "Transaction status updated" });
   } catch (error) {
@@ -134,3 +134,4 @@ export const updateTransactionStatus = async (
     res.status(500).send(error);
   }
 };
+
