@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../config/prisma";
 import { v4 as uuidv4 } from "uuid";
+import { cloudUpload } from "../config/cloudinary";
 
 export const handleCheckout = async (
   req: Request,
@@ -102,7 +103,7 @@ export const updateTransactionStatus = async (
     });
 
     const now = new Date();
-    if(now.getTime() > current.expired_hours.getTime()) {
+    if (now.getTime() > current.expired_hours.getTime()) {
       await prisma.transactions.update({
         where: { id: transactionId },
         data: { status: "Expired" },
@@ -149,12 +150,126 @@ export const getTransactionList = async (
   res: Response
 ): Promise<any> => {
   try {
-    const userId = res.locals.data.id
-    const response = await prisma.transactions.findMany({
-      where: {user_id: userId}
-    })
+    const userId = res.locals.data.id;
+    const transaction = await prisma.transactions.findMany({
+      where: { user_id: userId },
+      include: {
+        events: true,
+      },
+    });
 
-    res.status(200).send(response)
+    const ticketDetail = await prisma.transaction_detail.findMany({
+      where: { transaction_id: { in: transaction.map((a) => a.id) } },
+    });
+
+    const totalPricesPerTransaction: Record<number, number> = {};
+    ticketDetail.forEach((detail) => {
+      if (!totalPricesPerTransaction[detail.transaction_id]) {
+        totalPricesPerTransaction[detail.transaction_id] = detail.price;
+      } else {
+        totalPricesPerTransaction[detail.transaction_id] += detail.price;
+      }
+    });
+
+    const responseData = transaction.map((item) => ({
+      transaction: item,
+      totalPricesPerTransaction: totalPricesPerTransaction[item.id] || 0,
+    }));
+
+    res.status(200).send(responseData);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const transactionDetail = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const invoiceId = req.params.invoice_id;
+    const response = await prisma.transactions.findFirst({
+      where: { invoice_id: invoiceId },
+      include: {
+        events: true,
+        transaction_detail: {
+          include: {
+            ticket_types: {
+              select: {
+                type_name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!response) {
+      throw "Transaction not found";
+    }
+
+    const ticketCount = await prisma.transaction_detail.groupBy({
+      by: ["ticket_id"],
+      where: { transaction_id: response.id },
+      _count: { ticket_id: true },
+    });
+
+    const ticketTypeIds = ticketCount.map((item) => item.ticket_id);
+
+    const ticketTypes = await prisma.ticket_types.findMany({
+      where: { id: { in: ticketTypeIds } },
+      select: { id: true, type_name: true },
+    });
+
+    const ticketSummary = ticketCount.map((item) => {
+      const type = ticketTypes.find((t) => t.id === item.ticket_id);
+      return {
+        ticket_id: item.ticket_id,
+        type_name: type ? type.type_name : "Unknown",
+        quantity: item._count.ticket_id,
+      };
+    });
+
+    const totalPrice = response.transaction_detail.reduce(
+      (acc: number, cur: any) => acc + cur.price,
+      0
+    );
+
+    res.status(200).send({
+      transaction: response,
+      totalPrice: totalPrice,
+      ticketSummary: ticketSummary,
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const uploadProof = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    if (!req.file) {
+      throw "No file attached";
+    }
+
+    const upload = await cloudUpload(req.file);
+
+    const transaction = await prisma.transactions.findFirst({
+      where: { invoice_id: req.params.invoice_id },
+    });
+
+    if (!transaction) {
+      throw "Transaction not found";
+    }
+
+    const updateProof = await prisma.transactions.update({
+      where: { id: transaction.id },
+      data: { payment_proof: upload.secure_url, status: "Confirmating" },
+    });
+
+    res.status(200).send(updateProof);
   } catch (error) {
     res.status(500).send(error);
   }
