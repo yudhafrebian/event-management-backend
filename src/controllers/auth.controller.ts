@@ -95,7 +95,7 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
     });
     const totalPoints = userPoints
       .map((a) => a.points_amount)
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b, 0);
 
     return res.status(200).send({
       id: users?.id,
@@ -132,7 +132,7 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
     });
     const totalPoints = userPoints
       .map((a) => a.points_amount)
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b, 0);
 
     return res.status(200).send({
       id: users?.id,

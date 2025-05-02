@@ -43,10 +43,10 @@ cron.schedule("* * * * *", async () => {
         }),
       ]);
 
-      console.log(`🔁 Transaction ID ${trx.id} expired and quota restored.`);
+      console.log(`Transaction ID ${trx.id} expired and quota restored.`);
     }
   } catch (error) {
-    console.error("❌ Cron error:", error);
+    console.error(error);
   }
 });
 
