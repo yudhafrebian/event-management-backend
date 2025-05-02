@@ -157,67 +157,122 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-export const updateUserProfile = async (
+// export const updateUserProfile = async (
+//   req: Request,
+//   res: Response
+// ): Promise<any> => {
+//   try {
+//     if (!req.body) {
+//       throw "Input new data to update";
+//     }
+
+//     const updateProfile = await prisma.users.update({
+//       where: { id: res.locals.data.id },
+//       data: {
+//         first_name: req.body.first_name,
+//         last_name: req.body.last_name,
+//         profile_picture: `/profile-img/${req.file?.filename}`,
+//       },
+//     });
+//     console.log(updateProfile);
+
+//     const updateUser = prisma.users.update({
+//       where: { id: res.locals.data.id },
+//       data: {
+//         email: req.body.email,
+//         password: req.body.password,
+//       },
+//     });
+//     console.log(updateUser);
+
+//     return res.status(200).send({
+//       success: true,
+//       message: "Update Success",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).send(error);
+//   }
+// };
+
+// export const uploadProfileImgCloud = async (
+//   req: Request,
+//   res: Response
+// ): Promise<any> => {
+//   try {
+//     console.log("file upload info :", req.file);
+//     if (!req.file) {
+//       throw "No file attached";
+//     }
+//     const cloudRes = await cloudUpload(req.file);
+//     console.log(cloudRes);
+
+//     await prisma.users.update({
+//       data: {
+//         profile_picture: cloudRes.secure_url,
+//       },
+//       where: {
+//         id: res.locals.data.id,
+//       },
+//     });
+//     return res.status(200).send({
+//       success: true,
+//       message: "Uploade Success",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).send(error);
+//   }
+// };
+
+export const updateProfile = async (
   req: Request,
   res: Response
 ): Promise<any> => {
   try {
-    if (!req.body) {
-      throw "Input new data to update";
+    // ERROR REQUEST CONTAINS UNDEFINED
+    console.log(req.body);
+    console.log(req.file);
+
+    const { first_name, last_name, email, password } = req.body;
+    const file = req.file;
+
+    if (!first_name && !last_name && !email && !password && !file) {
+      throw "No data provided to update";
     }
 
-    const updateProfile = await prisma.users.update({
-      where: { id: res.locals.data.id },
-      data: {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        profile_picture: `/profile-img/${req.file?.filename}`,
-      },
-    });
-    console.log(updateProfile);
+    const updateData: any = {};
 
-    const updateUser = prisma.users.update({
+    // Update profile fields if provided
+    if (first_name) updateData.first_name = first_name;
+    if (last_name) updateData.last_name = last_name;
+    if (email) updateData.email = email;
+    if (password) {
+      const salt = await genSalt();
+      updateData.password = await hash(password, salt);
+    }
+
+    // Upload profile image to cloud if file is provided
+    if (file) {
+      console.log("file upload info :", file);
+      const cloudRes = await cloudUpload(file);
+      console.log(cloudRes);
+      updateData.profile_picture = cloudRes.secure_url;
+    }
+
+    console.log(updateData);
+
+    // Update user in the database
+    const updatedUser = await prisma.users.update({
       where: { id: res.locals.data.id },
-      data: {
-        email: req.body.email,
-        password: req.body.password,
-      },
+      data: updateData,
     });
-    console.log(updateUser);
+
+    console.log(updatedUser);
 
     return res.status(200).send({
       success: true,
       message: "Update Success",
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send(error);
-  }
-};
-
-export const uploadProfileImgCloud = async (
-  req: Request,
-  res: Response
-): Promise<any> => {
-  try {
-    console.log("file upload info :", req.file);
-    if (!req.file) {
-      throw "No file attached";
-    }
-    const cloudRes = await cloudUpload(req.file);
-    console.log(cloudRes);
-
-    await prisma.users.update({
-      data: {
-        profile_picture: cloudRes.secure_url,
-      },
-      where: {
-        id: res.locals.data.id,
-      },
-    });
-    return res.status(200).send({
-      success: true,
-      message: "Uploade Success",
     });
   } catch (error) {
     console.log(error);
