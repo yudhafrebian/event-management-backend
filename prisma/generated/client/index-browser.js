@@ -169,7 +169,11 @@ exports.Prisma.TransactionsScalarFieldEnum = {
   invoice_id: 'invoice_id',
   status: 'status',
   expired_hours: 'expired_hours',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  total_price: 'total_price',
+  sub_total: 'sub_total',
+  voucher_discount: 'voucher_discount',
+  point_discount: 'point_discount'
 };
 
 exports.Prisma.UsersScalarFieldEnum = {

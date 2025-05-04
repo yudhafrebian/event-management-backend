@@ -12,14 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTransactionList = exports.updateTransactionStatus = exports.handleCheckout = void 0;
+exports.getUserPoints = exports.uploadProof = exports.transactionDetail = exports.getTransactionList = exports.updateTransactionStatus = exports.handleCheckout = void 0;
 const prisma_1 = __importDefault(require("../config/prisma"));
 const uuid_1 = require("uuid");
+const cloudinary_1 = require("../config/cloudinary");
 const handleCheckout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = res.locals.data.id;
-        const { event_id, tickets, } = req.body;
-        console.log(event_id, tickets);
+        const { event_id, total_price, usePoints, useVoucher, tickets, sub_total, voucher_discount, point_discount, voucher_code } = req.body;
         if (!event_id || !tickets || tickets.length === 0) {
             throw "Invalid data";
         }
@@ -29,10 +29,26 @@ const handleCheckout = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 user_id: userId,
                 event_id,
                 invoice_id: invoiceId,
+                total_price: total_price,
+                sub_total,
+                voucher_discount,
+                point_discount,
                 expired_date: new Date(new Date().getTime() + 72 * 60 * 60 * 1000),
-                expired_hours: new Date(new Date().getTime() + 2 * 60 * 1000),
+                expired_hours: new Date(new Date().getTime() + 2 * 60 * 60 * 1000),
             },
         });
+        if (usePoints) {
+            yield prisma_1.default.points.updateMany({
+                where: { user_id: userId },
+                data: { points_amount: 0 }
+            });
+        }
+        if (useVoucher) {
+            yield prisma_1.default.vouchers.updateMany({
+                where: { code: voucher_code, quota: { gt: 0 } },
+                data: { quota: { decrement: 1 } }
+            });
+        }
         const createDetails = yield prisma_1.default.transaction_detail.createMany({
             data: tickets.map((ticket) => ({
                 code: `${ticket.type_name.slice(0, 3).toUpperCase()}-${(0, uuid_1.v4)()
@@ -125,13 +141,120 @@ exports.updateTransactionStatus = updateTransactionStatus;
 const getTransactionList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = res.locals.data.id;
-        const response = yield prisma_1.default.transactions.findMany({
-            where: { user_id: userId }
+        const transaction = yield prisma_1.default.transactions.findMany({
+            where: { user_id: userId },
+            include: {
+                events: true,
+            },
         });
-        res.status(200).send(response);
+        const ticketDetail = yield prisma_1.default.transaction_detail.findMany({
+            where: { transaction_id: { in: transaction.map((a) => a.id) } },
+        });
+        const totalPricesPerTransaction = {};
+        ticketDetail.forEach((detail) => {
+            if (!totalPricesPerTransaction[detail.transaction_id]) {
+                totalPricesPerTransaction[detail.transaction_id] = detail.price;
+            }
+            else {
+                totalPricesPerTransaction[detail.transaction_id] += detail.price;
+            }
+        });
+        const responseData = transaction.map((item) => ({
+            transaction: item,
+            totalPricesPerTransaction: totalPricesPerTransaction[item.id] || 0,
+        }));
+        res.status(200).send(responseData);
     }
     catch (error) {
         res.status(500).send(error);
     }
 });
 exports.getTransactionList = getTransactionList;
+const transactionDetail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const invoiceId = req.params.invoice_id;
+        const response = yield prisma_1.default.transactions.findFirst({
+            where: { invoice_id: invoiceId },
+            include: {
+                events: true,
+                transaction_detail: {
+                    include: {
+                        ticket_types: {
+                            select: {
+                                type_name: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        if (!response) {
+            throw "Transaction not found";
+        }
+        const ticketCount = yield prisma_1.default.transaction_detail.groupBy({
+            by: ["ticket_id"],
+            where: { transaction_id: response.id },
+            _count: { ticket_id: true },
+        });
+        const ticketTypeIds = ticketCount.map((item) => item.ticket_id);
+        const ticketTypes = yield prisma_1.default.ticket_types.findMany({
+            where: { id: { in: ticketTypeIds } },
+            select: { id: true, type_name: true },
+        });
+        const ticketSummary = ticketCount.map((item) => {
+            const type = ticketTypes.find((t) => t.id === item.ticket_id);
+            return {
+                ticket_id: item.ticket_id,
+                type_name: type ? type.type_name : "Unknown",
+                quantity: item._count.ticket_id,
+            };
+        });
+        res.status(200).send({
+            transaction: response,
+            ticketSummary: ticketSummary,
+        });
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
+});
+exports.transactionDetail = transactionDetail;
+const uploadProof = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!req.file) {
+            throw "No file attached";
+        }
+        const upload = yield (0, cloudinary_1.cloudUpload)(req.file);
+        const transaction = yield prisma_1.default.transactions.findFirst({
+            where: { invoice_id: req.params.invoice_id },
+        });
+        if (!transaction) {
+            throw "Transaction not found";
+        }
+        const updateProof = yield prisma_1.default.transactions.update({
+            where: { id: transaction.id },
+            data: { payment_proof: upload.secure_url, status: "Confirmating" },
+        });
+        res.status(200).send(updateProof);
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
+});
+exports.uploadProof = uploadProof;
+const getUserPoints = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = res.locals.data.id;
+        const points = yield prisma_1.default.points.findMany({
+            where: { user_id: userId },
+        });
+        const totalPoints = points
+            .map((a) => a.points_amount)
+            .reduce((a, b) => a + b, 0);
+        res.status(200).send({ total_point: totalPoints });
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
+});
+exports.getUserPoints = getUserPoints;
