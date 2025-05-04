@@ -98,7 +98,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         const totalPoints = userPoints
             .map((a) => a.points_amount)
-            .reduce((a, b) => a + b);
+            .reduce((a, b) => a + b, 0);
         return res.status(200).send({
             id: users === null || users === void 0 ? void 0 : users.id,
             email: users === null || users === void 0 ? void 0 : users.email,
@@ -134,7 +134,7 @@ const keepLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         const totalPoints = userPoints
             .map((a) => a.points_amount)
-            .reduce((a, b) => a + b);
+            .reduce((a, b) => a + b, 0);
         return res.status(200).send({
             id: users === null || users === void 0 ? void 0 : users.id,
             email: users === null || users === void 0 ? void 0 : users.email,

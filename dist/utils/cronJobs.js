@@ -50,11 +50,11 @@ node_cron_1.default.schedule("* * * * *", () => __awaiter(void 0, void 0, void 0
                     },
                 }),
             ]);
-            console.log(`🔁 Transaction ID ${trx.id} expired and quota restored.`);
+            console.log(`Transaction ID ${trx.id} expired and quota restored.`);
         }
     }
     catch (error) {
-        console.error("❌ Cron error:", error);
+        console.error(error);
     }
 }));
 node_cron_1.default.schedule("* * * * *", () => __awaiter(void 0, void 0, void 0, function* () {

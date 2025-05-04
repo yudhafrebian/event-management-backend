@@ -8029,12 +8029,20 @@ export namespace Prisma {
     id: number | null
     user_id: number | null
     event_id: number | null
+    total_price: number | null
+    sub_total: number | null
+    voucher_discount: number | null
+    point_discount: number | null
   }
 
   export type TransactionsSumAggregateOutputType = {
     id: number | null
     user_id: number | null
     event_id: number | null
+    total_price: number | null
+    sub_total: number | null
+    voucher_discount: number | null
+    point_discount: number | null
   }
 
   export type TransactionsMinAggregateOutputType = {
@@ -8047,6 +8055,10 @@ export namespace Prisma {
     status: $Enums.Status | null
     expired_hours: Date | null
     created_at: Date | null
+    total_price: number | null
+    sub_total: number | null
+    voucher_discount: number | null
+    point_discount: number | null
   }
 
   export type TransactionsMaxAggregateOutputType = {
@@ -8059,6 +8071,10 @@ export namespace Prisma {
     status: $Enums.Status | null
     expired_hours: Date | null
     created_at: Date | null
+    total_price: number | null
+    sub_total: number | null
+    voucher_discount: number | null
+    point_discount: number | null
   }
 
   export type TransactionsCountAggregateOutputType = {
@@ -8071,6 +8087,10 @@ export namespace Prisma {
     status: number
     expired_hours: number
     created_at: number
+    total_price: number
+    sub_total: number
+    voucher_discount: number
+    point_discount: number
     _all: number
   }
 
@@ -8079,12 +8099,20 @@ export namespace Prisma {
     id?: true
     user_id?: true
     event_id?: true
+    total_price?: true
+    sub_total?: true
+    voucher_discount?: true
+    point_discount?: true
   }
 
   export type TransactionsSumAggregateInputType = {
     id?: true
     user_id?: true
     event_id?: true
+    total_price?: true
+    sub_total?: true
+    voucher_discount?: true
+    point_discount?: true
   }
 
   export type TransactionsMinAggregateInputType = {
@@ -8097,6 +8125,10 @@ export namespace Prisma {
     status?: true
     expired_hours?: true
     created_at?: true
+    total_price?: true
+    sub_total?: true
+    voucher_discount?: true
+    point_discount?: true
   }
 
   export type TransactionsMaxAggregateInputType = {
@@ -8109,6 +8141,10 @@ export namespace Prisma {
     status?: true
     expired_hours?: true
     created_at?: true
+    total_price?: true
+    sub_total?: true
+    voucher_discount?: true
+    point_discount?: true
   }
 
   export type TransactionsCountAggregateInputType = {
@@ -8121,6 +8157,10 @@ export namespace Prisma {
     status?: true
     expired_hours?: true
     created_at?: true
+    total_price?: true
+    sub_total?: true
+    voucher_discount?: true
+    point_discount?: true
     _all?: true
   }
 
@@ -8220,6 +8260,10 @@ export namespace Prisma {
     status: $Enums.Status
     expired_hours: Date
     created_at: Date
+    total_price: number
+    sub_total: number
+    voucher_discount: number
+    point_discount: number
     _count: TransactionsCountAggregateOutputType | null
     _avg: TransactionsAvgAggregateOutputType | null
     _sum: TransactionsSumAggregateOutputType | null
@@ -8251,6 +8295,10 @@ export namespace Prisma {
     status?: boolean
     expired_hours?: boolean
     created_at?: boolean
+    total_price?: boolean
+    sub_total?: boolean
+    voucher_discount?: boolean
+    point_discount?: boolean
     notifications?: boolean | transactions$notificationsArgs<ExtArgs>
     transaction_detail?: boolean | transactions$transaction_detailArgs<ExtArgs>
     users?: boolean | usersDefaultArgs<ExtArgs>
@@ -8268,6 +8316,10 @@ export namespace Prisma {
     status?: boolean
     expired_hours?: boolean
     created_at?: boolean
+    total_price?: boolean
+    sub_total?: boolean
+    voucher_discount?: boolean
+    point_discount?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions"]>
@@ -8282,6 +8334,10 @@ export namespace Prisma {
     status?: boolean
     expired_hours?: boolean
     created_at?: boolean
+    total_price?: boolean
+    sub_total?: boolean
+    voucher_discount?: boolean
+    point_discount?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions"]>
@@ -8296,9 +8352,13 @@ export namespace Prisma {
     status?: boolean
     expired_hours?: boolean
     created_at?: boolean
+    total_price?: boolean
+    sub_total?: boolean
+    voucher_discount?: boolean
+    point_discount?: boolean
   }
 
-  export type transactionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "event_id" | "payment_proof" | "expired_date" | "invoice_id" | "status" | "expired_hours" | "created_at", ExtArgs["result"]["transactions"]>
+  export type transactionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "event_id" | "payment_proof" | "expired_date" | "invoice_id" | "status" | "expired_hours" | "created_at" | "total_price" | "sub_total" | "voucher_discount" | "point_discount", ExtArgs["result"]["transactions"]>
   export type transactionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notifications?: boolean | transactions$notificationsArgs<ExtArgs>
     transaction_detail?: boolean | transactions$transaction_detailArgs<ExtArgs>
@@ -8333,6 +8393,10 @@ export namespace Prisma {
       status: $Enums.Status
       expired_hours: Date
       created_at: Date
+      total_price: number
+      sub_total: number
+      voucher_discount: number
+      point_discount: number
     }, ExtArgs["result"]["transactions"]>
     composites: {}
   }
@@ -8769,6 +8833,10 @@ export namespace Prisma {
     readonly status: FieldRef<"transactions", 'Status'>
     readonly expired_hours: FieldRef<"transactions", 'DateTime'>
     readonly created_at: FieldRef<"transactions", 'DateTime'>
+    readonly total_price: FieldRef<"transactions", 'Int'>
+    readonly sub_total: FieldRef<"transactions", 'Int'>
+    readonly voucher_discount: FieldRef<"transactions", 'Int'>
+    readonly point_discount: FieldRef<"transactions", 'Int'>
   }
     
 
@@ -10583,7 +10651,6 @@ export namespace Prisma {
   export type VouchersAvgAggregateOutputType = {
     id: number | null
     event_id: number | null
-    code: number | null
     disc_amount: number | null
     quota: number | null
   }
@@ -10591,29 +10658,28 @@ export namespace Prisma {
   export type VouchersSumAggregateOutputType = {
     id: number | null
     event_id: number | null
-    code: number | null
     disc_amount: number | null
-    quota: bigint | null
+    quota: number | null
   }
 
   export type VouchersMinAggregateOutputType = {
     id: number | null
     event_id: number | null
-    code: number | null
+    code: string | null
     disc_amount: number | null
     start_date: Date | null
     end_date: Date | null
-    quota: bigint | null
+    quota: number | null
   }
 
   export type VouchersMaxAggregateOutputType = {
     id: number | null
     event_id: number | null
-    code: number | null
+    code: string | null
     disc_amount: number | null
     start_date: Date | null
     end_date: Date | null
-    quota: bigint | null
+    quota: number | null
   }
 
   export type VouchersCountAggregateOutputType = {
@@ -10631,7 +10697,6 @@ export namespace Prisma {
   export type VouchersAvgAggregateInputType = {
     id?: true
     event_id?: true
-    code?: true
     disc_amount?: true
     quota?: true
   }
@@ -10639,7 +10704,6 @@ export namespace Prisma {
   export type VouchersSumAggregateInputType = {
     id?: true
     event_id?: true
-    code?: true
     disc_amount?: true
     quota?: true
   }
@@ -10764,11 +10828,11 @@ export namespace Prisma {
   export type VouchersGroupByOutputType = {
     id: number
     event_id: number
-    code: number
+    code: string
     disc_amount: number
     start_date: Date
     end_date: Date
-    quota: bigint
+    quota: number
     _count: VouchersCountAggregateOutputType | null
     _avg: VouchersAvgAggregateOutputType | null
     _sum: VouchersSumAggregateOutputType | null
@@ -10852,11 +10916,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       event_id: number
-      code: number
+      code: string
       disc_amount: number
       start_date: Date
       end_date: Date
-      quota: bigint
+      quota: number
     }, ExtArgs["result"]["vouchers"]>
     composites: {}
   }
@@ -11283,11 +11347,11 @@ export namespace Prisma {
   interface vouchersFieldRefs {
     readonly id: FieldRef<"vouchers", 'Int'>
     readonly event_id: FieldRef<"vouchers", 'Int'>
-    readonly code: FieldRef<"vouchers", 'Int'>
+    readonly code: FieldRef<"vouchers", 'String'>
     readonly disc_amount: FieldRef<"vouchers", 'Int'>
     readonly start_date: FieldRef<"vouchers", 'DateTime'>
     readonly end_date: FieldRef<"vouchers", 'DateTime'>
-    readonly quota: FieldRef<"vouchers", 'BigInt'>
+    readonly quota: FieldRef<"vouchers", 'Int'>
   }
     
 
@@ -17335,7 +17399,11 @@ export namespace Prisma {
     invoice_id: 'invoice_id',
     status: 'status',
     expired_hours: 'expired_hours',
-    created_at: 'created_at'
+    created_at: 'created_at',
+    total_price: 'total_price',
+    sub_total: 'sub_total',
+    voucher_discount: 'voucher_discount',
+    point_discount: 'point_discount'
   };
 
   export type TransactionsScalarFieldEnum = (typeof TransactionsScalarFieldEnum)[keyof typeof TransactionsScalarFieldEnum]
@@ -17919,6 +17987,10 @@ export namespace Prisma {
     status?: EnumStatusFilter<"transactions"> | $Enums.Status
     expired_hours?: DateTimeFilter<"transactions"> | Date | string
     created_at?: DateTimeFilter<"transactions"> | Date | string
+    total_price?: IntFilter<"transactions"> | number
+    sub_total?: IntFilter<"transactions"> | number
+    voucher_discount?: IntFilter<"transactions"> | number
+    point_discount?: IntFilter<"transactions"> | number
     notifications?: NotificationsListRelationFilter
     transaction_detail?: Transaction_detailListRelationFilter
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
@@ -17935,6 +18007,10 @@ export namespace Prisma {
     status?: SortOrder
     expired_hours?: SortOrder
     created_at?: SortOrder
+    total_price?: SortOrder
+    sub_total?: SortOrder
+    voucher_discount?: SortOrder
+    point_discount?: SortOrder
     notifications?: notificationsOrderByRelationAggregateInput
     transaction_detail?: transaction_detailOrderByRelationAggregateInput
     users?: usersOrderByWithRelationInput
@@ -17954,6 +18030,10 @@ export namespace Prisma {
     status?: EnumStatusFilter<"transactions"> | $Enums.Status
     expired_hours?: DateTimeFilter<"transactions"> | Date | string
     created_at?: DateTimeFilter<"transactions"> | Date | string
+    total_price?: IntFilter<"transactions"> | number
+    sub_total?: IntFilter<"transactions"> | number
+    voucher_discount?: IntFilter<"transactions"> | number
+    point_discount?: IntFilter<"transactions"> | number
     notifications?: NotificationsListRelationFilter
     transaction_detail?: Transaction_detailListRelationFilter
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
@@ -17970,6 +18050,10 @@ export namespace Prisma {
     status?: SortOrder
     expired_hours?: SortOrder
     created_at?: SortOrder
+    total_price?: SortOrder
+    sub_total?: SortOrder
+    voucher_discount?: SortOrder
+    point_discount?: SortOrder
     _count?: transactionsCountOrderByAggregateInput
     _avg?: transactionsAvgOrderByAggregateInput
     _max?: transactionsMaxOrderByAggregateInput
@@ -17990,6 +18074,10 @@ export namespace Prisma {
     status?: EnumStatusWithAggregatesFilter<"transactions"> | $Enums.Status
     expired_hours?: DateTimeWithAggregatesFilter<"transactions"> | Date | string
     created_at?: DateTimeWithAggregatesFilter<"transactions"> | Date | string
+    total_price?: IntWithAggregatesFilter<"transactions"> | number
+    sub_total?: IntWithAggregatesFilter<"transactions"> | number
+    voucher_discount?: IntWithAggregatesFilter<"transactions"> | number
+    point_discount?: IntWithAggregatesFilter<"transactions"> | number
   }
 
   export type usersWhereInput = {
@@ -18098,11 +18186,11 @@ export namespace Prisma {
     NOT?: vouchersWhereInput | vouchersWhereInput[]
     id?: IntFilter<"vouchers"> | number
     event_id?: IntFilter<"vouchers"> | number
-    code?: IntFilter<"vouchers"> | number
+    code?: StringFilter<"vouchers"> | string
     disc_amount?: IntFilter<"vouchers"> | number
     start_date?: DateTimeFilter<"vouchers"> | Date | string
     end_date?: DateTimeFilter<"vouchers"> | Date | string
-    quota?: BigIntFilter<"vouchers"> | bigint | number
+    quota?: IntFilter<"vouchers"> | number
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
   }
 
@@ -18119,17 +18207,17 @@ export namespace Prisma {
 
   export type vouchersWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    code?: string
     AND?: vouchersWhereInput | vouchersWhereInput[]
     OR?: vouchersWhereInput[]
     NOT?: vouchersWhereInput | vouchersWhereInput[]
     event_id?: IntFilter<"vouchers"> | number
-    code?: IntFilter<"vouchers"> | number
     disc_amount?: IntFilter<"vouchers"> | number
     start_date?: DateTimeFilter<"vouchers"> | Date | string
     end_date?: DateTimeFilter<"vouchers"> | Date | string
-    quota?: BigIntFilter<"vouchers"> | bigint | number
+    quota?: IntFilter<"vouchers"> | number
     events?: XOR<EventsScalarRelationFilter, eventsWhereInput>
-  }, "id">
+  }, "id" | "code">
 
   export type vouchersOrderByWithAggregationInput = {
     id?: SortOrder
@@ -18152,11 +18240,11 @@ export namespace Prisma {
     NOT?: vouchersScalarWhereWithAggregatesInput | vouchersScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"vouchers"> | number
     event_id?: IntWithAggregatesFilter<"vouchers"> | number
-    code?: IntWithAggregatesFilter<"vouchers"> | number
+    code?: StringWithAggregatesFilter<"vouchers"> | string
     disc_amount?: IntWithAggregatesFilter<"vouchers"> | number
     start_date?: DateTimeWithAggregatesFilter<"vouchers"> | Date | string
     end_date?: DateTimeWithAggregatesFilter<"vouchers"> | Date | string
-    quota?: BigIntWithAggregatesFilter<"vouchers"> | bigint | number
+    quota?: IntWithAggregatesFilter<"vouchers"> | number
   }
 
   export type ticket_typesWhereInput = {
@@ -18777,6 +18865,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
@@ -18793,6 +18885,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -18804,6 +18900,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
@@ -18820,6 +18920,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -18834,6 +18938,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
   }
 
   export type transactionsUpdateManyMutationInput = {
@@ -18843,6 +18951,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
   }
 
   export type transactionsUncheckedUpdateManyInput = {
@@ -18855,6 +18967,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
   }
 
   export type usersCreateInput = {
@@ -18974,69 +19090,69 @@ export namespace Prisma {
   }
 
   export type vouchersCreateInput = {
-    code: number
+    code: string
     disc_amount: number
     start_date: Date | string
     end_date: Date | string
-    quota: bigint | number
+    quota: number
     events: eventsCreateNestedOneWithoutVouchersInput
   }
 
   export type vouchersUncheckedCreateInput = {
     id?: number
     event_id: number
-    code: number
+    code: string
     disc_amount: number
     start_date: Date | string
     end_date: Date | string
-    quota: bigint | number
+    quota: number
   }
 
   export type vouchersUpdateInput = {
-    code?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     disc_amount?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    quota?: BigIntFieldUpdateOperationsInput | bigint | number
+    quota?: IntFieldUpdateOperationsInput | number
     events?: eventsUpdateOneRequiredWithoutVouchersNestedInput
   }
 
   export type vouchersUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    code?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     disc_amount?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    quota?: BigIntFieldUpdateOperationsInput | bigint | number
+    quota?: IntFieldUpdateOperationsInput | number
   }
 
   export type vouchersCreateManyInput = {
     id?: number
     event_id: number
-    code: number
+    code: string
     disc_amount: number
     start_date: Date | string
     end_date: Date | string
-    quota: bigint | number
+    quota: number
   }
 
   export type vouchersUpdateManyMutationInput = {
-    code?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     disc_amount?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    quota?: BigIntFieldUpdateOperationsInput | bigint | number
+    quota?: IntFieldUpdateOperationsInput | number
   }
 
   export type vouchersUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    code?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     disc_amount?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    quota?: BigIntFieldUpdateOperationsInput | bigint | number
+    quota?: IntFieldUpdateOperationsInput | number
   }
 
   export type ticket_typesCreateInput = {
@@ -19776,12 +19892,20 @@ export namespace Prisma {
     status?: SortOrder
     expired_hours?: SortOrder
     created_at?: SortOrder
+    total_price?: SortOrder
+    sub_total?: SortOrder
+    voucher_discount?: SortOrder
+    point_discount?: SortOrder
   }
 
   export type transactionsAvgOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     event_id?: SortOrder
+    total_price?: SortOrder
+    sub_total?: SortOrder
+    voucher_discount?: SortOrder
+    point_discount?: SortOrder
   }
 
   export type transactionsMaxOrderByAggregateInput = {
@@ -19794,6 +19918,10 @@ export namespace Prisma {
     status?: SortOrder
     expired_hours?: SortOrder
     created_at?: SortOrder
+    total_price?: SortOrder
+    sub_total?: SortOrder
+    voucher_discount?: SortOrder
+    point_discount?: SortOrder
   }
 
   export type transactionsMinOrderByAggregateInput = {
@@ -19806,12 +19934,20 @@ export namespace Prisma {
     status?: SortOrder
     expired_hours?: SortOrder
     created_at?: SortOrder
+    total_price?: SortOrder
+    sub_total?: SortOrder
+    voucher_discount?: SortOrder
+    point_discount?: SortOrder
   }
 
   export type transactionsSumOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     event_id?: SortOrder
+    total_price?: SortOrder
+    sub_total?: SortOrder
+    voucher_discount?: SortOrder
+    point_discount?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19962,7 +20098,6 @@ export namespace Prisma {
   export type vouchersAvgOrderByAggregateInput = {
     id?: SortOrder
     event_id?: SortOrder
-    code?: SortOrder
     disc_amount?: SortOrder
     quota?: SortOrder
   }
@@ -19990,7 +20125,6 @@ export namespace Prisma {
   export type vouchersSumOrderByAggregateInput = {
     id?: SortOrder
     event_id?: SortOrder
-    code?: SortOrder
     disc_amount?: SortOrder
     quota?: SortOrder
   }
@@ -21779,6 +21913,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
@@ -21793,6 +21931,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -21808,20 +21950,20 @@ export namespace Prisma {
   }
 
   export type vouchersCreateWithoutEventsInput = {
-    code: number
+    code: string
     disc_amount: number
     start_date: Date | string
     end_date: Date | string
-    quota: bigint | number
+    quota: number
   }
 
   export type vouchersUncheckedCreateWithoutEventsInput = {
     id?: number
-    code: number
+    code: string
     disc_amount: number
     start_date: Date | string
     end_date: Date | string
-    quota: bigint | number
+    quota: number
   }
 
   export type vouchersCreateOrConnectWithoutEventsInput = {
@@ -22003,6 +22145,10 @@ export namespace Prisma {
     status?: EnumStatusFilter<"transactions"> | $Enums.Status
     expired_hours?: DateTimeFilter<"transactions"> | Date | string
     created_at?: DateTimeFilter<"transactions"> | Date | string
+    total_price?: IntFilter<"transactions"> | number
+    sub_total?: IntFilter<"transactions"> | number
+    voucher_discount?: IntFilter<"transactions"> | number
+    point_discount?: IntFilter<"transactions"> | number
   }
 
   export type vouchersUpsertWithWhereUniqueWithoutEventsInput = {
@@ -22027,11 +22173,11 @@ export namespace Prisma {
     NOT?: vouchersScalarWhereInput | vouchersScalarWhereInput[]
     id?: IntFilter<"vouchers"> | number
     event_id?: IntFilter<"vouchers"> | number
-    code?: IntFilter<"vouchers"> | number
+    code?: StringFilter<"vouchers"> | string
     disc_amount?: IntFilter<"vouchers"> | number
     start_date?: DateTimeFilter<"vouchers"> | Date | string
     end_date?: DateTimeFilter<"vouchers"> | Date | string
-    quota?: BigIntFilter<"vouchers"> | bigint | number
+    quota?: IntFilter<"vouchers"> | number
   }
 
   export type usersCreateWithoutNotificationsInput = {
@@ -22083,6 +22229,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
@@ -22098,6 +22248,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
@@ -22172,6 +22326,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
@@ -22187,6 +22345,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
@@ -22861,6 +23023,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
@@ -22875,6 +23041,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -23311,6 +23481,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
@@ -23326,6 +23500,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
@@ -23426,6 +23604,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
@@ -23441,6 +23623,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
@@ -23739,15 +23925,19 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
   }
 
   export type vouchersCreateManyEventsInput = {
     id?: number
-    code: number
+    code: string
     disc_amount: number
     start_date: Date | string
     end_date: Date | string
-    quota: bigint | number
+    quota: number
   }
 
   export type attendeesUpdateWithoutEventsInput = {
@@ -23851,6 +24041,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
@@ -23865,6 +24059,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -23878,32 +24076,36 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
   }
 
   export type vouchersUpdateWithoutEventsInput = {
-    code?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     disc_amount?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    quota?: BigIntFieldUpdateOperationsInput | bigint | number
+    quota?: IntFieldUpdateOperationsInput | number
   }
 
   export type vouchersUncheckedUpdateWithoutEventsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    code?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     disc_amount?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    quota?: BigIntFieldUpdateOperationsInput | bigint | number
+    quota?: IntFieldUpdateOperationsInput | number
   }
 
   export type vouchersUncheckedUpdateManyWithoutEventsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    code?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     disc_amount?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    quota?: BigIntFieldUpdateOperationsInput | bigint | number
+    quota?: IntFieldUpdateOperationsInput | number
   }
 
   export type notificationsCreateManyTransactionsInput = {
@@ -24015,6 +24217,10 @@ export namespace Prisma {
     status?: $Enums.Status
     expired_hours: Date | string
     created_at?: Date | string
+    total_price?: number
+    sub_total: number
+    voucher_discount?: number
+    point_discount: number
   }
 
   export type attendeesUpdateWithoutUsersInput = {
@@ -24146,6 +24352,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
@@ -24160,6 +24370,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -24173,6 +24387,10 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     expired_hours?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: IntFieldUpdateOperationsInput | number
+    sub_total?: IntFieldUpdateOperationsInput | number
+    voucher_discount?: IntFieldUpdateOperationsInput | number
+    point_discount?: IntFieldUpdateOperationsInput | number
   }
 
   export type transaction_detailCreateManyTicket_typesInput = {

@@ -76,6 +76,10 @@ model transactions {
   status             Status               @default(Pending)
   expired_hours      DateTime             @db.Timestamptz(6)
   created_at         DateTime             @default(now()) @db.Timestamptz(6)
+  total_price        Int                  @default(0)
+  sub_total          Int
+  voucher_discount   Int                  @default(0)
+  point_discount     Int
   notifications      notifications[]
   transaction_detail transaction_detail[]
   users              users                @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
@@ -105,11 +109,11 @@ model users {
 model vouchers {
   id          Int      @id @default(autoincrement())
   event_id    Int
-  code        Int
+  code        String   @unique @db.VarChar
   disc_amount Int
   start_date  DateTime @db.Date
   end_date    DateTime @db.Date
-  quota       BigInt
+  quota       Int
   events      events   @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vouchers_fk1")
 }
 

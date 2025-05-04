@@ -11,17 +11,29 @@ export const handleCheckout = async (
     const userId = res.locals.data.id;
     const {
       event_id,
+      total_price,
+      usePoints,
+      useVoucher,
       tickets,
+      sub_total,
+      voucher_discount,
+      point_discount,
+      voucher_code
     }: {
       event_id: number;
+      total_price: number;
+      usePoints: boolean;
+      useVoucher: boolean;
+      sub_total: number;
+      voucher_discount: number;
+      point_discount: number;
+      voucher_code: string;
       tickets: {
         id: number;
         type_name: string;
         price: number;
       }[];
     } = req.body;
-
-    console.log(event_id, tickets);
 
     if (!event_id || !tickets || tickets.length === 0) {
       throw "Invalid data";
@@ -34,10 +46,28 @@ export const handleCheckout = async (
         user_id: userId,
         event_id,
         invoice_id: invoiceId,
+        total_price: total_price,
+        sub_total,
+        voucher_discount,
+        point_discount,
         expired_date: new Date(new Date().getTime() + 72 * 60 * 60 * 1000),
         expired_hours: new Date(new Date().getTime() + 2 * 60 * 60 * 1000),
       },
     });
+
+    if(usePoints){
+      await prisma.points.updateMany({
+        where:{user_id: userId},
+        data:{points_amount:0}
+      })
+    }
+
+    if(useVoucher){
+      await prisma.vouchers.updateMany({
+        where:{code:voucher_code, quota:{gt:0}},
+        data:{quota:{decrement:1}}
+      })
+    }
 
     const createDetails = await prisma.transaction_detail.createMany({
       data: tickets.map((ticket) => ({
@@ -230,14 +260,8 @@ export const transactionDetail = async (
       };
     });
 
-    const totalPrice = response.transaction_detail.reduce(
-      (acc: number, cur: any) => acc + cur.price,
-      0
-    );
-
     res.status(200).send({
       transaction: response,
-      totalPrice: totalPrice,
       ticketSummary: ticketSummary,
     });
   } catch (error) {
@@ -270,6 +294,22 @@ export const uploadProof = async (
     });
 
     res.status(200).send(updateProof);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const getUserPoints = async (req: Request, res: Response) => {
+  try {
+    const userId = res.locals.data.id;
+    const points = await prisma.points.findMany({
+      where: { user_id: userId },
+    });
+
+    const totalPoints = points
+      .map((a) => a.points_amount)
+      .reduce((a, b) => a + b, 0);
+    res.status(200).send({ total_point: totalPoints });
   } catch (error) {
     res.status(500).send(error);
   }

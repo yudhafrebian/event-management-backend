@@ -4,6 +4,7 @@ import eventRoute from "./routers/event.router";
 import organizerRoute from "./routers/organizer.router";
 import authRouter from "./routers/auth.router";
 import transactionRoute from "./routers/transactions.router";
+import voucherRoute from "./routers/voucher.router";
 import "./utils/cronJobs";
 
 const PORT: number = 5000;
@@ -21,4 +22,6 @@ app.use("/auth", authRouter);
 app.use("/events", eventRoute);
 app.use("/organizers", organizerRoute);
 app.use("/transactions", transactionRoute);
+app.use("/vouchers", voucherRoute);
+
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
