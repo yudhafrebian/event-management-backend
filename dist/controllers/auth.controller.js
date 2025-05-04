@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadProfileImgCloud = exports.updateUserProfile = exports.keepLogin = exports.signIn = exports.register = void 0;
+exports.updateProfile = exports.keepLogin = exports.signIn = exports.register = void 0;
 const prisma_1 = __importDefault(require("../config/prisma"));
 const bcrypt_1 = require("bcrypt");
 const createToken_1 = require("../utils/createToken");
@@ -159,29 +159,104 @@ const keepLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.keepLogin = keepLogin;
-const updateUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+// export const updateUserProfile = async (
+//   req: Request,
+//   res: Response
+// ): Promise<any> => {
+//   try {
+//     if (!req.body) {
+//       throw "Input new data to update";
+//     }
+//     const updateProfile = await prisma.users.update({
+//       where: { id: res.locals.data.id },
+//       data: {
+//         first_name: req.body.first_name,
+//         last_name: req.body.last_name,
+//         profile_picture: `/profile-img/${req.file?.filename}`,
+//       },
+//     });
+//     console.log(updateProfile);
+//     const updateUser = prisma.users.update({
+//       where: { id: res.locals.data.id },
+//       data: {
+//         email: req.body.email,
+//         password: req.body.password,
+//       },
+//     });
+//     console.log(updateUser);
+//     return res.status(200).send({
+//       success: true,
+//       message: "Update Success",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).send(error);
+//   }
+// };
+// export const uploadProfileImgCloud = async (
+//   req: Request,
+//   res: Response
+// ): Promise<any> => {
+//   try {
+//     console.log("file upload info :", req.file);
+//     if (!req.file) {
+//       throw "No file attached";
+//     }
+//     const cloudRes = await cloudUpload(req.file);
+//     console.log(cloudRes);
+//     await prisma.users.update({
+//       data: {
+//         profile_picture: cloudRes.secure_url,
+//       },
+//       where: {
+//         id: res.locals.data.id,
+//       },
+//     });
+//     return res.status(200).send({
+//       success: true,
+//       message: "Uploade Success",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).send(error);
+//   }
+// };
+const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (!req.body) {
-            throw "Input new data to update";
+        // ERROR REQUEST CONTAINS UNDEFINED
+        console.log(req.body);
+        console.log(req.file);
+        const { first_name, last_name, email, password } = req.body;
+        const file = req.file;
+        if (!first_name && !last_name && !email && !password && !file) {
+            throw "No data provided to update";
         }
-        const updateProfile = yield prisma_1.default.users.update({
+        const updateData = {};
+        // Update profile fields if provided
+        if (first_name)
+            updateData.first_name = first_name;
+        if (last_name)
+            updateData.last_name = last_name;
+        if (email)
+            updateData.email = email;
+        if (password) {
+            const salt = yield (0, bcrypt_1.genSalt)();
+            updateData.password = yield (0, bcrypt_1.hash)(password, salt);
+        }
+        // Upload profile image to cloud if file is provided
+        if (file) {
+            console.log("file upload info :", file);
+            const cloudRes = yield (0, cloudinary_1.cloudUpload)(file);
+            console.log(cloudRes);
+            updateData.profile_picture = cloudRes.secure_url;
+        }
+        console.log(updateData);
+        // Update user in the database
+        const updatedUser = yield prisma_1.default.users.update({
             where: { id: res.locals.data.id },
-            data: {
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                profile_picture: `/profile-img/${(_a = req.file) === null || _a === void 0 ? void 0 : _a.filename}`,
-            },
+            data: updateData,
         });
-        console.log(updateProfile);
-        const updateUser = prisma_1.default.users.update({
-            where: { id: res.locals.data.id },
-            data: {
-                email: req.body.email,
-                password: req.body.password,
-            },
-        });
-        console.log(updateUser);
+        console.log(updatedUser);
         return res.status(200).send({
             success: true,
             message: "Update Success",
@@ -192,31 +267,4 @@ const updateUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, functi
         return res.status(500).send(error);
     }
 });
-exports.updateUserProfile = updateUserProfile;
-const uploadProfileImgCloud = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        console.log("file upload info :", req.file);
-        if (!req.file) {
-            throw "No file attached";
-        }
-        const cloudRes = yield (0, cloudinary_1.cloudUpload)(req.file);
-        console.log(cloudRes);
-        yield prisma_1.default.users.update({
-            data: {
-                profile_picture: cloudRes.secure_url,
-            },
-            where: {
-                id: res.locals.data.id,
-            },
-        });
-        return res.status(200).send({
-            success: true,
-            message: "Uploade Success",
-        });
-    }
-    catch (error) {
-        console.log(error);
-        return res.status(500).send(error);
-    }
-});
-exports.uploadProfileImgCloud = uploadProfileImgCloud;
+exports.updateProfile = updateProfile;
