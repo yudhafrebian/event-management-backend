@@ -111,8 +111,15 @@ export const updateTransactionStatus = async (
   try {
     const { transactionId, newStatus } = req.body;
 
+    console.log(req.body);
+
     if (!transactionId || !newStatus) {
-      throw "Missing required fields";
+      return res.status(400).send({ message: "Missing required fields" });
+    }
+
+    const validStatuses = ["Pending", "Confirming", "Approved", "Rejected", "Expired"];
+    if (!validStatuses.includes(newStatus)) {
+      return res.status(400).send({ message: "Invalid status" });
     }
 
     const current = await prisma.transactions.findUnique({
@@ -123,7 +130,7 @@ export const updateTransactionStatus = async (
     });
 
     if (!current) {
-      throw "Transaction not found";
+      return res.status(404).send({ message: "Transaction not found" });
     }
 
     const ticketCounts: Record<number, number> = {};
@@ -138,11 +145,13 @@ export const updateTransactionStatus = async (
         where: { id: transactionId },
         data: { status: "Expired" },
       });
+      return res.status(200).send({ message: "Transaction has expired" });
     }
 
     const shouldRestoreQuota =
-      ["Canceled", "Rejected", "Expired"].includes(current.status) &&
-      current.status === newStatus;
+      current.transaction_detail.length > 0 &&
+      current.status === "Pending" &&
+      ["Canceled", "Rejected", "Expired"].includes(newStatus);
 
     if (shouldRestoreQuota) {
       await prisma.$transaction([
@@ -168,12 +177,17 @@ export const updateTransactionStatus = async (
       });
     }
 
-    res.status(200).send({ message: "Transaction status updated" });
+    res.status(200).send({
+      message: "Transaction status updated successfully",
+      transactionId,
+      newStatus,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).send(error);
+    res.status(500).send({ message: "Server error", error });
   }
 };
+
 
 export const getTransactionList = async (
   req: Request,
@@ -299,7 +313,7 @@ export const uploadProof = async (
   }
 };
 
-export const getUserPoints = async (req: Request, res: Response) => {
+export const getUserPoints = async (req: Request, res: Response):Promise<any> => {
   try {
     const userId = res.locals.data.id;
     const points = await prisma.points.findMany({
@@ -314,3 +328,35 @@ export const getUserPoints = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
+
+export const getOrganizerTransaction = async(req: Request, res: Response):Promise<any> => {
+  try {
+
+    const userId = res.locals.data.id
+    const organizer = await prisma.organizers.findFirst({
+      where: { user_id: userId }
+    }) 
+
+    if (!organizer) {
+      throw "Organizer not found";
+    }
+
+    const event = await prisma.events.findMany({
+      where: { organizer_id: organizer.id},
+    })
+
+
+    const transaction = await prisma.transactions.findMany({
+      where: { event_id: { in: event.map((a) => a.id) } },
+      include: {
+        events: true
+      }
+    });
+
+    res.status(200).send(transaction);
+    
+  } catch (error) {
+    res.status(500).send(error);
+  }
+  
+}

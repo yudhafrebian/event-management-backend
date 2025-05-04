@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserPoints = exports.uploadProof = exports.transactionDetail = exports.getTransactionList = exports.updateTransactionStatus = exports.handleCheckout = void 0;
+exports.getOrganizerTransaction = exports.getUserPoints = exports.uploadProof = exports.transactionDetail = exports.getTransactionList = exports.updateTransactionStatus = exports.handleCheckout = void 0;
 const prisma_1 = __importDefault(require("../config/prisma"));
 const uuid_1 = require("uuid");
 const cloudinary_1 = require("../config/cloudinary");
@@ -82,8 +82,13 @@ exports.handleCheckout = handleCheckout;
 const updateTransactionStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { transactionId, newStatus } = req.body;
+        console.log(req.body);
         if (!transactionId || !newStatus) {
-            throw "Missing required fields";
+            return res.status(400).send({ message: "Missing required fields" });
+        }
+        const validStatuses = ["Pending", "Confirming", "Approved", "Rejected", "Expired"];
+        if (!validStatuses.includes(newStatus)) {
+            return res.status(400).send({ message: "Invalid status" });
         }
         const current = yield prisma_1.default.transactions.findUnique({
             where: { id: transactionId },
@@ -92,7 +97,7 @@ const updateTransactionStatus = (req, res) => __awaiter(void 0, void 0, void 0, 
             },
         });
         if (!current) {
-            throw "Transaction not found";
+            return res.status(404).send({ message: "Transaction not found" });
         }
         const ticketCounts = {};
         current.transaction_detail.forEach((detail) => {
@@ -105,9 +110,11 @@ const updateTransactionStatus = (req, res) => __awaiter(void 0, void 0, void 0, 
                 where: { id: transactionId },
                 data: { status: "Expired" },
             });
+            return res.status(200).send({ message: "Transaction has expired" });
         }
-        const shouldRestoreQuota = ["Canceled", "Rejected", "Expired"].includes(current.status) &&
-            current.status === newStatus;
+        const shouldRestoreQuota = current.transaction_detail.length > 0 &&
+            current.status === "Pending" &&
+            ["Canceled", "Rejected", "Expired"].includes(newStatus);
         if (shouldRestoreQuota) {
             yield prisma_1.default.$transaction([
                 ...Object.entries(ticketCounts).map(([ticketId, count]) => prisma_1.default.ticket_types.update({
@@ -130,11 +137,15 @@ const updateTransactionStatus = (req, res) => __awaiter(void 0, void 0, void 0, 
                 data: { status: newStatus },
             });
         }
-        res.status(200).send({ message: "Transaction status updated" });
+        res.status(200).send({
+            message: "Transaction status updated successfully",
+            transactionId,
+            newStatus,
+        });
     }
     catch (error) {
         console.error(error);
-        res.status(500).send(error);
+        res.status(500).send({ message: "Server error", error });
     }
 });
 exports.updateTransactionStatus = updateTransactionStatus;
@@ -258,3 +269,28 @@ const getUserPoints = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getUserPoints = getUserPoints;
+const getOrganizerTransaction = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = res.locals.data.id;
+        const organizer = yield prisma_1.default.organizers.findFirst({
+            where: { user_id: userId }
+        });
+        if (!organizer) {
+            throw "Organizer not found";
+        }
+        const event = yield prisma_1.default.events.findMany({
+            where: { organizer_id: organizer.id },
+        });
+        const transaction = yield prisma_1.default.transactions.findMany({
+            where: { event_id: { in: event.map((a) => a.id) } },
+            include: {
+                events: true
+            }
+        });
+        res.status(200).send(transaction);
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
+});
+exports.getOrganizerTransaction = getOrganizerTransaction;

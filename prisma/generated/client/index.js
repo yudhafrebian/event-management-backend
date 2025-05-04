@@ -278,7 +278,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\Documents\\purwadhika\\mini project\\event-management-backend\\prisma\\generated\\client",
+      "value": "D:\\Backend\\event-backend\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -292,11 +292,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\Documents\\purwadhika\\mini project\\event-management-backend\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Backend\\event-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
