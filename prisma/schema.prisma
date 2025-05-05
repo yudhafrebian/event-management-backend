@@ -80,6 +80,7 @@ model transactions {
   sub_total          Int
   voucher_discount   Int                  @default(0)
   point_discount     Int
+  voucher_code       String?              @db.VarChar
   notifications      notifications[]
   transaction_detail transaction_detail[]
   users              users                @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
@@ -166,7 +167,7 @@ model cities {
 model points {
   id                          Int       @id @default(autoincrement())
   created_at                  DateTime  @default(now()) @db.Timestamptz(6)
-  user_id                     Int
+  user_id                     Int       
   points_amount               Int
   expire_date                 DateTime? @db.Date
   users_points_user_idTousers users     @relation("points_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)

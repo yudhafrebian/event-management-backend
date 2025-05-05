@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { getVoucher } from "../controllers/voucher.controller";
+import { createVoucher, getEvent, getVoucher } from "../controllers/voucher.controller";
+import { verifyToken } from "../middleware/verifyToken";
 
 const route = Router();
 
-route.get("/:code", getVoucher)
+route.get("/event", verifyToken, getEvent)
+route.get("/:event_id/:code", getVoucher)
+route.post("/create", verifyToken, createVoucher)
 
 export default route
