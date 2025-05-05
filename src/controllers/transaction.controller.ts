@@ -3,6 +3,7 @@ import { Status } from "../../prisma/generated/client";
 import prisma from "../config/prisma";
 import { v4 as uuidv4 } from "uuid";
 import { cloudUpload } from "../config/cloudinary";
+import { sendEmailTicket } from "../utils/emailSender";
 
 export const handleCheckout = async (
   req: Request,
@@ -137,6 +138,7 @@ export const updateTransactionStatus = async (
       where: { id: transactionId },
       include: {
         transaction_detail: true,
+        users: true,
       },
     });
 
@@ -207,6 +209,28 @@ export const updateTransactionStatus = async (
         where: { code: current.voucher_code },
         data: { quota: { increment: 1 } },
       });
+    }
+
+    if(newStatus === "Approved") {
+      try {
+        const tickets = current.transaction_detail.map((detail) => ({
+          code : detail.code,
+        }))
+
+        await sendEmailTicket(
+          current.users.email,
+          "Your Ticket Confirmation",
+          null,
+          {
+            email: current.users.email,
+            tickets: tickets
+          }
+        )
+
+        console.log("email sent");
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     res.status(200).send({

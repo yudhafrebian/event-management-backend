@@ -2,6 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const voucher_controller_1 = require("../controllers/voucher.controller");
+const verifyToken_1 = require("../middleware/verifyToken");
 const route = (0, express_1.Router)();
-route.get("/:code", voucher_controller_1.getVoucher);
+route.get("/event", verifyToken_1.verifyToken, voucher_controller_1.getEvent);
+route.get("/list", verifyToken_1.verifyToken, voucher_controller_1.getActiveVoucher);
+route.get("/:event_id/:code", voucher_controller_1.getVoucher);
+route.post("/create", verifyToken_1.verifyToken, voucher_controller_1.createVoucher);
+route.delete("/delete/:id", verifyToken_1.verifyToken, voucher_controller_1.deleteVoucher);
 exports.default = route;
