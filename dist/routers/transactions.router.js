@@ -5,6 +5,7 @@ const verifyToken_1 = require("../middleware/verifyToken");
 const transaction_controller_1 = require("../controllers/transaction.controller");
 const uploader_1 = require("../middleware/uploader");
 const route = (0, express_1.Router)();
+route.get("/status", transaction_controller_1.getStatus);
 route.get("/list", verifyToken_1.verifyToken, transaction_controller_1.getTransactionList);
 route.get("/points", verifyToken_1.verifyToken, transaction_controller_1.getUserPoints);
 route.get("/organizer/list", verifyToken_1.verifyToken, transaction_controller_1.getOrganizerTransaction);

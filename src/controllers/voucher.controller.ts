@@ -3,7 +3,6 @@ import prisma from "../config/prisma";
 
 export const getVoucher = async (req: Request, res: Response): Promise<any> => {
   try {
-
     const response = await prisma.vouchers.findFirst({
       where: { code: req.params.code, event_id: parseInt(req.params.event_id) },
     });
@@ -22,7 +21,7 @@ export const getVoucher = async (req: Request, res: Response): Promise<any> => {
       return res.status(400).send({ message: "Voucher expired" });
     }
 
-    if(response.quota === 0) {
+    if (response.quota === 0) {
       return res.status(400).send({ message: "Voucher out of stock" });
     }
 
@@ -32,13 +31,63 @@ export const getVoucher = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-export const createVoucher = async (req: Request, res: Response): Promise<any> => {
+export const getActiveVoucher = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   try {
-    const {event_name} =req.body
+    const userId = res.locals.data.id;
+    const organizer = await prisma.organizers.findFirst({
+      where: { user_id: userId },
+    });
+
+    if (!organizer) {
+      throw "Organizer not found";
+    }
+
+    const event = await prisma.events.findMany({
+      where: { organizer_id: organizer.id },
+    });
+
+    const response = await prisma.vouchers.findMany({
+      where: { event_id: { in: event.map((a) => a.id) } },
+      include: {
+        events: true,
+      },
+    });
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const deleteVoucher = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const response = await prisma.vouchers.delete({
+      where: { id: parseInt(req.params.id) },
+    });
+
+    res
+      .status(200)
+      .send({ message: "Voucher deleted", success: true, data: response });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const createVoucher = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const { event_name } = req.body;
     const event = await prisma.events.findUnique({
       where: { title: event_name },
-    })
-    if(!event) {
+    });
+    if (!event) {
       return res.status(404).send({ message: "Event not found" });
     }
     const response = await prisma.vouchers.create({
@@ -51,13 +100,12 @@ export const createVoucher = async (req: Request, res: Response): Promise<any> =
         quota: req.body.quota,
       },
     });
-    
 
     res.status(201).send(response);
   } catch (error) {
     res.status(500).send(error);
   }
-}
+};
 
 export const getEvent = async (req: Request, res: Response): Promise<any> => {
   try {
