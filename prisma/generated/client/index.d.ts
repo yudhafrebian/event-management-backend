@@ -8059,6 +8059,7 @@ export namespace Prisma {
     sub_total: number | null
     voucher_discount: number | null
     point_discount: number | null
+    voucher_code: string | null
   }
 
   export type TransactionsMaxAggregateOutputType = {
@@ -8075,6 +8076,7 @@ export namespace Prisma {
     sub_total: number | null
     voucher_discount: number | null
     point_discount: number | null
+    voucher_code: string | null
   }
 
   export type TransactionsCountAggregateOutputType = {
@@ -8091,6 +8093,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount: number
     point_discount: number
+    voucher_code: number
     _all: number
   }
 
@@ -8129,6 +8132,7 @@ export namespace Prisma {
     sub_total?: true
     voucher_discount?: true
     point_discount?: true
+    voucher_code?: true
   }
 
   export type TransactionsMaxAggregateInputType = {
@@ -8145,6 +8149,7 @@ export namespace Prisma {
     sub_total?: true
     voucher_discount?: true
     point_discount?: true
+    voucher_code?: true
   }
 
   export type TransactionsCountAggregateInputType = {
@@ -8161,6 +8166,7 @@ export namespace Prisma {
     sub_total?: true
     voucher_discount?: true
     point_discount?: true
+    voucher_code?: true
     _all?: true
   }
 
@@ -8264,6 +8270,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount: number
     point_discount: number
+    voucher_code: string | null
     _count: TransactionsCountAggregateOutputType | null
     _avg: TransactionsAvgAggregateOutputType | null
     _sum: TransactionsSumAggregateOutputType | null
@@ -8299,6 +8306,7 @@ export namespace Prisma {
     sub_total?: boolean
     voucher_discount?: boolean
     point_discount?: boolean
+    voucher_code?: boolean
     notifications?: boolean | transactions$notificationsArgs<ExtArgs>
     transaction_detail?: boolean | transactions$transaction_detailArgs<ExtArgs>
     users?: boolean | usersDefaultArgs<ExtArgs>
@@ -8320,6 +8328,7 @@ export namespace Prisma {
     sub_total?: boolean
     voucher_discount?: boolean
     point_discount?: boolean
+    voucher_code?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions"]>
@@ -8338,6 +8347,7 @@ export namespace Prisma {
     sub_total?: boolean
     voucher_discount?: boolean
     point_discount?: boolean
+    voucher_code?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
     events?: boolean | eventsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions"]>
@@ -8356,9 +8366,10 @@ export namespace Prisma {
     sub_total?: boolean
     voucher_discount?: boolean
     point_discount?: boolean
+    voucher_code?: boolean
   }
 
-  export type transactionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "event_id" | "payment_proof" | "expired_date" | "invoice_id" | "status" | "expired_hours" | "created_at" | "total_price" | "sub_total" | "voucher_discount" | "point_discount", ExtArgs["result"]["transactions"]>
+  export type transactionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "event_id" | "payment_proof" | "expired_date" | "invoice_id" | "status" | "expired_hours" | "created_at" | "total_price" | "sub_total" | "voucher_discount" | "point_discount" | "voucher_code", ExtArgs["result"]["transactions"]>
   export type transactionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notifications?: boolean | transactions$notificationsArgs<ExtArgs>
     transaction_detail?: boolean | transactions$transaction_detailArgs<ExtArgs>
@@ -8397,6 +8408,7 @@ export namespace Prisma {
       sub_total: number
       voucher_discount: number
       point_discount: number
+      voucher_code: string | null
     }, ExtArgs["result"]["transactions"]>
     composites: {}
   }
@@ -8837,6 +8849,7 @@ export namespace Prisma {
     readonly sub_total: FieldRef<"transactions", 'Int'>
     readonly voucher_discount: FieldRef<"transactions", 'Int'>
     readonly point_discount: FieldRef<"transactions", 'Int'>
+    readonly voucher_code: FieldRef<"transactions", 'String'>
   }
     
 
@@ -17403,7 +17416,8 @@ export namespace Prisma {
     total_price: 'total_price',
     sub_total: 'sub_total',
     voucher_discount: 'voucher_discount',
-    point_discount: 'point_discount'
+    point_discount: 'point_discount',
+    voucher_code: 'voucher_code'
   };
 
   export type TransactionsScalarFieldEnum = (typeof TransactionsScalarFieldEnum)[keyof typeof TransactionsScalarFieldEnum]
@@ -17991,6 +18005,7 @@ export namespace Prisma {
     sub_total?: IntFilter<"transactions"> | number
     voucher_discount?: IntFilter<"transactions"> | number
     point_discount?: IntFilter<"transactions"> | number
+    voucher_code?: StringNullableFilter<"transactions"> | string | null
     notifications?: NotificationsListRelationFilter
     transaction_detail?: Transaction_detailListRelationFilter
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
@@ -18011,6 +18026,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     voucher_discount?: SortOrder
     point_discount?: SortOrder
+    voucher_code?: SortOrderInput | SortOrder
     notifications?: notificationsOrderByRelationAggregateInput
     transaction_detail?: transaction_detailOrderByRelationAggregateInput
     users?: usersOrderByWithRelationInput
@@ -18034,6 +18050,7 @@ export namespace Prisma {
     sub_total?: IntFilter<"transactions"> | number
     voucher_discount?: IntFilter<"transactions"> | number
     point_discount?: IntFilter<"transactions"> | number
+    voucher_code?: StringNullableFilter<"transactions"> | string | null
     notifications?: NotificationsListRelationFilter
     transaction_detail?: Transaction_detailListRelationFilter
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
@@ -18054,6 +18071,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     voucher_discount?: SortOrder
     point_discount?: SortOrder
+    voucher_code?: SortOrderInput | SortOrder
     _count?: transactionsCountOrderByAggregateInput
     _avg?: transactionsAvgOrderByAggregateInput
     _max?: transactionsMaxOrderByAggregateInput
@@ -18078,6 +18096,7 @@ export namespace Prisma {
     sub_total?: IntWithAggregatesFilter<"transactions"> | number
     voucher_discount?: IntWithAggregatesFilter<"transactions"> | number
     point_discount?: IntWithAggregatesFilter<"transactions"> | number
+    voucher_code?: StringNullableWithAggregatesFilter<"transactions"> | string | null
   }
 
   export type usersWhereInput = {
@@ -18869,6 +18888,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
@@ -18889,6 +18909,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -18904,6 +18925,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
@@ -18924,6 +18946,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -18942,6 +18965,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
   }
 
   export type transactionsUpdateManyMutationInput = {
@@ -18955,6 +18979,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type transactionsUncheckedUpdateManyInput = {
@@ -18971,6 +18996,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type usersCreateInput = {
@@ -19896,6 +19922,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     voucher_discount?: SortOrder
     point_discount?: SortOrder
+    voucher_code?: SortOrder
   }
 
   export type transactionsAvgOrderByAggregateInput = {
@@ -19922,6 +19949,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     voucher_discount?: SortOrder
     point_discount?: SortOrder
+    voucher_code?: SortOrder
   }
 
   export type transactionsMinOrderByAggregateInput = {
@@ -19938,6 +19966,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     voucher_discount?: SortOrder
     point_discount?: SortOrder
+    voucher_code?: SortOrder
   }
 
   export type transactionsSumOrderByAggregateInput = {
@@ -21917,6 +21946,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
@@ -21935,6 +21965,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -22149,6 +22180,7 @@ export namespace Prisma {
     sub_total?: IntFilter<"transactions"> | number
     voucher_discount?: IntFilter<"transactions"> | number
     point_discount?: IntFilter<"transactions"> | number
+    voucher_code?: StringNullableFilter<"transactions"> | string | null
   }
 
   export type vouchersUpsertWithWhereUniqueWithoutEventsInput = {
@@ -22233,6 +22265,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
@@ -22252,6 +22285,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
@@ -22330,6 +22364,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
@@ -22349,6 +22384,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
@@ -23027,6 +23063,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailCreateNestedManyWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
@@ -23045,6 +23082,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
     transaction_detail?: transaction_detailUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -23485,6 +23523,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsCreateNestedManyWithoutTransactionsInput
     users: usersCreateNestedOneWithoutTransactionsInput
     events: eventsCreateNestedOneWithoutTransactionsInput
@@ -23504,6 +23543,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
     notifications?: notificationsUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
@@ -23608,6 +23648,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
@@ -23627,6 +23668,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
   }
 
@@ -23929,6 +23971,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
   }
 
   export type vouchersCreateManyEventsInput = {
@@ -24045,6 +24088,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     users?: usersUpdateOneRequiredWithoutTransactionsNestedInput
@@ -24063,6 +24107,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -24080,6 +24125,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type vouchersUpdateWithoutEventsInput = {
@@ -24221,6 +24267,7 @@ export namespace Prisma {
     sub_total: number
     voucher_discount?: number
     point_discount: number
+    voucher_code?: string | null
   }
 
   export type attendeesUpdateWithoutUsersInput = {
@@ -24356,6 +24403,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUpdateManyWithoutTransactionsNestedInput
     events?: eventsUpdateOneRequiredWithoutTransactionsNestedInput
@@ -24374,6 +24422,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: notificationsUncheckedUpdateManyWithoutTransactionsNestedInput
     transaction_detail?: transaction_detailUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -24391,6 +24440,7 @@ export namespace Prisma {
     sub_total?: IntFieldUpdateOperationsInput | number
     voucher_discount?: IntFieldUpdateOperationsInput | number
     point_discount?: IntFieldUpdateOperationsInput | number
+    voucher_code?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type transaction_detailCreateManyTicket_typesInput = {
