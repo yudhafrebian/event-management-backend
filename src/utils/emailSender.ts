@@ -12,6 +12,30 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
+
+export const sendEmail = async (
+  emailTo: string,
+  subject: string,
+  content?: string | null,
+  data?: { email: string; token: string }
+) => {
+  try {
+    const templatePath = path.join(__dirname, "../template", "register.hbs");
+    const templateSource = fs.readFileSync(templatePath, "utf-8");
+    const templateCompile = handlebars.compile(templateSource);
+    const generateHTML = templateCompile(data);
+
+    await transporter.sendMail({
+      from: process.env.MAIL_SENDER,
+      to: emailTo,
+      subject,
+      html: content || generateHTML,
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const sendEmailTicket = async (
   emailTo: string,
   subject: string,
@@ -53,3 +77,4 @@ export const sendEmailTicket = async (
         throw error
     }
 };                                                               
+

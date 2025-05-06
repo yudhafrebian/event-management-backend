@@ -190,11 +190,141 @@ export const detailTicket = async (
       },
     });
     if (!detail) {
-      return res.status(404).send({ message: "Ticket not found for this event" });
+      return res
+        .status(404)
+        .send({ message: "Ticket not found for this event" });
     }
 
     res.status(200).send(detail);
   } catch (error) {
     res.status(500).send(error);
+  }
+};
+
+export const updateEvent = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const {
+      title,
+      description,
+      start_date,
+      end_date,
+      location,
+      category,
+      ticket_types,
+    } = req.body;
+
+    console.log("incoming data", req.body);
+
+    // Find the organizer based on the user ID
+    const organizer = await prisma.organizers.findFirst({
+      where: { user_id: res.locals.data.id },
+    });
+
+    if (!organizer) {
+      throw "Organizer not found";
+    }
+
+    // Find the event to update
+    const event = await prisma.events.findUnique({
+      where: { title: req.params.title },
+    });
+
+    if (!event) {
+      throw "Event not found";
+    }
+
+    // Prepare the update data
+    const updateData: any = {};
+
+    if (title) updateData.title = title;
+    if (description) updateData.description = description;
+    if (start_date) updateData.start_date = new Date(start_date);
+    if (end_date) updateData.end_date = new Date(end_date);
+    if (location) updateData.location = location;
+    if (category) updateData.category = category;
+
+    // Handle file upload if a new file is provided
+    // if (req.file) {
+    //   const upload = await cloudUpload(req.file);
+    //   updateData.event_picture = upload.secure_url;
+    // }
+
+    // // Update the event in the database
+    // const updatedEvent = await prisma.events.update({
+    //   where: { id: event.id },
+    //   data: updateData,
+    // });
+
+    // // Update ticket types if provided
+    // if (ticket_types) {
+    //   const parsedTicketTypes = JSON.parse(ticket_types);
+    //   await prisma.ticket_types.deleteMany({
+    //     where: { event_id: event.id },
+    //   });
+    //   await prisma.ticket_types.createMany({
+    //     data: parsedTicketTypes.map((ticket: any) => ({
+    //       ...ticket,
+    //       event_id: event.id,
+    //     })),
+    //   });
+    // }
+
+    // res.status(200).send({ success: true, updatedEvent });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "Failed to update event", details: error });
+  }
+};
+
+export const getAttendeeList = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const { event_id } = req.params;
+
+    // Validate event_id
+    if (!event_id) {
+      return res.status(400).send({ error: "Event ID is required" });
+    }
+
+    // Find transactions with the given event_id
+    const transactions = await prisma.transactions.findMany({
+      where: { event_id: parseInt(event_id, 10) },
+      select: { user_id: true },
+    });
+
+    if (!transactions || transactions.length === 0) {
+      return res
+        .status(404)
+        .send({ message: "No attendees found for this event" });
+    }
+
+    // Extract unique user IDs
+    const userIds = [
+      ...new Set(transactions.map((transaction) => transaction.user_id)),
+    ];
+
+    // Fetch user details for the retrieved user IDs
+    const users = await prisma.users.findMany({
+      where: { id: { in: userIds } },
+      select: { id: true, first_name: true, last_name: true },
+    });
+
+    // Format the attendee list
+    const attendeeList = users.map((user) => ({
+      id: user.id,
+      name: `${user.first_name} ${user.last_name}`,
+    }));
+
+    res.status(200).send({ attendees: attendeeList });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .send({ error: "Failed to fetch attendee list", details: error });
   }
 };

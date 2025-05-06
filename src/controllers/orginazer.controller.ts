@@ -11,6 +11,7 @@ export const getAllOrganizer = async (
         users: true,
       },
     });
+    console.log(response);
 
     res.status(200).send(response);
   } catch (error) {
@@ -23,15 +24,16 @@ export const getDetailOrganizer = async (
   res: Response
 ): Promise<any> => {
   try {
-    const detail = await prisma.organizers.findUnique({
-      where: { organizer_name: req.params.name },
+    const userId = res.locals.id;
+    const detail = await prisma.organizers.findFirst({
+      where: { user_id: userId },
       include: {
         users: true,
       },
     });
 
     const detailEvents = await prisma.events.findMany({
-      where: { organizer_id: detail?.id},
+      where: { organizer_id: detail?.id },
       include: {
         ticket_types: true,
       },
@@ -40,6 +42,9 @@ export const getDetailOrganizer = async (
     const totalEvents = await prisma.events.count({
       where: { organizer_id: detail?.id },
     });
+
+    console.log(detail, detailEvents, totalEvents);
+
     res.status(200).send({ detail, detailEvents, totalEvents });
   } catch (error) {
     res.status(500).send(error);

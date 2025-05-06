@@ -3,6 +3,7 @@ import prisma from "../config/prisma";
 import { hash, genSalt, compare } from "bcrypt";
 import { createToken } from "../utils/createToken";
 import { cloudUpload } from "../config/cloudinary";
+import { sendEmail } from "../utils/emailSender";
 
 export const register = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -50,7 +51,9 @@ export const register = async (req: Request, res: Response): Promise<any> => {
         },
       });
       console.log("points added", referralPoints.points_amount);
+    }
 
+    if (referralCode) {
       // give voucher to user who used the code
       const referralVoucher = await prisma.referral_coupons.create({
         data: {
@@ -62,6 +65,17 @@ export const register = async (req: Request, res: Response): Promise<any> => {
       });
       console.log("voucher created", referralVoucher.code);
     }
+
+    const token = createToken({
+      id: newUsers?.id,
+      is_verified: newUsers?.is_verified,
+      role: newUsers?.role,
+    });
+    await sendEmail(req.body.email, "Verify Registration", null, {
+      email: req.body.email,
+      token,
+    });
+
     return res.status(200).send({
       success: true,
       message: "Register Success",
@@ -122,7 +136,7 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
 
 export const keepLogin = async (req: Request, res: Response): Promise<any> => {
   try {
-    console.log(res.locals.data.id);
+    console.log("user id", res.locals.data.id);
     const users = await prisma.users.findUnique({
       where: { id: res.locals.data.id },
     });
@@ -157,80 +171,31 @@ export const keepLogin = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-// export const updateUserProfile = async (
-//   req: Request,
-//   res: Response
-// ): Promise<any> => {
-//   try {
-//     if (!req.body) {
-//       throw "Input new data to update";
-//     }
+export const verifyAccount = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const userId = res.locals.data.id;
+    console.log("user id", userId);
 
-//     const updateProfile = await prisma.users.update({
-//       where: { id: res.locals.data.id },
-//       data: {
-//         first_name: req.body.first_name,
-//         last_name: req.body.last_name,
-//         profile_picture: `/profile-img/${req.file?.filename}`,
-//       },
-//     });
-//     console.log(updateProfile);
+    const verify = await prisma.users.update({
+      data: { is_verified: true },
+      where: { id: userId },
+    });
 
-//     const updateUser = prisma.users.update({
-//       where: { id: res.locals.data.id },
-//       data: {
-//         email: req.body.email,
-//         password: req.body.password,
-//       },
-//     });
-//     console.log(updateUser);
-
-//     return res.status(200).send({
-//       success: true,
-//       message: "Update Success",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).send(error);
-//   }
-// };
-
-// export const uploadProfileImgCloud = async (
-//   req: Request,
-//   res: Response
-// ): Promise<any> => {
-//   try {
-//     console.log("file upload info :", req.file);
-//     if (!req.file) {
-//       throw "No file attached";
-//     }
-//     const cloudRes = await cloudUpload(req.file);
-//     console.log(cloudRes);
-
-//     await prisma.users.update({
-//       data: {
-//         profile_picture: cloudRes.secure_url,
-//       },
-//       where: {
-//         id: res.locals.data.id,
-//       },
-//     });
-//     return res.status(200).send({
-//       success: true,
-//       message: "Uploade Success",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).send(error);
-//   }
-// };
+    return res.status(200).send("Your account is now verified");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+};
 
 export const updateProfile = async (
   req: Request,
   res: Response
 ): Promise<any> => {
   try {
-    // ERROR REQUEST CONTAINS UNDEFINED
     console.log(req.body);
     console.log(req.file);
 
