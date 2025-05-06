@@ -173,7 +173,8 @@ exports.Prisma.TransactionsScalarFieldEnum = {
   total_price: 'total_price',
   sub_total: 'sub_total',
   voucher_discount: 'voucher_discount',
-  point_discount: 'point_discount'
+  point_discount: 'point_discount',
+  voucher_code: 'voucher_code'
 };
 
 exports.Prisma.UsersScalarFieldEnum = {

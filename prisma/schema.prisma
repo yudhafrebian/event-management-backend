@@ -80,6 +80,7 @@ model transactions {
   sub_total          Int
   voucher_discount   Int                  @default(0)
   point_discount     Int
+  voucher_code       String?              @db.VarChar
   notifications      notifications[]
   transaction_detail transaction_detail[]
   users              users                @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transactions_fk1")
