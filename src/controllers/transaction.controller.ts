@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
+import { Status } from "../../prisma/generated/client";
 import prisma from "../config/prisma";
 import { v4 as uuidv4 } from "uuid";
 import { cloudUpload } from "../config/cloudinary";
+import { sendEmailTicket } from "../utils/emailSender";
 
 export const handleCheckout = async (
   req: Request,
@@ -18,7 +20,8 @@ export const handleCheckout = async (
       sub_total,
       voucher_discount,
       point_discount,
-      voucher_code
+      voucher_code,
+      status,
     }: {
       event_id: number;
       total_price: number;
@@ -28,6 +31,7 @@ export const handleCheckout = async (
       voucher_discount: number;
       point_discount: number;
       voucher_code: string;
+      status: string;
       tickets: {
         id: number;
         type_name: string;
@@ -48,25 +52,27 @@ export const handleCheckout = async (
         invoice_id: invoiceId,
         total_price: total_price,
         sub_total,
+        status: status as Status,
         voucher_discount,
         point_discount,
+        voucher_code,
         expired_date: new Date(new Date().getTime() + 72 * 60 * 60 * 1000),
         expired_hours: new Date(new Date().getTime() + 2 * 60 * 60 * 1000),
       },
     });
 
-    if(usePoints){
+    if (usePoints) {
       await prisma.points.updateMany({
-        where:{user_id: userId},
-        data:{points_amount:0}
-      })
+        where: { user_id: userId },
+        data: { points_amount: 0 },
+      });
     }
 
-    if(useVoucher){
+    if (useVoucher) {
       await prisma.vouchers.updateMany({
-        where:{code:voucher_code, quota:{gt:0}},
-        data:{quota:{decrement:1}}
-      })
+        where: { code: voucher_code, quota: { gt: 0 } },
+        data: { quota: { decrement: 1 } },
+      });
     }
 
     const createDetails = await prisma.transaction_detail.createMany({
@@ -117,7 +123,13 @@ export const updateTransactionStatus = async (
       return res.status(400).send({ message: "Missing required fields" });
     }
 
-    const validStatuses = ["Pending", "Confirming", "Approved", "Rejected", "Expired"];
+    const validStatuses = [
+      "Pending",
+      "Confirming",
+      "Approved",
+      "Rejected",
+      "Expired",
+    ];
     if (!validStatuses.includes(newStatus)) {
       return res.status(400).send({ message: "Invalid status" });
     }
@@ -126,6 +138,7 @@ export const updateTransactionStatus = async (
       where: { id: transactionId },
       include: {
         transaction_detail: true,
+        users: true,
       },
     });
 
@@ -153,28 +166,71 @@ export const updateTransactionStatus = async (
       current.status === "Pending" &&
       ["Canceled", "Rejected", "Expired"].includes(newStatus);
 
-    if (shouldRestoreQuota) {
-      await prisma.$transaction([
-        ...Object.entries(ticketCounts).map(([ticketId, count]) =>
-          prisma.ticket_types.update({
-            where: { id: parseInt(ticketId) },
-            data: {
-              quota: {
-                increment: count,
-              },
-            },
-          })
-        ),
-        prisma.transactions.update({
-          where: { id: transactionId },
-          data: { status: newStatus },
-        }),
-      ]);
-    } else {
-      await prisma.transactions.update({
+    await prisma.$transaction([
+      ...Object.entries(ticketCounts).map(([ticketId, count]) =>
+        prisma.ticket_types.update({
+          where: { id: parseInt(ticketId) },
+          data: { quota: { increment: count } },
+        })
+      ),
+      prisma.transactions.update({
         where: { id: transactionId },
         data: { status: newStatus },
+      }),
+    ]);
+
+    if (current.point_discount && current.point_discount > 0) {
+      const existingPoint = await prisma.points.findFirst({
+        where: { user_id: current.user_id },
+        orderBy: { created_at: "desc" },
       });
+
+      if (existingPoint) {
+        await prisma.points.update({
+          where: { id: existingPoint.id },
+          data: { points_amount: { increment: current.point_discount } },
+        });
+      } else {
+        await prisma.points.create({
+          data: {
+            user_id: current.user_id,
+            points_amount: current.point_discount,
+          },
+        });
+      }
+    }
+
+    if (
+      current.voucher_code &&
+      current.voucher_discount &&
+      current.voucher_discount > 0
+    ) {
+      await prisma.vouchers.updateMany({
+        where: { code: current.voucher_code },
+        data: { quota: { increment: 1 } },
+      });
+    }
+
+    if(newStatus === "Approved") {
+      try {
+        const tickets = current.transaction_detail.map((detail) => ({
+          code : detail.code,
+        }))
+
+        await sendEmailTicket(
+          current.users.email,
+          "Your Ticket Confirmation",
+          null,
+          {
+            email: current.users.email,
+            tickets: tickets
+          }
+        )
+
+        console.log("email sent");
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     res.status(200).send({
@@ -188,19 +244,30 @@ export const updateTransactionStatus = async (
   }
 };
 
-
 export const getTransactionList = async (
   req: Request,
   res: Response
 ): Promise<any> => {
   try {
     const userId = res.locals.data.id;
-    const transaction = await prisma.transactions.findMany({
-      where: { user_id: userId },
-      include: {
-        events: true,
-      },
-    });
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 5;
+    const skip = (page - 1) * limit;
+
+    const [transaction, totalCount] = await Promise.all([
+      prisma.transactions.findMany({
+        where: { user_id: userId },
+        include: {
+          events: true,
+        },
+        skip,
+        take: limit,
+        orderBy: { created_at: 'desc' },
+      }),
+      prisma.transactions.count({
+        where: { user_id: userId },
+      }),
+    ]);
 
     const ticketDetail = await prisma.transaction_detail.findMany({
       where: { transaction_id: { in: transaction.map((a) => a.id) } },
@@ -220,11 +287,21 @@ export const getTransactionList = async (
       totalPricesPerTransaction: totalPricesPerTransaction[item.id] || 0,
     }));
 
-    res.status(200).send(responseData);
+    res.status(200).send({
+      data: responseData,
+      pagination: {
+        total: totalCount,
+        page,
+        limit,
+        totalPages: Math.ceil(totalCount / limit),
+      },
+    });
   } catch (error) {
+    console.error(error);
     res.status(500).send(error);
   }
 };
+
 
 export const transactionDetail = async (
   req: Request,
@@ -313,7 +390,10 @@ export const uploadProof = async (
   }
 };
 
-export const getUserPoints = async (req: Request, res: Response):Promise<any> => {
+export const getUserPoints = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   try {
     const userId = res.locals.data.id;
     const points = await prisma.points.findMany({
@@ -329,34 +409,42 @@ export const getUserPoints = async (req: Request, res: Response):Promise<any> =>
   }
 };
 
-export const getOrganizerTransaction = async(req: Request, res: Response):Promise<any> => {
+export const getOrganizerTransaction = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   try {
-
-    const userId = res.locals.data.id
+    const userId = res.locals.data.id;
     const organizer = await prisma.organizers.findFirst({
-      where: { user_id: userId }
-    }) 
+      where: { user_id: userId },
+    });
 
     if (!organizer) {
       throw "Organizer not found";
     }
 
     const event = await prisma.events.findMany({
-      where: { organizer_id: organizer.id},
-    })
-
+      where: { organizer_id: organizer.id },
+    });
 
     const transaction = await prisma.transactions.findMany({
       where: { event_id: { in: event.map((a) => a.id) } },
       include: {
-        events: true
-      }
+        events: true,
+      },
     });
 
     res.status(200).send(transaction);
-    
   } catch (error) {
     res.status(500).send(error);
   }
-  
-}
+};
+
+export const getStatus = async (req: Request, res: Response) => {
+  try {
+    const status = Object.values(Status);
+    res.status(200).send(status);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
